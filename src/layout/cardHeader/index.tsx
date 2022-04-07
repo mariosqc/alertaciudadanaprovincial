@@ -21,15 +21,13 @@ export const CardHeader: FC<CardHeaderProps> = ({ title, subtitle }) => {
             color="pri.800"
             fontWeight="bold"
             lineHeight="5"
-            fontSize="lg"
-            mb="1"
           >
             {title}
           </Text>
           <Text
             fontFamily="Open Sans, sans-serif"
             fontWeight="medium"
-            color="gray.600"
+            color="gray.500"
             fontSize="sm"
             lineHeight="4"
             maxW="4xl"

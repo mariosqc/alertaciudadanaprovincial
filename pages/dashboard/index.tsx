@@ -21,13 +21,10 @@ const DashboardPage = () => {
               subtitle="Lorem ipsum dolor sit amet, consectetur adipisicing elit."
             />
             <Divider />
-            <Card.CardContainer>
-              <Text fontSize="3xl" fontWeight="bold">
-                3,432
-              </Text>
-              <Text fontWeight="medium" color="gray.600">
-                New Orders
-              </Text>
+            <Card.CardContainer height="xl" activeScrollbar>
+              <Box border="2px" height="5xl" w="200vw">
+                Hola
+              </Box>
             </Card.CardContainer>
             <Divider />
             <Flex
