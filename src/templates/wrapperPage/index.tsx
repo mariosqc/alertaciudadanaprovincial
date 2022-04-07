@@ -14,7 +14,7 @@ interface WrapperPageProps {
 export const WrapperPage: FC<WrapperPageProps> = ({ children, title, description }) => {
   return (
     <>
-      <NextSeo title={`${title} | Alerta Ciudadana`} description={description} />
+      <NextSeo title={`${title} - Alerta Ciudadana`} description={description} />
       <Stack bgColor="#eceff3" minH="100vh">
         <Header />
         <Flex flexDir="column" pb="2" flex="1" px="2">
