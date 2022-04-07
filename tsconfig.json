@@ -25,6 +25,7 @@
       "@/store": ["src/store"],
       "@/templates": ["src/templates"],
       "@/themes": ["src/themes"],
+      "@/layout": ["src/layout"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
