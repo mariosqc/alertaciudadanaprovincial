@@ -20,7 +20,7 @@
       "@/components": ["src/components"],
       "@/firebase": ["src/firebase"],
       "@/hooks": ["src/hooks"],
-      "@/screens": ["src/screens"],
+      "@/pages": ["src/pages"],
       "@/services": ["src/services"],
       "@/store": ["src/store"],
       "@/templates": ["src/templates"],
