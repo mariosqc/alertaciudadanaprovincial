@@ -1,7 +1,8 @@
 import React from "react";
 
 import { NextPage } from "next";
+import { WrapperPage } from "@/templates";
 
 export const EmergenciesPage: NextPage = () => {
-  return <div>EmergenciesPage</div>;
+  return <WrapperPage title="Emergencias">EmergenciesPage</WrapperPage>;
 };
