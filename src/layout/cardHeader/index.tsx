@@ -32,7 +32,7 @@ export const CardHeader: FC<CardHeaderProps> = ({ title, subtitle }) => {
       <CardContainer>
         <Flex alignItems="center" justifyContent="space-between">
           <Box>
-            <Text fontFamily="Open Sans, sans-serif" color="pri.800" fontWeight="bold" lineHeight="5">
+            <Text fontSize="lg" fontFamily="Open Sans, sans-serif" color="pri.800" fontWeight="bold" lineHeight="5">
               {title}
             </Text>
             <Text
