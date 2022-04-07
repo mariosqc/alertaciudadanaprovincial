@@ -12,6 +12,9 @@ export const Button: FC<ButtonProps> = (props) => {
     <_Button
       borderRadius="sm"
       _focus={{ ring: "2", ringColor: `${props.colorScheme}.200` }}
+      lineHeight="-1"
+      fontSize="sm"
+      fontFamily="Open Sans, sans-serif"
       {...props}
     />
   );
