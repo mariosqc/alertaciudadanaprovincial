@@ -1,14 +1,8 @@
-import {
-  Box,
-  Divider,
-  Flex,
-  GridItem,
-  SimpleGrid,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Divider, Flex, GridItem, SimpleGrid, Text } from "@chakra-ui/react";
 import React from "react";
 import { Settings } from "react-feather";
 import { Card } from "@/layout";
+import { FormProvider, Input } from "@/components";
 
 const DashboardPage = () => {
   return (
@@ -16,23 +10,22 @@ const DashboardPage = () => {
       <SimpleGrid columns={12} gap={4}>
         <GridItem colSpan={12}>
           <Card.CardWrapper>
-            <Card.CardHeader
-              title="Sales Graph"
-              subtitle="Lorem ipsum dolor sit amet, consectetur adipisicing elit."
-            />
+            <Card.CardHeader title="Sales Graph" subtitle="Lorem ipsum dolor sit amet, consectetur adipisicing elit." />
             <Divider />
-            <Card.CardBody height="xl" activeScrollbar>
-              <Box border="2px" height="5xl" w="200vw">
-                Hola
+            <Card.CardBody>
+              <Box>
+                <FormProvider
+                  id="example-form"
+                  onSubmit={(values) => {
+                    console.log(values);
+                  }}
+                >
+                  <Input name="example" />
+                </FormProvider>
               </Box>
             </Card.CardBody>
             <Divider />
-            <Flex
-              px="4"
-              py="2"
-              alignItems="center"
-              justifyContent="space-between"
-            >
+            <Flex px="4" py="2" alignItems="center" justifyContent="space-between">
               <Text color="pri.800" fontWeight="bold">
                 Sales Graph
               </Text>
