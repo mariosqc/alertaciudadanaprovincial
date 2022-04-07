@@ -1,5 +1,9 @@
-import React from "react";
+import React, { FC } from "react";
 
-export const CardBody = () => {
-  return <div>CardBody</div>;
+import { CardContainer, CardContainerProps } from "../cardContainer";
+
+interface CardBodyProps extends CardContainerProps {}
+
+export const CardBody: FC<CardBodyProps> = ({ children, ...props }) => {
+  return <CardContainer {...props}>{children}</CardContainer>;
 };

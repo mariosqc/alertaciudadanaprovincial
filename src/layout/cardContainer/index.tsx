@@ -1,8 +1,10 @@
+import React, { FC } from "react";
+
 import { Box, BoxProps } from "@chakra-ui/react";
-import React, { FC, useEffect, useMemo, useRef, useState } from "react";
+
 import Scrollbar from "react-scrollbars-custom";
 
-interface CardContainerProps extends BoxProps {
+export interface CardContainerProps extends BoxProps {
   activeScrollbar?: boolean;
 }
 

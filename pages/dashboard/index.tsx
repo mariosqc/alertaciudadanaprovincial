@@ -21,11 +21,11 @@ const DashboardPage = () => {
               subtitle="Lorem ipsum dolor sit amet, consectetur adipisicing elit."
             />
             <Divider />
-            <Card.CardContainer height="xl" activeScrollbar>
+            <Card.CardBody height="xl" activeScrollbar>
               <Box border="2px" height="5xl" w="200vw">
                 Hola
               </Box>
-            </Card.CardContainer>
+            </Card.CardBody>
             <Divider />
             <Flex
               px="4"
