@@ -1,13 +1,13 @@
 import React, { FC } from "react";
 
-import { Box, BoxProps } from "@chakra-ui/react";
+import { Box, GridItem, GridItemProps } from "@chakra-ui/react";
 
-interface CardWrapperProps extends BoxProps {}
+interface CardWrapperProps extends GridItemProps {}
 
 export const CardWrapper: FC<CardWrapperProps> = ({ children, ...props }) => {
   return (
-    <Box borderWidth="1px" borderColor="gray.300" shadow="md" rounded="md" bgColor="white" {...props}>
+    <GridItem borderWidth="1px" borderColor="gray.300" shadow="md" rounded="md" bgColor="white" {...props}>
       {children}
-    </Box>
+    </GridItem>
   );
 };

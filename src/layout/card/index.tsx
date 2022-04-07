@@ -4,8 +4,8 @@ import { CardHeader } from "../cardHeader";
 import { CardBody } from "../cardBody";
 
 export const Card = {
-  CardWrapper,
-  CardContainer,
-  CardHeader,
-  CardBody,
+  Wrapper: CardWrapper,
+  Container: CardContainer,
+  Header: CardHeader,
+  Body: CardBody,
 };

@@ -9,10 +9,10 @@ const DashboardPage = () => {
   return (
     <WrapperPage title="Dashboard">
       <GridItem colSpan={12}>
-        <Card.CardWrapper>
-          <Card.CardHeader title="Sales Graph" subtitle="Lorem ipsum dolor sit amet, consectetur adipisicing elit." />
+        <Card.Wrapper>
+          <Card.Header title="Sales Graph" subtitle="Lorem ipsum dolor sit amet, consectetur adipisicing elit." />
           <Divider />
-          <Card.CardBody>
+          <Card.Body>
             <Box>
               <FormProvider
                 id="example-form"
@@ -23,7 +23,7 @@ const DashboardPage = () => {
                 <Input name="example" />
               </FormProvider>
             </Box>
-          </Card.CardBody>
+          </Card.Body>
           <Divider />
           <Flex px="4" py="2" alignItems="center" justifyContent="space-between">
             <Text color="pri.800" fontWeight="bold">
@@ -33,7 +33,7 @@ const DashboardPage = () => {
               <Settings size="1.25rem" />
             </Box>
           </Flex>
-        </Card.CardWrapper>
+        </Card.Wrapper>
       </GridItem>
     </WrapperPage>
   );
