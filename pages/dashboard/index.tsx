@@ -16,14 +16,10 @@ const DashboardPage = () => {
       <SimpleGrid columns={12} gap={4}>
         <GridItem colSpan={12}>
           <Card.CardWrapper>
-            <Flex p="4" alignItems="center" justifyContent="space-between">
-              <Text color="pri.800" fontWeight="bold">
-                Sales Graph
-              </Text>
-              <Box color="sec.800">
-                <Settings size="1.25rem" />
-              </Box>
-            </Flex>
+            <Card.CardHeader
+              title="Sales Graph"
+              subtitle="Lorem ipsum dolor sit amet, consectetur adipisicing elit."
+            />
             <Divider />
             <Card.CardContainer>
               <Text fontSize="3xl" fontWeight="bold">
