@@ -16,6 +16,7 @@
     "framer-motion": "^6",
     "moment": "^2.29.2",
     "next": "12.1.4",
+    "next-seo": "^5.4.0",
     "nprogress": "^0.2.0",
     "numeral": "^2.0.6",
     "react": "17.0.0",
