@@ -1,11 +1,13 @@
 import { Box, Button, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
 import React, { useEffect } from "react";
+import { query, get } from "firebase/database";
 
 import { database } from "@/firebase";
+import { WrapperPage } from "@/templates";
 
 const example = () => {
   async function getValues() {
-    const response = await database.ref("Admin").get();
+    const response = await get(query(database.ref("Provincia/Emergency")));
 
     console.log(response.val());
   }
@@ -15,7 +17,7 @@ const example = () => {
   }, []);
 
   return (
-    <Box m="52">
+    <WrapperPage title="Example page">
       <Menu>
         <MenuButton as={Button}>Actions</MenuButton>
         <MenuList>
@@ -26,17 +28,8 @@ const example = () => {
           <MenuItem>Attend a Workshop</MenuItem>
         </MenuList>
       </Menu>
-    </Box>
+    </WrapperPage>
   );
 };
-
-// export const getServerSideProps: GetServerSideProps = async () => {
-//   const response = database.ref("Admin");
-//   console.log(response);
-
-//   return {
-//     props: {},
-//   };
-// };
 
 export default example;

@@ -9,16 +9,17 @@ import { Header } from "../header";
 interface WrapperPageProps {
   title: string;
   description?: string;
+  fullScreen?: boolean;
 }
 
-export const WrapperPage: FC<WrapperPageProps> = ({ children, title, description }) => {
+export const WrapperPage: FC<WrapperPageProps> = ({ children, title, description, fullScreen }) => {
   return (
     <>
       <NextSeo title={`${title} - Alerta Ciudadana`} description={description} />
       <Stack bgColor="#eceff3" minH="100vh">
         <Header />
         <Flex flexDir="column" pb="2" flex="1" px="2">
-          <SimpleGrid flex="1" columns={12} gap={2}>
+          <SimpleGrid flex={fullScreen ? "1" : undefined} columns={12} gap={2}>
             {children}
           </SimpleGrid>
         </Flex>

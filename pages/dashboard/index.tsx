@@ -11,7 +11,6 @@ const DashboardPage = () => {
       <GridItem colSpan={12}>
         <Card.Wrapper>
           <Card.Header title="Sales Graph" subtitle="Lorem ipsum dolor sit amet, consectetur adipisicing elit." />
-          <Divider />
           <Card.Body>
             <Box>
               <FormProvider

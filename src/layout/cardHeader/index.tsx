@@ -1,32 +1,18 @@
 import React, { FC } from "react";
 
-import {
-  Box,
-  Divider,
-  Flex,
-  HStack,
-  Text,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  MenuItemOption,
-  MenuGroup,
-  MenuOptionGroup,
-  MenuDivider,
-} from "@chakra-ui/react";
+import { Box, Divider, Flex, Text, IconButton, HStack } from "@chakra-ui/react";
 
-import { Settings } from "react-feather";
+import { Plus } from "react-feather";
 
 import { CardContainer } from "../cardContainer";
-import { Button } from "@/components";
 
 interface CardHeaderProps {
   title: string;
   subtitle?: string;
+  optionsRight?: React.ReactElement[];
 }
 
-export const CardHeader: FC<CardHeaderProps> = ({ title, subtitle }) => {
+export const CardHeader: FC<CardHeaderProps> = ({ title, subtitle, optionsRight }) => {
   return (
     <>
       <CardContainer>
@@ -47,26 +33,7 @@ export const CardHeader: FC<CardHeaderProps> = ({ title, subtitle }) => {
               {subtitle}
             </Text>
           </Box>
-          <Box>
-            <Menu>
-              <MenuButton as={Button}>Actions</MenuButton>
-              <MenuList>
-                <MenuItem>Download</MenuItem>
-                <MenuItem>Create a Copy</MenuItem>
-                <MenuItem>Mark as Draft</MenuItem>
-                <MenuItem>Delete</MenuItem>
-                <MenuItem>Attend a Workshop</MenuItem>
-              </MenuList>
-            </Menu>
-            {/*   <HStack>
-              <Button size="sm" variant="outline" colorScheme="orange">
-                Reportes
-              </Button>
-              <Button size="sm" variant="outline" colorScheme="pri">
-                Tipos de Emergencias
-              </Button>
-            </HStack> */}
-          </Box>
+          <HStack>{optionsRight?.map((optionRight) => optionRight)}</HStack>
         </Flex>
       </CardContainer>
       <Divider />
