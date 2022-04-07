@@ -18,7 +18,7 @@ export const WrapperPage: FC<WrapperPageProps> = ({ children, title, description
       <Stack bgColor="#eceff3" h="100vh">
         <Header />
         <Box px="2">
-          <SimpleGrid columns={12} gap={3}>
+          <SimpleGrid columns={12} gap={2}>
             {children}
           </SimpleGrid>
         </Box>
