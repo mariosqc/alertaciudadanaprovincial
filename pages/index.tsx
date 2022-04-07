@@ -1,3 +1,3 @@
-import { HomePage } from "@/screens";
+import { HomePage } from "@/pages";
 
 export default HomePage;
