@@ -1,5 +1,6 @@
 export const colors = {
   pri: {
+    50: "#f2eeff",
     100: "#e3dbfc",
     200: "#c6b6fa",
     300: "#aa92f7",

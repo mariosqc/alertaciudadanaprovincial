@@ -18,7 +18,7 @@ export const Input: FC<InputProps> = ({ name, inputProps, rules }) => {
         ring: "1",
         ringColor: inputProps?.colorScheme ? `${inputProps?.colorScheme}.100` : "pri.100",
       }}
-      rounded="sm"
+      rounded="md"
       color="black"
       px="2.5"
       placeholder="Escribe algo..."
