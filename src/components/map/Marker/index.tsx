@@ -5,12 +5,15 @@ import { Coords } from "google-map-react";
 
 export interface MarkerProps extends Coords {
   text: string;
+  onClick?(): void;
 }
 
-export const Marker: FC<MarkerProps> = () => {
+export const Marker: FC<MarkerProps> = ({ onClick }) => {
   return (
     <Box pos="relative" color="red.500">
       <Image
+        cursor="pointer"
+        onClick={onClick}
         pos="absolute"
         top="-1.25rem"
         left="-5"
