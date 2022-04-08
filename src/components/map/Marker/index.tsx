@@ -1,26 +1,28 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 
-import { Box, Image } from "@chakra-ui/react";
-import { Coords } from "google-map-react";
+export const Marker: FC<any> = (options) => {
+  const [marker, setMarker] = useState<any>();
 
-export interface MarkerProps extends Coords {
-  text: string;
-  onClick?(): void;
-}
+  console.log(marker);
 
-export const Marker: FC<MarkerProps> = ({ onClick }) => {
-  return (
-    <Box pos="relative" color="red.500">
-      <Image
-        cursor="pointer"
-        onClick={onClick}
-        pos="absolute"
-        top="-1.25rem"
-        left="-5"
-        w="10"
-        src="https://cdn-icons.flaticon.com/png/512/3585/premium/3585243.png?token=exp=1649368549~hmac=b542171c9d7a0713a035a20bfa31e370"
-        alt=""
-      />
-    </Box>
-  );
+  useEffect(() => {
+    if (!marker) {
+      setMarker(new google.maps.Marker());
+    }
+
+    // remove marker from map on unmount
+    return () => {
+      if (marker) {
+        marker.setMap(null);
+      }
+    };
+  }, [marker]);
+
+  useEffect(() => {
+    if (marker) {
+      marker.setOptions(options);
+    }
+  }, [marker, options]);
+
+  return null;
 };
