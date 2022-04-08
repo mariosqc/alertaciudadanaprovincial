@@ -1,53 +1,47 @@
-import React, { FC, useEffect, useRef } from "react";
+import React, { FC } from "react";
 
-import { Wrapper, Status } from "@googlemaps/react-wrapper";
-import { Marker } from "../Marker";
+import GoogleMapReact, { ChangeEventValue, ClickEventValue, Coords } from "google-map-react";
+
+import { Marker, MarkerProps } from "../Marker";
+import { log } from "console";
 
 interface MapProps {
-  center?: Center;
+  center?: Coords;
+  draggableCursor?: "default" | "pointer";
+  trackerPositions?: MarkerProps[];
+  onChange?(value: ChangeEventValue): void;
+  onClick?(value: ClickEventValue): void;
 }
 
-export const Map: FC<MapProps> = ({ center }) => {
-  const render = (status: "LOADING" | "SUCCESS" | "FAILURE") => {
-    switch (status) {
-      case Status.LOADING:
-        return <p>Cargando...</p>;
-      case Status.FAILURE:
-        return <p>Error...</p>;
-      case Status.SUCCESS:
-        return (
-          <>
-            <Marker position={{ lat: 19.4136, lng: -70.6473 }} />
-            <GoogleMap center={{ lat: 19.4136014, lng: -70.6473487 }}>
-              <Marker position={{ lat: 19.4136, lng: -70.6473 }} />
-            </GoogleMap>
-          </>
-        );
-      default:
-        return <>Default</>;
-    }
-  };
-
+export const Map: FC<MapProps> = ({
+  onClick,
+  onChange,
+  center = { lat: 19.41050702557079, lng: -70.64527523623106 },
+  trackerPositions = [],
+  draggableCursor,
+}) => {
   return (
-    <div>
-      <Wrapper apiKey="AIzaSyA6oiUPztz63oNG_746746GFVro2xX_Rs4" render={render} />
-    </div>
+    <GoogleMapReact
+      bootstrapURLKeys={{ key: String(process.env.NEXT_PUBLIC_MAP_KEY) }}
+      center={center}
+      onChange={onChange}
+      zoom={8}
+      defaultZoom={8}
+      options={{
+        minZoom: 5,
+        maxZoom: 19,
+        draggableCursor,
+        fullscreenControl: false,
+        mapTypeControl: false,
+        streetViewControl: false,
+        zoomControl: false,
+        keyboardShortcuts: false,
+      }}
+      onClick={onClick}
+    >
+      {trackerPositions.map((item, i) => (
+        <Marker key={i} {...item} />
+      ))}
+    </GoogleMapReact>
   );
-};
-
-interface GoogleMapProps {
-  center: Center;
-}
-
-const GoogleMap: FC<GoogleMapProps> = ({ center }) => {
-  const ref = useRef<any>();
-
-  useEffect(() => {
-    new (window as any).google.maps.Map(ref.current, {
-      center,
-      zoom: 0,
-    });
-  });
-
-  return <div ref={ref} style={{ height: "50rem" }} />;
 };
