@@ -1,65 +1,31 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import { NextPage } from "next";
 import { WrapperPage } from "@/templates";
-import { Box, Image } from "@chakra-ui/react";
 import { Card } from "@/layout";
-import GoogleMapReact from "google-map-react";
+import { Map } from "@/components";
 
-const AnyReactComponent = ({ text }: any) => (
-  <Box pos="relative" color="red.500">
-    <Image
-      pos="absolute"
-      top="-1.25rem"
-      left="-5"
-      w="10"
-      src="https://cdn-icons.flaticon.com/png/512/3585/premium/3585243.png?token=exp=1649368549~hmac=b542171c9d7a0713a035a20bfa31e370"
-      alt=""
-    />
-  </Box>
-);
+import { MarkerProps } from "src/components/map/Marker";
 
 export const TrackerPage: NextPage = () => {
-  const [position, setPosition] = useState([{ lat: 19.410289483836525, lng: -70.64524957675236 }]);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setPosition([
-        { lat: 19.410289483836525, lng: -70.64524957675236 },
-        { lat: 13.3289483836525, lng: -40.45236 },
-        { lat: 19.336525, lng: -70.5 },
-        { lat: 19.59483836525, lng: -70.3675236 },
-        { lat: 20.483836525, lng: -70.66 },
-      ]);
-    }, 2000);
-  }, []);
+  const [positions, setPositions] = useState<MarkerProps[]>([
+    { lat: 19.410289483836525, lng: -70.64524957675236, text: "" },
+    { lat: 13.3289483836525, lng: -40.45236, text: "" },
+    { lat: 19.336525, lng: -70.5, text: "" },
+    { lat: 19.59483836525, lng: -70.3675236, text: "" },
+  ]);
 
   return (
     <WrapperPage fullScreen title="Seguimientos">
       <Card.Wrapper colSpan={12} flex="1">
         <Card.Header title="Seguimiento" />
         <Card.Body h="95%">
-          <GoogleMapReact
-            bootstrapURLKeys={{ key: "AIzaSyA6oiUPztz63oNG_746746GFVro2xX_Rs4" }}
-            center={{ lat: 19.41050702557079, lng: -70.64527523623106 }}
-            onChange={(e) => {
-              console.log(e);
-            }}
-            zoom={8}
-            defaultZoom={8}
-            options={{ minZoom: 5, maxZoom: 19 }}
+          <Map.Map
+            trackerPositions={positions}
             onClick={(value) => {
-              const { lat, lng } = value;
-
-              // setPosition({ lat, lng });
-
-              // console.log(newItem);
+              setPositions((prev) => [{ lat: value.lat, lng: value.lng, text: "Example" }]);
             }}
-          >
-            {position.map((item, i) => (
-              <AnyReactComponent key={i} lat={item.lat} lng={item.lng} text="My Marker" />
-            ))}
-          </GoogleMapReact>
+          />
         </Card.Body>
       </Card.Wrapper>
     </WrapperPage>
