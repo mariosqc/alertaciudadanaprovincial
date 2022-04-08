@@ -2,6 +2,7 @@ import React from "react";
 
 import { Tabs, TabList, TabPanels, Tab, TabPanel, GridItem } from "@chakra-ui/react";
 import { Card } from "@/layout";
+import { ConfigurationPanel } from "./panels/configuration/ConfigurationPanel";
 
 export const SettingsTabBar = () => {
   return (
@@ -9,7 +10,7 @@ export const SettingsTabBar = () => {
       <Tabs>
         <Card.Wrapper shadow="sm" mb="2">
           <TabList borderColor="gray.200" borderBottomWidth="1px">
-            <Tab _focus={{}}>Configuraciones</Tab>
+            <Tab _focus={{}}>Configuración</Tab>
             <Tab _focus={{}}>Listado de Mensajes</Tab>
             <Tab _focus={{}}>Cambiar Contraseña</Tab>
           </TabList>
@@ -19,7 +20,7 @@ export const SettingsTabBar = () => {
           <Card.Body>
             <TabPanels>
               <TabPanel p="0">
-                <p>one!</p>
+                <ConfigurationPanel />
               </TabPanel>
               <TabPanel p="0">
                 <p>two!</p>
