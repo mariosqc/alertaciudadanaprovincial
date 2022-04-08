@@ -11,7 +11,7 @@ export const TrackerPage: NextPage = () => {
     <WrapperPage fullScreen title="Seguimientos">
       <Card.Wrapper colSpan={12} flex="1">
         <Card.Header title="Seguimiento" />
-        <Card.Body>
+        <Card.Body h="95%">
           <Map.Map />
         </Card.Body>
       </Card.Wrapper>

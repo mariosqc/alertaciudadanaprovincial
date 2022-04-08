@@ -3,7 +3,6 @@ import React, { FC } from "react";
 import GoogleMapReact, { ChangeEventValue, ClickEventValue, Coords } from "google-map-react";
 
 import { Marker, MarkerProps } from "../Marker";
-import { log } from "console";
 
 interface MapProps {
   center?: Coords;
