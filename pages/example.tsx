@@ -1,35 +1,46 @@
-import { Box, Button, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
-import React, { useEffect } from "react";
-import { query, get } from "firebase/database";
+import React from "react";
 
-import { database } from "@/firebase";
-import { WrapperPage } from "@/templates";
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
+  Button,
+  Box,
+} from "@chakra-ui/react";
+import { Map } from "@/components";
 
-const example = () => {
-  async function getValues() {
-    const response = await get(query(database.ref("Provincia/Emergency")));
-
-    console.log(response.val());
-  }
-
-  useEffect(() => {
-    getValues();
-  }, []);
-
+const ExamplePage = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   return (
-    <WrapperPage title="Example page">
-      <Menu>
-        <MenuButton as={Button}>Actions</MenuButton>
-        <MenuList>
-          <MenuItem>Download</MenuItem>
-          <MenuItem>Create a Copy</MenuItem>
-          <MenuItem>Mark as Draft</MenuItem>
-          <MenuItem>Delete</MenuItem>
-          <MenuItem>Attend a Workshop</MenuItem>
-        </MenuList>
-      </Menu>
-    </WrapperPage>
+    <>
+      <Button onClick={onOpen}>Open Modal</Button>
+
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Modal Title</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Box h="96">
+              <Map.Map />
+            </Box>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme="blue" mr={3} onClick={onClose}>
+              Close
+            </Button>
+            <Button variant="ghost">Secondary Action</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
   );
 };
 
-export default example;
+export default ExamplePage;

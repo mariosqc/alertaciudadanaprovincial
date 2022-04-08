@@ -14,3 +14,11 @@ a {
 * {
   box-sizing: border-box;
 }
+
+
+img[alt="Google"][draggable=false] {
+  display: none;
+}
+div.gmnoprint {
+  display: none;
+}

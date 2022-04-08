@@ -27,7 +27,16 @@ export const Map: FC<MapProps> = ({
       onChange={onChange}
       zoom={8}
       defaultZoom={8}
-      options={{ minZoom: 5, maxZoom: 19, draggableCursor }}
+      options={{
+        minZoom: 5,
+        maxZoom: 19,
+        draggableCursor,
+        fullscreenControl: false,
+        mapTypeControl: false,
+        streetViewControl: false,
+        zoomControl: false,
+        keyboardShortcuts: false,
+      }}
       onClick={onClick}
     >
       {trackerPositions.map((item, i) => (
