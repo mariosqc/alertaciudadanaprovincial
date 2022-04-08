@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { NextPage } from "next";
 import { WrapperPage } from "@/templates";
 import { Box, Image } from "@chakra-ui/react";
 import { Card } from "@/layout";
 import GoogleMapReact from "google-map-react";
-import { MapPin } from "react-feather";
 
 const AnyReactComponent = ({ text }: any) => (
   <Box pos="relative" color="red.500">
@@ -21,7 +20,20 @@ const AnyReactComponent = ({ text }: any) => (
 );
 
 export const TrackerPage: NextPage = () => {
-  const [position, setPosition] = useState({ lat: 19.410289483836525, lng: -70.64524957675236 });
+  const [position, setPosition] = useState([{ lat: 19.410289483836525, lng: -70.64524957675236 }]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setPosition([
+        { lat: 19.410289483836525, lng: -70.64524957675236 },
+        { lat: 13.3289483836525, lng: -40.45236 },
+        { lat: 19.336525, lng: -70.5 },
+        { lat: 19.59483836525, lng: -70.3675236 },
+        { lat: 20.483836525, lng: -70.66 },
+      ]);
+    }, 2000);
+  }, []);
+
   return (
     <WrapperPage fullScreen title="Seguimientos">
       <Card.Wrapper colSpan={12} flex="1">
@@ -30,16 +42,23 @@ export const TrackerPage: NextPage = () => {
           <GoogleMapReact
             bootstrapURLKeys={{ key: "AIzaSyA6oiUPztz63oNG_746746GFVro2xX_Rs4" }}
             center={{ lat: 19.41050702557079, lng: -70.64527523623106 }}
-            defaultZoom={15}
+            onChange={(e) => {
+              console.log(e);
+            }}
+            zoom={8}
+            defaultZoom={8}
+            options={{ minZoom: 5, maxZoom: 19 }}
             onClick={(value) => {
               const { lat, lng } = value;
 
-              setPosition({ lat, lng });
+              // setPosition({ lat, lng });
 
               // console.log(newItem);
             }}
           >
-            <AnyReactComponent lat={position.lat} lng={position.lng} text="My Marker" />
+            {position.map((item, i) => (
+              <AnyReactComponent key={i} lat={item.lat} lng={item.lng} text="My Marker" />
+            ))}
           </GoogleMapReact>
         </Card.Body>
       </Card.Wrapper>
