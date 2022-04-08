@@ -6,7 +6,7 @@ import { Bell, Settings } from "react-feather";
 import { Navbar } from "../navbar";
 
 export const Header = () => {
-  const { push } = useRouter();
+  const { push, pathname } = useRouter();
 
   return (
     <div>
@@ -20,7 +20,7 @@ export const Header = () => {
             <IconButton
               aria-label="Settings"
               size="sm"
-              variant="ghost"
+              variant={pathname !== "/settings" ? "ghost" : undefined}
               _focus={{}}
               colorScheme="blue"
               icon={<Settings size="1.25rem" />}

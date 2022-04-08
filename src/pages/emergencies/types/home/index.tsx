@@ -1,10 +1,10 @@
 import React from "react";
 
 import { NextPage } from "next";
-import { GeneralList, WrapperPage } from "@/templates";
-import { IconButton } from "@chakra-ui/react";
+
+import { GeneralList, GeneralModalAdd, WrapperPage } from "@/templates";
+
 import { Card } from "@/layout";
-import { Plus } from "react-feather";
 
 export const EmergencyTypesPage: NextPage = () => {
   return (
@@ -13,17 +13,7 @@ export const EmergencyTypesPage: NextPage = () => {
         <Card.Header
           title="Tipos de Emergencias"
           subtitle="Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut id architecto velit, corporis facere aliquam."
-          optionsRight={[
-            <IconButton
-              key="1"
-              colorScheme="pri"
-              rounded="md"
-              variant="outline"
-              size="sm"
-              aria-label="New"
-              icon={<Plus />}
-            />,
-          ]}
+          optionsRight={[<GeneralModalAdd isLoading={false} key="add" />]}
         />
         <GeneralList
           items={[
