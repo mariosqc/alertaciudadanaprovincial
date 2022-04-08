@@ -10,8 +10,9 @@ import {
   useDisclosure,
   Box,
   Text,
+  HStack,
 } from "@chakra-ui/react";
-import { Button, Map } from "@/components";
+import { Button, FormProvider, Input, Map } from "@/components";
 import { MarkerProps } from "src/components/map/Marker";
 
 export const SetCenterCoordinates = () => {
@@ -56,13 +57,38 @@ export const SetCenterCoordinates = () => {
             </Box>
           </ModalBody>
 
-          <ModalFooter>
-            <Button colorScheme="pri" mr={3} onClick={handleUpdate}>
-              Guardar Cambios
-            </Button>
-            <Button variant="ghost" onClick={onClose}>
-              Cancelar
-            </Button>
+          <ModalFooter pt="0" justifyContent="space-between">
+            <FormProvider onSubmit={() => {}} id="">
+              <HStack>
+                <Input
+                  name="lat"
+                  inputProps={{
+                    isReadOnly: true,
+                    value: centerCoord.lat.toFixed(10),
+                    width: "36",
+                    textAlign: "center",
+                  }}
+                />
+                ,
+                <Input
+                  name="lng"
+                  inputProps={{
+                    isReadOnly: true,
+                    value: centerCoord.lng.toFixed(10),
+                    width: "36",
+                    textAlign: "center",
+                  }}
+                />
+              </HStack>
+            </FormProvider>
+            <Box>
+              <Button colorScheme="pri" mr={3} onClick={handleUpdate}>
+                Guardar Cambios
+              </Button>
+              <Button variant="ghost" onClick={onClose}>
+                Cancelar
+              </Button>
+            </Box>
           </ModalFooter>
         </ModalContent>
       </Modal>
