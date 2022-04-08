@@ -27,6 +27,7 @@
     "react": "17.0.0",
     "react-dom": "17.0.0",
     "react-feather": "^2.0.9",
+    "react-google-maps": "^9.4.5",
     "react-hook-form": "^7.29.0",
     "react-list": "^0.8.17",
     "react-scrollbars-custom": "^4.0.27",
