@@ -1,8 +1,10 @@
-import { Card } from "@/layout";
 import React from "react";
 
-import { List, ListItem } from "@chakra-ui/react";
+import { Flex, List, ListItem, Text } from "@chakra-ui/react";
+
+import { Card } from "@/layout";
 import { Button } from "@/components";
+
 import { NewMessageModal } from "./newMessage/NewMessageModal";
 
 export const MessagesListPanel = () => {
@@ -15,21 +17,39 @@ export const MessagesListPanel = () => {
       />
 
       <Card.Body>
-        <List>
+        <List spacing={2} w="3xl" pl="5" listStyleType="disc">
           <ListItem>
-            <p>three!</p>
+            <Flex justifyContent="space-between" alignItems="center">
+              <Text flex="1" mr="5" overflow="hidden" whiteSpace="nowrap" textOverflow="ellipsis" fontWeight="medium">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.Lorem ipsum dolor sit amet consectetur
+                adipisicing elit.it amet consectetur adipisicing elit.Lorem ipsum dolor sit amet consectetur adipisicing
+                elit.it amet consectetur adipisicing elit.Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              </Text>
+              <Button colorScheme="red" variant="ghost" size="sm">
+                Eliminar
+              </Button>
+            </Flex>
           </ListItem>
           <ListItem>
-            <p>three!</p>
+            <Flex justifyContent="space-between" alignItems="center">
+              <Text flex="1" mr="5" overflow="hidden" whiteSpace="nowrap" textOverflow="ellipsis" fontWeight="medium">
+                Lorem ipsum dolor sit amet consectetur.
+              </Text>
+              <Button colorScheme="red" variant="ghost" size="sm">
+                Eliminar
+              </Button>
+            </Flex>
           </ListItem>
           <ListItem>
-            <p>three!</p>
-          </ListItem>
-          <ListItem>
-            <p>three!</p>
-          </ListItem>
-          <ListItem>
-            <p>three!</p>
+            <Flex justifyContent="space-between" alignItems="center">
+              <Text flex="1" mr="5" overflow="hidden" whiteSpace="nowrap" textOverflow="ellipsis" fontWeight="medium">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.Lorem ipsum dolor sit amet consectetur
+                adipisicing elit.
+              </Text>
+              <Button colorScheme="red" variant="ghost" size="sm">
+                Eliminar
+              </Button>
+            </Flex>
           </ListItem>
         </List>
       </Card.Body>
