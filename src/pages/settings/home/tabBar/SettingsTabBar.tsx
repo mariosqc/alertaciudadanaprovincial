@@ -3,6 +3,7 @@ import React from "react";
 import { Tabs, TabList, TabPanels, Tab, TabPanel, GridItem } from "@chakra-ui/react";
 import { Card } from "@/layout";
 import { ConfigurationPanel } from "./panels/configuration/ConfigurationPanel";
+import { MessagesListPanel } from "./panels/messagesList/MessagesListPanel";
 
 export const SettingsTabBar = () => {
   return (
@@ -17,19 +18,17 @@ export const SettingsTabBar = () => {
         </Card.Wrapper>
 
         <Card.Wrapper>
-          <Card.Body>
-            <TabPanels>
-              <TabPanel p="0">
-                <ConfigurationPanel />
-              </TabPanel>
-              <TabPanel p="0">
-                <p>two!</p>
-              </TabPanel>
-              <TabPanel p="0">
-                <p>three!</p>
-              </TabPanel>
-            </TabPanels>
-          </Card.Body>
+          <TabPanels>
+            <TabPanel p="0">
+              <ConfigurationPanel />
+            </TabPanel>
+            <TabPanel p="0">
+              <MessagesListPanel />
+            </TabPanel>
+            <TabPanel p="0">
+              <p>three!</p>
+            </TabPanel>
+          </TabPanels>
         </Card.Wrapper>
       </Tabs>
     </GridItem>
