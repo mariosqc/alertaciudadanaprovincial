@@ -8,7 +8,7 @@ import { Map } from "@/components";
 
 export const TrackerPage: NextPage = () => {
   return (
-    <WrapperPage fullScreen title="Seguimientos">
+    <WrapperPage fullScreen title="Seguimientos" breadcrumb={{ routes: ["tracker"] }}>
       <Card.Wrapper colSpan={12} flex="1">
         <Card.Header title="Seguimiento" />
         <Card.Body h="95%">

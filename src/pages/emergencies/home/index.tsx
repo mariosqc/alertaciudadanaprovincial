@@ -8,7 +8,7 @@ import { Button } from "@/components";
 
 export const EmergenciesPage: NextPage = () => {
   return (
-    <WrapperPage title="Emergencias">
+    <WrapperPage title="Emergencias" breadcrumb={{ routes: ["emergencies"] }}>
       <Card.Wrapper colSpan={12}>
         <Card.Header title="Listado de Emergencias" />
         <Card.Body>

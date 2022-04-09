@@ -3,12 +3,12 @@ import React from "react";
 import { NextPage } from "next";
 import { GeneralList, WrapperPage } from "@/templates";
 import { Card } from "@/layout";
-import { IconButton } from "@chakra-ui/react";
+import { Breadcrumb as _Breadcrumb, IconButton } from "@chakra-ui/react";
 import { Plus } from "react-feather";
 
 export const ComplaintTypesPage: NextPage = () => {
   return (
-    <WrapperPage title="Tipos de Denuncias">
+    <WrapperPage title="Tipos de Denuncias" breadcrumb={{ routes: ["complaints", "complaintTypes"] }}>
       <Card.Wrapper colSpan={12}>
         <Card.Header
           title="Tipos de Denuncias"
