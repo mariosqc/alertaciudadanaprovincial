@@ -6,7 +6,16 @@ interface CardWrapperProps extends GridItemProps {}
 
 export const CardWrapper: FC<CardWrapperProps> = ({ children, ...props }) => {
   return (
-    <GridItem borderWidth="1px" borderColor="gray.300" shadow="md" rounded="md" bgColor="white" {...props}>
+    <GridItem
+      display="flex"
+      flexDir="column"
+      borderWidth="1px"
+      borderColor="gray.300"
+      shadow="md"
+      rounded="md"
+      bgColor="white"
+      {...props}
+    >
       {children}
     </GridItem>
   );
