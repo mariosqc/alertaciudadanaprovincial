@@ -15,6 +15,7 @@ interface WrapperPageProps {
   breadcrumb?: {
     routes: RoutesBreadcrumbType[];
   };
+  rows?: number;
 }
 
 export const WrapperPage: FC<WrapperPageProps> = ({ children, title, description, fullScreen, breadcrumb }) => {
