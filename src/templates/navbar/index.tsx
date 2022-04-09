@@ -10,6 +10,7 @@ export const Navbar = () => {
     { label: "Seguimiento", pathname: "/tracker" },
     { label: "Emergencias", pathname: "/emergencies" },
     { label: "Denuncias", pathname: "/complaints" },
+    { label: "Distritos", pathname: "/districts" },
   ]);
 
   return (
