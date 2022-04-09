@@ -30,7 +30,7 @@ export const SetCenterCoordinates = () => {
   return (
     <div>
       <Button colorScheme="pri" onClick={onOpen}>
-        Cambiar Coordenadas del centro
+        Cambiar
       </Button>
 
       <Modal isCentered size="4xl" isOpen={isOpen} onClose={onClose}>

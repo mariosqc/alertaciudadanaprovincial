@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 
-import { Card } from "@/layout";
+import { Card, CardContainer } from "@/layout";
 
 import { SetCenterCoordinates } from "./SetCenterCoordinates";
+import { Box, Divider, Flex, HStack, Stack } from "@chakra-ui/react";
+import { Button, FormProvider, InputControl, InputMaskControl } from "@/components";
+import { FormControl } from "src/components/form/formControl";
 
 export const ConfigurationPanel = () => {
+  const [isEditting, setIsEditting] = useState(false);
+
   return (
     <>
       <Card.Header
@@ -12,8 +17,61 @@ export const ConfigurationPanel = () => {
         subtitle="Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus deserunt reprehenderit corporis sed repudiandae maxime."
       />
       <Card.Body>
-        <SetCenterCoordinates />
+        <FormProvider id="" onSubmit={() => {}}>
+          <Stack w="2xl">
+            <FormControl
+              name="coords"
+              label="Coordenadas del centro"
+              helperText="Especifique la ubicación donde estará el centro del mapa."
+            >
+              <HStack alignItems="center">
+                <InputControl name="lat" inputProps={{ isReadOnly: true }} />
+                <InputControl name="lng" inputProps={{ isReadOnly: true }} />
+                <SetCenterCoordinates />
+              </HStack>
+            </FormControl>
+            <InputControl
+              formControl={{
+                label: "Google Map Api",
+                helperText: "Identificación para el uso de la aplicación con Google Maps.",
+              }}
+              name="googleApiKey"
+            />
+            <InputMaskControl
+              mask="+1 (999) 999-9999"
+              formControl={{ label: "Teléfono", helperText: "Teléfono de contacto." }}
+              name="phone"
+            />
+            <InputControl
+              formControl={{ label: "Versión", helperText: "Versión actual de la aplicación." }}
+              name="version"
+            />
+          </Stack>
+        </FormProvider>
       </Card.Body>
+      <Divider />
+      <CardContainer>
+        <Flex justifyContent="space-between">
+          {isEditting ? (
+            <Button colorScheme="red" variant="ghost">
+              Restablecer Formulario
+            </Button>
+          ) : (
+            <Box />
+          )}
+
+          {isEditting ? (
+            <HStack>
+              <Button colorScheme="pri">Guardar Cambios</Button>
+              <Button onClick={() => setIsEditting(false)}>Cancelar</Button>
+            </HStack>
+          ) : (
+            <Button onClick={() => setIsEditting(true)} colorScheme="orange">
+              Editar Configuración
+            </Button>
+          )}
+        </Flex>
+      </CardContainer>
     </>
   );
 };
