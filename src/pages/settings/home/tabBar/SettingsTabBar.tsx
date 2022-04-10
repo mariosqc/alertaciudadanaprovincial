@@ -9,7 +9,7 @@ export const SettingsTabBar = () => {
   return (
     <GridItem colSpan={12}>
       <Tabs colorScheme="pri">
-        <Card.Wrapper overflow="auto" shadow="sm" mb={["1", null, null, "2"]}>
+        <Card.Wrapper overflowX="auto" overflowY="hidden" shadow="sm" mb={["1", null, null, "2"]}>
           <TabList borderColor="gray.200" borderBottomWidth="1px">
             <Tab
               py="3"
