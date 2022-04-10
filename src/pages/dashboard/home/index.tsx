@@ -71,7 +71,7 @@ export const DashboardPage: NextPage = () => {
 
   return (
     <WrapperPage fullScreen title="Dashboard">
-      <Card.Wrapper colSpan={6}>
+      <Card.Wrapper colSpan={[12, null, null, 6]}>
         <Card.Header
           title="Grafico 1"
           optionsRight={[
@@ -88,7 +88,7 @@ export const DashboardPage: NextPage = () => {
         />
         <Card.Body flex="1">{Chart}</Card.Body>
       </Card.Wrapper>
-      <Card.Wrapper colSpan={6}>
+      <Card.Wrapper colSpan={[12, null, null, 6]}>
         <Card.Header
           title="Grafico 1"
           optionsRight={[
@@ -105,7 +105,7 @@ export const DashboardPage: NextPage = () => {
         />
         <Card.Body flex="1">{Chart}</Card.Body>
       </Card.Wrapper>
-      <Card.Wrapper colSpan={6}>
+      <Card.Wrapper colSpan={[12, null, null, 6]}>
         <Card.Header
           title="Grafico 1"
           optionsRight={[
@@ -122,7 +122,7 @@ export const DashboardPage: NextPage = () => {
         />
         <Card.Body flex="1">{Chart}</Card.Body>
       </Card.Wrapper>
-      <Card.Wrapper colSpan={6}>
+      <Card.Wrapper colSpan={[12, null, null, 6]}>
         <Card.Header
           title="Grafico 1"
           optionsRight={[
