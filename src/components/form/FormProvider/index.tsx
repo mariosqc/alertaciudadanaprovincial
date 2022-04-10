@@ -1,12 +1,12 @@
 import React, { FC, useEffect, useState } from "react";
-import { FormProvider as _FormProvider, useForm } from "react-hook-form";
+import { FieldValues, FormProvider as _FormProvider, useForm, UseFormReturn } from "react-hook-form";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 
 export interface FormProviderProps {
   id: string;
   onSubmit(values: any): void;
-  setMethods?: any;
+  setMethods?(methods: UseFormReturn<FieldValues, any>): void;
   defaultValues?: any;
   schema?: any;
 }
