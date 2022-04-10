@@ -1,22 +1,21 @@
 import React from "react";
 
 import { NextPage } from "next";
-import { Box, Flex, Stack } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import { Card } from "@/layout";
-import { Button, FormProvider, Input } from "@/components";
+import { Form } from "./signinForm/Form";
 
 export const SigninPage: NextPage = () => {
+  async function onSubmit(values: SigninFormOnSubmit) {
+    console.log(values);
+  }
+
   return (
     <Flex bgColor="#eceff3" h="100vh" w="100vw" alignItems="center" justifyContent="center">
       <Card.Wrapper w="sm">
+        <Card.Header title="Iniciar Sesión" />
         <Card.Container>
-          <FormProvider id="" onSubmit={() => {}}>
-            <Stack>
-              <Input name="Correo electrónico" />
-              <Input name="Contraseña" />
-              <Button colorScheme="pri">Iniciar Sesión</Button>
-            </Stack>
-          </FormProvider>
+          <Form onSubmit={onSubmit} />
         </Card.Container>
       </Card.Wrapper>
     </Flex>
