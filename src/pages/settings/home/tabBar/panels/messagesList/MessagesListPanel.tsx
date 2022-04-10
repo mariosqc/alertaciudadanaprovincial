@@ -25,7 +25,7 @@ export const MessagesListPanel = () => {
                 adipisicing elit.it amet consectetur adipisicing elit.Lorem ipsum dolor sit amet consectetur adipisicing
                 elit.it amet consectetur adipisicing elit.Lorem ipsum dolor sit amet consectetur adipisicing elit.
               </Text>
-              <Button colorScheme="red" variant="ghost" size="sm">
+              <Button _focus={{}} colorScheme="red" variant="ghost" size="sm">
                 Eliminar
               </Button>
             </Flex>
@@ -35,7 +35,7 @@ export const MessagesListPanel = () => {
               <Text flex="1" mr="5" overflow="hidden" whiteSpace="nowrap" textOverflow="ellipsis" fontWeight="medium">
                 Lorem ipsum dolor sit amet consectetur.
               </Text>
-              <Button colorScheme="red" variant="ghost" size="sm">
+              <Button _focus={{}} colorScheme="red" variant="ghost" size="sm">
                 Eliminar
               </Button>
             </Flex>
@@ -46,7 +46,7 @@ export const MessagesListPanel = () => {
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.Lorem ipsum dolor sit amet consectetur
                 adipisicing elit.
               </Text>
-              <Button colorScheme="red" variant="ghost" size="sm">
+              <Button _focus={{}} colorScheme="red" variant="ghost" size="sm">
                 Eliminar
               </Button>
             </Flex>
