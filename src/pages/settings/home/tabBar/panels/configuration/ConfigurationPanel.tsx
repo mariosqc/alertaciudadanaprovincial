@@ -18,17 +18,19 @@ export const ConfigurationPanel = () => {
       />
       <Card.Body>
         <FormProvider id="" onSubmit={() => {}}>
-          <Stack w="2xl">
+          <Stack maxW="2xl">
             <FormControl
               name="coords"
               label="Coordenadas del centro"
               helperText="Especifique la ubicación donde estará el centro del mapa."
             >
-              <HStack alignItems="center">
-                <InputControl name="lat" inputProps={{ isReadOnly: true }} />
-                <InputControl name="lng" inputProps={{ isReadOnly: true }} />
+              <Flex flexDir={["column", null, null, "row"]}>
+                <HStack mb={["2", null, null, "0"]} mr="2" alignItems="center">
+                  <InputControl name="lat" inputProps={{ isReadOnly: true }} />
+                  <InputControl name="lng" inputProps={{ isReadOnly: true }} />
+                </HStack>
                 <SetCenterCoordinates />
-              </HStack>
+              </Flex>
             </FormControl>
             <InputControl
               formControl={{

@@ -11,6 +11,7 @@ import {
   Box,
   Text,
   HStack,
+  Flex,
 } from "@chakra-ui/react";
 import { Button, FormProvider, Input, Map } from "@/components";
 import { MarkerProps } from "src/components/map/Marker";
@@ -29,14 +30,14 @@ export const SetCenterCoordinates = () => {
 
   return (
     <div>
-      <Button colorScheme="pri" onClick={onOpen}>
+      <Button w="full" colorScheme="pri" onClick={onOpen}>
         Cambiar
       </Button>
 
       <Modal isCentered size="4xl" isOpen={isOpen} onClose={onClose}>
         <ModalOverlay rounded="sm" />
-        <ModalContent>
-          <ModalHeader pb="0">
+        <ModalContent mx="2">
+          <ModalHeader px="2" pb="0">
             <Text lineHeight="none" fontSize="lg" fontWeight="medium">
               Cambiar Coordenadas del centro
             </Text>
@@ -44,7 +45,7 @@ export const SetCenterCoordinates = () => {
               Seleccione un punto en el mapa y luego haga click en Guardar
             </Text>
           </ModalHeader>
-          <ModalBody>
+          <ModalBody px="2">
             <Box h="xl">
               <Map.Map
                 center={centerCoord}
@@ -57,7 +58,13 @@ export const SetCenterCoordinates = () => {
             </Box>
           </ModalBody>
 
-          <ModalFooter pt="0" justifyContent="space-between">
+          <ModalFooter
+            px="2"
+            flexDir={["column", null, null, "row"]}
+            alignItems="stretch"
+            pt="0"
+            justifyContent="space-between"
+          >
             <FormProvider onSubmit={() => {}} id="">
               <HStack>
                 <Input
@@ -81,14 +88,14 @@ export const SetCenterCoordinates = () => {
                 />
               </HStack>
             </FormProvider>
-            <Box>
+            <Flex mt={["2", null, null, 0]} flex="1" justifyContent="flex-end">
               <Button colorScheme="pri" mr={3} onClick={handleUpdate}>
                 Guardar Cambios
               </Button>
               <Button variant="ghost" onClick={onClose}>
                 Cancelar
               </Button>
-            </Box>
+            </Flex>
           </ModalFooter>
         </ModalContent>
       </Modal>
