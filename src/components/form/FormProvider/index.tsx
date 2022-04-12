@@ -3,22 +3,37 @@ import { FieldValues, FormProvider as _FormProvider, useForm, UseFormReturn } fr
 
 import { yupResolver } from "@hookform/resolvers/yup";
 
+const IS_DEVELOPMENT = true;
+
 export interface FormProviderProps {
   id: string;
   onSubmit(values: any): void;
   setMethods?(methods: UseFormReturn<FieldValues, any>): void;
   defaultValues?: any;
   schema?: any;
+  faker?: any;
 }
 
-export const FormProvider: FC<FormProviderProps> = ({ children, id, onSubmit, defaultValues, setMethods, schema }) => {
+export const FormProvider: FC<FormProviderProps> = ({
+  children,
+  id,
+  onSubmit,
+  defaultValues,
+  setMethods,
+  schema,
+  faker,
+}) => {
   const [defaultValuesInternal, setDefaultValuesInternal] = useState<any>(null);
-  const methods = useForm({ resolver: yupResolver(schema) });
-
+  const methods = useForm({ resolver: schema ? yupResolver(schema) : undefined });
   useEffect(() => {
     if (defaultValues && JSON.stringify(defaultValues) !== JSON.stringify(defaultValuesInternal)) {
       methods.reset(defaultValues);
       setDefaultValuesInternal(defaultValues);
+    } else {
+      if (IS_DEVELOPMENT) {
+        methods.reset(faker);
+        setDefaultValuesInternal(faker);
+      }
     }
   }, [defaultValues]);
 

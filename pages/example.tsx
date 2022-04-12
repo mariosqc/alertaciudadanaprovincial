@@ -1,45 +1,59 @@
-import React from "react";
+import { Button, FormProvider, InputControl } from "@/components";
+import { Box, Flex, Stack } from "@chakra-ui/react";
+import React, { FC } from "react";
+import * as yup from "yup";
+import { faker } from "@faker-js/faker";
 
-import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  useDisclosure,
-  Button,
-  Box,
-} from "@chakra-ui/react";
-import { Map } from "@/components";
+const exampleFormSchema = yup.object().shape({
+  name: yup.string().required("El nombre es requerido"),
+  lastname: yup.string().required("El apellido es requerido"),
+  email: yup.string().email().required("El email es requerido"),
+});
+
+type ExampleFormType = RemoveIndex<yup.InferType<typeof exampleFormSchema>>;
+
+interface ExampleFormProps extends ExampleFormType {}
 
 const ExamplePage = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  async function onSubmit(values: ExampleFormProps) {
+    console.log(values);
+  }
+
   return (
-    <>
-      <Button onClick={onOpen}>Open Modal</Button>
+    <Box m="32">
+      <ExampleForm onSubmit={onSubmit} />
+    </Box>
+  );
+};
 
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Modal Title</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <Box h="96">
-              <Map.Map />
-            </Box>
-          </ModalBody>
+const fakerValues: ExampleFormType = {
+  email: faker.internet.email(),
+  name: faker.name.firstName(),
+  lastname: faker.name.lastName(),
+};
 
-          <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={onClose}>
-              Close
-            </Button>
-            <Button variant="ghost">Secondary Action</Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
-    </>
+interface ComponentFormProps<T> {
+  onSubmit(values: T): void;
+}
+
+const ExampleForm: FC<ComponentFormProps<ExampleFormProps>> = ({ onSubmit }) => {
+  return (
+    <FormProvider
+      id="example-form"
+      schema={exampleFormSchema}
+      onSubmit={onSubmit}
+      faker={fakerValues}
+      // defaultValues={{ email: "hola@gmail.com" } as ExampleFormType}
+    >
+      <Stack w="xl" mx="auto">
+        <InputControl formControl={{ label: "name" }} name="name" />
+        <InputControl formControl={{ label: "lastname" }} name="lastname" />
+        <InputControl formControl={{ label: "email" }} name="email" />
+        <Flex justifyContent="flex-end">
+          <Button type="submit">Submit</Button>
+        </Flex>
+      </Stack>
+    </FormProvider>
   );
 };
 
