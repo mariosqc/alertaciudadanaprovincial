@@ -1,7 +1,7 @@
-import { Map as _Map } from "./Map";
+import { ExamplePage } from "./map";
 import { Marker } from "./Marker";
 
 export const Map = {
-  Map: _Map,
+  Map: ExamplePage,
   Marker,
 };

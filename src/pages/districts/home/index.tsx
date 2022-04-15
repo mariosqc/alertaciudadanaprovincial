@@ -6,10 +6,7 @@ import { Card } from "@/layout";
 
 export const DistrictTemplate: NextPage = () => {
   return (
-    <WrapperPage title="Distritos" breadcrumb={{ routes: ["districts"] }}>
-      <Card.Wrapper colSpan={12}>
-        <Card.Header title="Listado de distritos" />
-      </Card.Wrapper>
+    <WrapperPage fullScreen title="Distritos" breadcrumb={{ routes: ["districts"] }}>
       <Card.Wrapper colSpan={12}></Card.Wrapper>
     </WrapperPage>
   );

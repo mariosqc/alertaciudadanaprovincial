@@ -7,7 +7,7 @@ export const MapForDistricts = () => {
   const [isAddingDistric, setIsAddingDistric] = useState(false);
 
   return (
-    <Card.Wrapper colSpan={12}>
+    <>
       <Card.Header
         title="Listado de distritos"
         optionsRight={[
@@ -19,6 +19,6 @@ export const MapForDistricts = () => {
       <Card.Body h="95%">
         <Map.Map />
       </Card.Body>
-    </Card.Wrapper>
+    </>
   );
 };
