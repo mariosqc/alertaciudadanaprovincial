@@ -10,6 +10,7 @@ export const DistrictTemplate: NextPage = () => {
       <Card.Wrapper colSpan={12}>
         <Card.Header title="Listado de distritos" />
       </Card.Wrapper>
+      <Card.Wrapper colSpan={12}></Card.Wrapper>
     </WrapperPage>
   );
 };
