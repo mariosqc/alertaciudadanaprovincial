@@ -14,7 +14,7 @@ import {
   Flex,
 } from "@chakra-ui/react";
 import { Button, FormProvider, Input, Map } from "@/components";
-import { MarkerProps } from "src/components/map/Marker";
+import { MarkerProps } from "src/components/googleMaps/Marker";
 
 export const SetCenterCoordinates = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
