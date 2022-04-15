@@ -10,14 +10,7 @@ export const Marker: FC<MarkerProps> = ({ positions }) => {
   return (
     <div>
       {positions.map((position, i) => (
-        <_Marker
-          /* icon={{
-              url: "https://cdn-icons-png.flaticon.com/512/684/684908.png",
-              scaledSize: new window.google.maps.Size(50, 50),
-            }} */
-          key={i}
-          position={position}
-        />
+        <_Marker key={i} position={position} />
       ))}
     </div>
   );

@@ -11,7 +11,6 @@ function MyComponent() {
         onClick={(e) => {
           if (e.latLng?.toJSON()) setPositions([...positions, e.latLng?.toJSON()]);
         }}
-        markerList={positions}
       />
     </Box>
   );
