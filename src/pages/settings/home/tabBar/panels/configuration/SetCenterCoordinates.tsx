@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 
 import {
   Modal,
@@ -15,7 +15,11 @@ import {
 } from "@chakra-ui/react";
 import { GoogleMaps, Button, FormProvider, Input } from "@/components";
 
-export const SetCenterCoordinates = () => {
+interface SetCenterCoordinatesProps {
+  isDisabled: boolean;
+}
+
+export const SetCenterCoordinates: FC<SetCenterCoordinatesProps> = ({ isDisabled }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [centerCoord] = useState({
     lat: 19.097612354575226,
@@ -29,7 +33,7 @@ export const SetCenterCoordinates = () => {
 
   return (
     <div>
-      <Button w="full" colorScheme="pri" onClick={onOpen}>
+      <Button w="full" colorScheme="pri" onClick={onOpen} isDisabled={isDisabled}>
         Cambiar
       </Button>
 

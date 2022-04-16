@@ -31,11 +31,11 @@ export const NewDistrict = () => {
           </ModalBody>
 
           <ModalFooter pt="0">
-            <Button mr={3} variant="ghost" onClick={onClose}>
-              Cancelar
+            <Button ml={3} type="submit" form="new-district-form" colorScheme="pri">
+              Guardar Distrito
             </Button>
-            <Button type="submit" form="new-district-form" colorScheme="pri">
-              Guardar
+            <Button variant="ghost" onClick={onClose}>
+              Cancelar
             </Button>
           </ModalFooter>
         </ModalContent>

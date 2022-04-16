@@ -28,7 +28,7 @@ export const ConfigurationPanel = () => {
                   <InputControl name="lat" inputProps={{ isReadOnly: true }} />
                   <InputControl name="lng" inputProps={{ isReadOnly: true }} />
                 </HStack>
-                <SetCenterCoordinates />
+                <SetCenterCoordinates isDisabled={!isEditting} />
               </Flex>
             </FormControl>
             <InputControl
@@ -37,15 +37,18 @@ export const ConfigurationPanel = () => {
                 helperText: "Identificación para el uso de la aplicación con Google Maps.",
               }}
               name="googleApiKey"
+              inputProps={{ isDisabled: !isEditting }}
             />
             <InputMaskControl
               mask="+1 (999) 999-9999"
               formControl={{ label: "Teléfono", helperText: "Teléfono de contacto." }}
               name="phone"
+              inputProps={{ isDisabled: !isEditting }}
             />
             <InputControl
               formControl={{ label: "Versión", helperText: "Versión actual de la aplicación." }}
               name="version"
+              inputProps={{ isDisabled: !isEditting }}
             />
           </Stack>
         </FormProvider>
@@ -63,8 +66,8 @@ export const ConfigurationPanel = () => {
 
           {isEditting ? (
             <HStack>
-              <Button colorScheme="pri">Guardar Cambios</Button>
               <Button onClick={() => setIsEditting(false)}>Cancelar</Button>
+              <Button colorScheme="pri">Guardar Cambios</Button>
             </HStack>
           ) : (
             <Button onClick={() => setIsEditting(true)} colorScheme="orange">

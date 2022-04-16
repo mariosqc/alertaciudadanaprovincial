@@ -32,11 +32,11 @@ export const ChangeNameModal = () => {
           </ModalBody>
 
           <ModalFooter>
-            <Button mr={3} variant="ghost" onClick={onClose}>
-              Cancelar
-            </Button>
-            <Button type="submit" colorScheme="pri" form="change-name-form">
+            <Button mr={3} type="submit" colorScheme="pri" form="change-name-form">
               Guardar Cambios
+            </Button>
+            <Button variant="ghost" onClick={onClose}>
+              Cancelar
             </Button>
           </ModalFooter>
         </ModalContent>
