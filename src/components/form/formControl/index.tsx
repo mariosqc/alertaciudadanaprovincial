@@ -2,6 +2,7 @@ import { FormLabel, FormControl as _FormControl, Flex, Box, Text, FormHelperText
 import React, { FC, useMemo } from "react";
 import { AlertTriangle } from "react-feather";
 import { useFormContext } from "react-hook-form";
+import objectPath from "object-path";
 
 type TypesInputType = "text" | "password" | "email" | "number" | "tel" | "select" | "textarea";
 
@@ -16,12 +17,11 @@ export interface FormControlProps {
 export const FormControl: FC<FormControlProps> = ({ children, name, label, helperText, isTruncatedLabel }) => {
   const {
     formState: { errors },
-    setFocus,
   } = useFormContext();
 
   const errMsg = useMemo(() => {
-    if (errors[name]) {
-      const { type, message } = errors[name] as Record<string, string>;
+    if (objectPath.get(errors, name)) {
+      const { type, message } = objectPath.get(errors, name) as Record<string, string>;
       const error = message ? message : type === "required" ? "Campo requerido" : "Formato no válido";
       return (
         <Flex fontSize="sm" fontWeight="semibold" ml="1" color="red.500" alignItems="center">
@@ -32,7 +32,7 @@ export const FormControl: FC<FormControlProps> = ({ children, name, label, helpe
         </Flex>
       );
     }
-  }, [errors[name]]);
+  }, [objectPath.get(errors, name)]);
 
   return (
     <_FormControl>
@@ -48,7 +48,7 @@ export const FormControl: FC<FormControlProps> = ({ children, name, label, helpe
         errMsg ? (
           errMsg
         ) : (
-          <FormHelperText textAlign="left" ml="1" mt="0.5" color="gray.500">
+          <FormHelperText textAlign="left" ml="1" mt="0.5" color="gray.700">
             {helperText}
           </FormHelperText>
         )

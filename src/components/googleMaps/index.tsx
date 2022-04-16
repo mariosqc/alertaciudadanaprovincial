@@ -1,4 +1,3 @@
-import Head from "next/head";
 import React, { FC, useCallback, useRef, useState } from "react";
 import { GoogleMap, Polygon, DrawingManager } from "@react-google-maps/api";
 import { Marker } from "./marker";
@@ -6,10 +5,26 @@ import { Marker } from "./marker";
 interface GoogleMapsProps {
   defaultCenter?: google.maps.LatLngLiteral;
   markerList?: google.maps.LatLngLiteral[];
+  polygonPathList?: google.maps.LatLngLiteral[][];
+  isDrawing?: boolean;
   onClick?(event: google.maps.MapMouseEvent): void;
+  onPolygonCompleteDrawingManager?({
+    coordinates,
+    polygon,
+  }: {
+    coordinates: google.maps.LatLngLiteral[];
+    polygon: google.maps.Polygon;
+  }): void;
 }
 
-export const GoogleMaps: FC<GoogleMapsProps> = ({ defaultCenter, markerList, onClick }) => {
+export const GoogleMaps: FC<GoogleMapsProps> = ({
+  defaultCenter,
+  markerList,
+  onClick,
+  isDrawing,
+  polygonPathList,
+  onPolygonCompleteDrawingManager,
+}) => {
   // Store Polygon path in state
   const [path, setPath] = useState([
     { lat: 52.52549080781086, lng: 13.398118538856465 },
@@ -19,7 +34,6 @@ export const GoogleMaps: FC<GoogleMapsProps> = ({ defaultCenter, markerList, onC
 
   const [map, setMap] = useState(null);
   const [polygon, setPolygon] = useState<google.maps.Polygon | null>(null);
-  const [isDrawing, setIsDrawing] = useState(true);
 
   // Define refs for Polygon instance and listeners
   const polygonRef = useRef<any>(null);
@@ -65,14 +79,11 @@ export const GoogleMaps: FC<GoogleMapsProps> = ({ defaultCenter, markerList, onC
   }, []);
 
   const onPolygonComplete = (polygon: google.maps.Polygon) => {
-    const list = polygon
+    const coordinates: google.maps.LatLngLiteral[] = polygon
       .getPaths()
       .getArray()[0]
       .Ed.map((item: any) => ({ lat: item.lat(), lng: item.lng() }));
-    setPath(list);
-
-    setIsDrawing(false);
-    drawingManagerRef.current = null;
+    onPolygonCompleteDrawingManager?.({ coordinates, polygon });
   };
 
   // Clean up refs
@@ -85,13 +96,6 @@ export const GoogleMaps: FC<GoogleMapsProps> = ({ defaultCenter, markerList, onC
 
   return (
     <>
-      <Head>
-        <script
-          src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6oiUPztz63oNG_746746GFVro2xX_Rs4&libraries=places&libraries=drawing"
-          async
-          defer
-        ></script>
-      </Head>
       <GoogleMap
         mapContainerStyle={{ width: "100%", height: "100%" }}
         options={{ maxZoom: 20, minZoom: 3 }}
@@ -101,18 +105,23 @@ export const GoogleMaps: FC<GoogleMapsProps> = ({ defaultCenter, markerList, onC
       >
         {markerList && <Marker positions={markerList} />}
 
-        <Polygon
-          // Make the Polygon editable / draggable
-          editable
-          draggable
-          path={path}
-          // Event used when manipulating and adding points
-          onMouseUp={onEdit}
-          // Event used when dragging the whole Polygon
-          onDragEnd={onEdit}
-          onLoad={onLoadPolygon}
-          onUnmount={onUnmountPolygon}
-        />
+        {polygonPathList &&
+          polygonPathList.map((coordinates, index) => (
+            <Polygon
+              key={index}
+              // Make the Polygon editable / draggable
+              editable
+              draggable
+              path={coordinates}
+              // Event used when manipulating and adding points
+              onMouseUp={onEdit}
+              // Event used when dragging the whole Polygon
+              onDragEnd={onEdit}
+              onLoad={onLoadPolygon}
+              onUnmount={onUnmountPolygon}
+            />
+          ))}
+
         {isDrawing && (
           <DrawingManager
             options={
