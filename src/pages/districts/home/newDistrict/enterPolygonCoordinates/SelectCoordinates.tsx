@@ -1,11 +1,17 @@
 import { Button } from "@/components";
 import { Box } from "@chakra-ui/react";
-import React, { useMemo, useState } from "react";
+import React, { FC, useState } from "react";
+import { useFormContext } from "react-hook-form";
 import { GoogleMaps } from "src/components/googleMaps";
 
-export const SelectCoordinates = () => {
+interface SelectCoordinatesProps {
+  value: google.maps.LatLngLiteral[];
+  onChange?(coordinates: google.maps.LatLngLiteral[]): void;
+}
+
+export const SelectCoordinates: FC<SelectCoordinatesProps> = ({ value, onChange }) => {
   const [isActiveDrawing, setIsActiveDrawing] = useState(true);
-  const [polygon, setPolygon] = useState<google.maps.LatLngLiteral[]>();
+  const [polygon, setPolygon] = useState<google.maps.LatLngLiteral[]>(value);
 
   return (
     <>
@@ -14,9 +20,13 @@ export const SelectCoordinates = () => {
           polygonPathList={polygon ? [polygon] : undefined}
           isDrawing={isActiveDrawing}
           onPolygonCompleteDrawingManager={({ coordinates }) => {
-            console.log({ coordinates });
             setPolygon(coordinates);
             setIsActiveDrawing(false);
+            onChange?.(coordinates);
+          }}
+          onEditPolygon={(paths) => {
+            setPolygon(paths);
+            onChange?.(paths);
           }}
         />
       </Box>

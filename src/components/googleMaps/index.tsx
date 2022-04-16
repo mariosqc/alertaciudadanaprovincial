@@ -15,6 +15,7 @@ interface GoogleMapsProps {
     coordinates: google.maps.LatLngLiteral[];
     polygon: google.maps.Polygon;
   }): void;
+  onEditPolygon?(paths: google.maps.LatLngLiteral[]): void;
 }
 
 export const GoogleMaps: FC<GoogleMapsProps> = ({
@@ -24,13 +25,9 @@ export const GoogleMaps: FC<GoogleMapsProps> = ({
   isDrawing,
   polygonPathList,
   onPolygonCompleteDrawingManager,
+  onEditPolygon,
 }) => {
   // Store Polygon path in state
-  const [path, setPath] = useState([
-    { lat: 52.52549080781086, lng: 13.398118538856465 },
-    { lat: 52.48578559055679, lng: 13.36653284549709 },
-    { lat: 52.48871246221608, lng: 13.44618372440334 },
-  ]);
 
   const [map, setMap] = useState(null);
   const [polygon, setPolygon] = useState<google.maps.Polygon | null>(null);
@@ -41,17 +38,16 @@ export const GoogleMaps: FC<GoogleMapsProps> = ({
   const drawingManagerRef = useRef<any>(null);
 
   // Call setPath with new edited path
-  const onEdit = useCallback(() => {
+  const _onEditPolygon = useCallback(() => {
     if (polygonRef.current) {
       const nextPath = polygonRef.current
         .getPath()
         .getArray()
-        .map((latLng: any) => {
-          return { lat: latLng.lat(), lng: latLng.lng() };
-        });
-      setPath(nextPath);
+        .map((latLng: any) => ({ lat: latLng.lat(), lng: latLng.lng() }));
+
+      onEditPolygon?.(nextPath);
     }
-  }, [setPath]);
+  }, [onEditPolygon]);
 
   // Bind refs to current Polygon and listeners
   const onLoadPolygon = useCallback(
@@ -59,12 +55,12 @@ export const GoogleMaps: FC<GoogleMapsProps> = ({
       polygonRef.current = polygon;
       const path = polygon.getPath();
       listenersRef.current.push(
-        path.addListener("set_at", onEdit),
-        path.addListener("insert_at", onEdit),
-        path.addListener("remove_at", onEdit)
+        path.addListener("set_at", _onEditPolygon),
+        path.addListener("insert_at", _onEditPolygon),
+        path.addListener("remove_at", _onEditPolygon)
       );
     },
-    [onEdit]
+    [_onEditPolygon]
   );
 
   const onLoad = useCallback(function callback(map) {
@@ -114,9 +110,9 @@ export const GoogleMaps: FC<GoogleMapsProps> = ({
               draggable
               path={coordinates}
               // Event used when manipulating and adding points
-              onMouseUp={onEdit}
+              onMouseUp={_onEditPolygon}
               // Event used when dragging the whole Polygon
-              onDragEnd={onEdit}
+              onDragEnd={_onEditPolygon}
               onLoad={onLoadPolygon}
               onUnmount={onUnmountPolygon}
             />
