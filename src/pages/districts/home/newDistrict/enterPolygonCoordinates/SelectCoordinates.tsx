@@ -1,9 +1,7 @@
 import { Button } from "@/components";
 import { Box } from "@chakra-ui/react";
 import React, { FC, useState } from "react";
-import { useFormContext } from "react-hook-form";
-import { FormControl } from "src/components/form/formControl";
-import { GoogleMaps } from "src/components/googleMaps";
+import { GoogleMaps, FormControl } from "@/components";
 
 interface SelectCoordinatesProps {
   value: google.maps.LatLngLiteral[];
@@ -19,7 +17,7 @@ export const SelectCoordinates: FC<SelectCoordinatesProps> = ({ value, onChange 
       <FormControl name="coordinates">
         <Box borderWidth="2px" h="md">
           <GoogleMaps
-            polygonPathList={polygon ? [polygon] : undefined}
+            polygonPathList={polygon ? [{ path: polygon, draggable: true, editable: true }] : undefined}
             isDrawing={isActiveDrawing}
             onPolygonCompleteDrawingManager={({ coordinates }) => {
               setPolygon(coordinates);

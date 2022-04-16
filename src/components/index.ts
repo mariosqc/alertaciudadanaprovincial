@@ -4,4 +4,4 @@ export * from "./form";
 
 export * from "./breadcrumb";
 
-export * from "./googleMaps/index";
+export * from "./googleMaps";

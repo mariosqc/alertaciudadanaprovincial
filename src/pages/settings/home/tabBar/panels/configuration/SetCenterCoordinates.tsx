@@ -13,12 +13,11 @@ import {
   HStack,
   Flex,
 } from "@chakra-ui/react";
-import { Button, FormProvider, Input, Map } from "@/components";
-import { MarkerProps } from "src/components/googleMaps/marker";
+import { GoogleMaps, Button, FormProvider, Input } from "@/components";
 
 export const SetCenterCoordinates = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [centerCoord, setCenterCoord] = useState<MarkerProps>({
+  const [centerCoord] = useState({
     lat: 19.097612354575226,
     lng: -72.1192613916425,
     text: "",
@@ -47,14 +46,7 @@ export const SetCenterCoordinates = () => {
           </ModalHeader>
           <ModalBody px="2">
             <Box h="xl">
-              <Map.Map
-                center={centerCoord}
-                trackerPositions={[centerCoord]}
-                onClick={(value) => {
-                  const { lat, lng } = value;
-                  setCenterCoord({ lat, lng, text: `${lat},${lng}` });
-                }}
-              />
+              <GoogleMaps defaultZoom={10} defaultCenter={centerCoord} />
             </Box>
           </ModalBody>
 

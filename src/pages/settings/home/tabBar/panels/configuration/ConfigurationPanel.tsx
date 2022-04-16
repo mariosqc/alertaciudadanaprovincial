@@ -4,8 +4,7 @@ import { Card, CardContainer } from "@/layout";
 
 import { SetCenterCoordinates } from "./SetCenterCoordinates";
 import { Box, Divider, Flex, HStack, Stack } from "@chakra-ui/react";
-import { Button, FormProvider, InputControl, InputMaskControl } from "@/components";
-import { FormControl } from "src/components/form/formControl";
+import { FormControl, Button, FormProvider, InputControl, InputMaskControl } from "@/components";
 
 export const ConfigurationPanel = () => {
   const [isEditting, setIsEditting] = useState(false);

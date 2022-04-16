@@ -1,9 +1,8 @@
-import { Button, Input } from "@/components";
+import { FormControl, Button, Input } from "@/components";
 import { HStack, IconButton, Stack, Text } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import { X } from "react-feather";
 import { useFieldArray, useFormContext } from "react-hook-form";
-import { FormControl } from "src/components/form/formControl";
 
 export const EnterCoordinatesManually = () => {
   const { getValues, setFocus, resetField, setValue } = useFormContext();
