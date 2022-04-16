@@ -23,7 +23,7 @@ export const DistrictTableMenuOptions: FC<DistrictTableMenuOptionsProps> = ({ di
         icon={<MoreVertical size="1.25rem" />}
       />
       <MenuList>
-        <ChangeNameModal />
+        <ChangeNameModal district={district} />
         <EditUserModal />
         <DeleteDistrict district={district} />
       </MenuList>

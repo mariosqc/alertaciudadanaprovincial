@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 
 import {
   Modal,
@@ -12,12 +12,18 @@ import {
 } from "@chakra-ui/react";
 import { Button } from "@/components";
 import { ChangeNameForm } from "./ChangeNameForm";
+import { database } from "@/firebase";
+interface ChangeNameModalProps {
+  district: District;
+}
 
-export const ChangeNameModal = () => {
+export const ChangeNameModal: FC<ChangeNameModalProps> = ({ district }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  async function onSubmit(values: any) {
-    console.log(values);
+  async function onSubmit(values: { name: string }) {
+    const { name } = values;
+    await database.ref(`admin/districts/${district.id}`).update({ name });
+    onClose();
   }
 
   return (
@@ -28,7 +34,7 @@ export const ChangeNameModal = () => {
         <ModalContent>
           <ModalHeader>Cambiar Nombre del Distrito</ModalHeader>
           <ModalBody>
-            <ChangeNameForm onSubmit={onSubmit} />
+            <ChangeNameForm defaultValues={district} onSubmit={onSubmit} />
           </ModalBody>
 
           <ModalFooter>
