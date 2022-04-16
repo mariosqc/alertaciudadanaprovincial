@@ -25,7 +25,7 @@ interface ComponentFormProps<T> {
 
 export interface ExampleFormProps extends ComponentFormProps<ExampleFormSchema> {}
 
-export const ExampleForm: FC<ExampleFormProps> = ({ onSubmit }) => {
+const ExampleForm: FC<ExampleFormProps> = ({ onSubmit }) => {
   return (
     <FormProvider id="example-form" schema={exampleFormSchema} onSubmit={onSubmit} faker={fakerValues}>
       <Stack w="xl" mx="auto">
@@ -39,3 +39,5 @@ export const ExampleForm: FC<ExampleFormProps> = ({ onSubmit }) => {
     </FormProvider>
   );
 };
+
+export default ExampleForm;
