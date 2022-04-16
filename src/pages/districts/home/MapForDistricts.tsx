@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import { Card } from "@/layout";
-import { Button, Map } from "@/components";
+import { Button } from "@/components";
 
 export const MapForDistricts = () => {
   const [isAddingDistric, setIsAddingDistric] = useState(false);
@@ -16,9 +16,6 @@ export const MapForDistricts = () => {
           </Button>,
         ]}
       />
-      <Card.Body h="95%">
-        <Map.Map />
-      </Card.Body>
     </>
   );
 };

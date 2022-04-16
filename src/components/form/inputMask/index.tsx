@@ -22,6 +22,7 @@ export const InputMask: FC<InputMaskProps> = ({ name, mask, maskChar = "", input
           maskChar={maskChar}
           {...inputProps}
         >
+          {/*  @ts-ignore:next-line */}
           {(inputProps: any) => (
             <_Input
               _focus={{

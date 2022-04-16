@@ -15,7 +15,7 @@ import "@fontsource/open-sans/700.css";
 import "@fontsource/open-sans/800.css";
 import Head from "next/head";
 
-const MyApp: FC<AppProps> = ({ Component, pageProps }) => {
+const MyApp: FC<{ Component: FC; pageProps: any }> = ({ Component, pageProps }) => {
   return (
     <ChakraProvider theme={theme}>
       <Head>
@@ -25,6 +25,7 @@ const MyApp: FC<AppProps> = ({ Component, pageProps }) => {
           defer
         ></script>
       </Head>
+
       <Component {...pageProps} />
     </ChakraProvider>
   );

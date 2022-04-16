@@ -11,62 +11,65 @@ const ReactApexChart = dynamic(() => import("react-apexcharts"), { ssr: false })
 
 export const DashboardPage: NextPage = () => {
   const Chart = (
-    <ReactApexChart
-      options={{
-        chart: {
-          height: "600",
-          type: "bar",
-        },
-        plotOptions: {
-          bar: {
-            horizontal: false,
-            columnWidth: "55%",
+    <>
+      {/*  @ts-ignore:next-line */}
+      <ReactApexChart
+        options={{
+          chart: {
+            height: "600",
+            type: "bar",
           },
-        },
-        dataLabels: {
-          enabled: false,
-        },
-        stroke: {
-          show: true,
-          width: 2,
-          colors: ["transparent"],
-        },
-        xaxis: {
-          categories: ["Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct"],
-        },
-        yaxis: {
-          title: {
-            text: "$ (thousands)",
-          },
-        },
-        fill: {
-          opacity: 1,
-        },
-        tooltip: {
-          y: {
-            formatter: function (val) {
-              return "$ " + val + " thousands";
+          plotOptions: {
+            bar: {
+              horizontal: false,
+              columnWidth: "55%",
             },
           },
-        },
-      }}
-      series={[
-        {
-          name: "Net Profit",
-          data: [44, 55, 57, 56, 61, 58, 63, 60, 66],
-        },
-        {
-          name: "Revenue",
-          data: [76, 85, 101, 98, 87, 105, 91, 114, 94],
-        },
-        {
-          name: "Free Cash Flow",
-          data: [35, 41, 36, 26, 45, 48, 52, 53, 41],
-        },
-      ]}
-      type="bar"
-      height="100%"
-    />
+          dataLabels: {
+            enabled: false,
+          },
+          stroke: {
+            show: true,
+            width: 2,
+            colors: ["transparent"],
+          },
+          xaxis: {
+            categories: ["Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct"],
+          },
+          yaxis: {
+            title: {
+              text: "$ (thousands)",
+            },
+          },
+          fill: {
+            opacity: 1,
+          },
+          tooltip: {
+            y: {
+              formatter: function (val) {
+                return "$ " + val + " thousands";
+              },
+            },
+          },
+        }}
+        series={[
+          {
+            name: "Net Profit",
+            data: [44, 55, 57, 56, 61, 58, 63, 60, 66],
+          },
+          {
+            name: "Revenue",
+            data: [76, 85, 101, 98, 87, 105, 91, 114, 94],
+          },
+          {
+            name: "Free Cash Flow",
+            data: [35, 41, 36, 26, 45, 48, 52, 53, 41],
+          },
+        ]}
+        type="bar"
+        height="100%"
+      />
+    </>
   );
 
   return (

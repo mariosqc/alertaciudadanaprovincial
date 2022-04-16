@@ -4,7 +4,7 @@ import { NextPage } from "next";
 
 import { WrapperPage } from "@/templates";
 import { Card } from "@/layout";
-import { Map } from "@/components";
+import { GoogleMaps } from "@/components";
 
 export const TrackerPage: NextPage = () => {
   return (
@@ -12,7 +12,7 @@ export const TrackerPage: NextPage = () => {
       <Card.Wrapper colSpan={12} flex="1">
         <Card.Header title="Seguimiento" />
         <Card.Body h="95%">
-          <Map.Map />
+          <GoogleMaps />
         </Card.Body>
       </Card.Wrapper>
     </WrapperPage>
