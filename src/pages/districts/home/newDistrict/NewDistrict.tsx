@@ -36,7 +36,7 @@ export const NewDistrict = () => {
             <NewDistrictForm />
           </ModalBody>
 
-          <ModalFooter pt="0">
+          <ModalFooter pt="1">
             <HStack>
               <Button type="submit" form="new-district-form" colorScheme="pri">
                 Guardar Distrito

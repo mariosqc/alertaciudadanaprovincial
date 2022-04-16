@@ -88,15 +88,15 @@ export const Breadcrumb: FC<BreadcrumbProps> = ({ routes = [] }) => {
     <GridItem colSpan={12}>
       <HStack ml="4">
         <Box color="blue.500">
-          <Link href="/dashboard">
-            <a>
-              <Flex alignItems="center">
-                <Home size="1.25rem" />
-                <ChakraLink ml="1" fontWeight="medium">
+          <Link href="/dashboard" passHref>
+            <Flex alignItems="center">
+              <Home size="1.25rem" />
+              <a>
+                <Text ml="1" fontWeight="medium">
                   Inicio
-                </ChakraLink>
-              </Flex>
-            </a>
+                </Text>
+              </a>
+            </Flex>
           </Link>
         </Box>
         {items.length > 0 && <Text color="gray.500">|</Text>}
@@ -111,10 +111,8 @@ export const Breadcrumb: FC<BreadcrumbProps> = ({ routes = [] }) => {
           {items.map((item) => (
             <BreadcrumbItem key={item.href}>
               <BreadcrumbLink fontWeight="medium">
-                <Link href={item.href}>
-                  <a>
-                    <ChakraLink color="blue.500">{item.label}</ChakraLink>
-                  </a>
+                <Link href={item.href} passHref>
+                  <Text color="blue.500">{item.label}</Text>
                 </Link>
               </BreadcrumbLink>
             </BreadcrumbItem>

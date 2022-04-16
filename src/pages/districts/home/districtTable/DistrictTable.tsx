@@ -41,11 +41,13 @@ export const DistrictTable = () => {
             </Tr>
           </Tbody>
           <Tfoot>
-            <Th>Nombre</Th>
-            <Th>Usuario Encargado</Th>
-            <Th>Fecha de Creación</Th>
-            <Th>Polígono</Th>
-            <Th></Th>
+            <Tr>
+              <Th>Nombre</Th>
+              <Th>Usuario Encargado</Th>
+              <Th>Fecha de Creación</Th>
+              <Th>Polígono</Th>
+              <Th></Th>
+            </Tr>
           </Tfoot>
         </Table>
       </TableContainer>

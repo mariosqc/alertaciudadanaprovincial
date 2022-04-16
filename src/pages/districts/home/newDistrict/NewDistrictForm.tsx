@@ -11,7 +11,24 @@ export const NewDistrictForm = () => {
     <FormProvider
       id="new-district-form"
       onSubmit={(values, methods) => {
-        const { name, coordinates, user } = values;
+        const {
+          name,
+          coordinates,
+          user: { passwordConfirmation, ...user },
+        } = values;
+
+        console.log(user, passwordConfirmation);
+
+        if (user.password !== passwordConfirmation) {
+          console.log("Hola");
+
+          methods.setError("user.confirmPassword", { message: "Las contraseñas no coinciden" });
+          methods.setError("user.password", { message: "Las contraseñas no coinciden" });
+          methods.setFocus("user.passwordConfirmation");
+
+          return;
+        }
+
         if (!coordinates) {
           methods.setError("coordinates", { message: "Debe ingresar un polígono válido", type: "required" });
           return;
@@ -20,6 +37,7 @@ export const NewDistrictForm = () => {
           methods.setError("coordinates", { message: "Debe ingresar las coordenadas del polígono", type: "required" });
           return;
         }
+
         console.log({ name, coordinates, user });
       }}
     >
@@ -32,7 +50,7 @@ export const NewDistrictForm = () => {
             inputProps={{ placeholder: "abc..." }}
           />
         </HStack>
-        <HStack>
+        <HStack alignItems="flex-start">
           <InputControl
             name="user.name"
             rules={{ required: true }}
@@ -46,15 +64,15 @@ export const NewDistrictForm = () => {
             inputProps={{ placeholder: "juan_manuel_estrella_01..." }}
           />
         </HStack>
-        <HStack>
+        <HStack alignItems="flex-start">
           <InputControl
             name="user.password"
-            rules={{ required: true }}
+            rules={{ required: true, minLength: { value: 8, message: "Debe ingresar min. 8 caracteres" } }}
             formControl={{ label: "Contraseña" }}
             inputProps={{ placeholder: "••••••••", type: "password", autoComplete: "on" }}
           />
           <InputControl
-            name="user.confirmPassword"
+            name="user.passwordConfirmation"
             rules={{ required: true }}
             formControl={{ label: "Confirmar Contraseña" }}
             inputProps={{ placeholder: "••••••••", type: "password", autoComplete: "on" }}
