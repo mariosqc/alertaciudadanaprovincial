@@ -1,5 +1,4 @@
 import React from "react";
-import { GoogleMaps } from "src/components/googleMaps";
 import { Tabs, TabList, TabPanels, Tab, TabPanel, Box, Text } from "@chakra-ui/react";
 import { SelectCoordinates } from "./SelectCoordinates";
 import { EnterCoordinatesManually } from "./EnterCoordinatesManually";
@@ -10,7 +9,7 @@ export const EnterPolygonCoordinates = () => {
 
   return (
     <Box>
-      <Tabs colorScheme="pri">
+      <Tabs isLazy colorScheme="pri">
         <TabList>
           <Tab onClick={() => setValue("coordinates", [])} _focus={{}}>
             <Text fontWeight="medium">Seleccionar Coordenadas</Text>
@@ -23,6 +22,7 @@ export const EnterPolygonCoordinates = () => {
         <TabPanels>
           <TabPanel pb="1" px="0">
             <Controller
+              rules={{ required: { message: "Debe ingresar un polígono válido", value: true } }}
               name="coordinates"
               render={({ field }) => <SelectCoordinates onChange={field.onChange} value={field.value} />}
             />

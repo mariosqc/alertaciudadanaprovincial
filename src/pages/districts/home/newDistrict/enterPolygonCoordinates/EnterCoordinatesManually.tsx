@@ -1,11 +1,12 @@
 import { Button, Input } from "@/components";
 import { HStack, IconButton, Stack, Text } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect } from "react";
 import { X } from "react-feather";
 import { useFieldArray, useFormContext } from "react-hook-form";
+import { FormControl } from "src/components/form/formControl";
 
 export const EnterCoordinatesManually = () => {
-  const { getValues, setFocus, resetField } = useFormContext();
+  const { getValues, setFocus, resetField, setValue } = useFormContext();
   const { append, fields, update, remove } = useFieldArray({ name: "coordinates" });
 
   function addNewCoordinate() {
@@ -27,41 +28,52 @@ export const EnterCoordinatesManually = () => {
     setFocus("lat");
   }
 
+  useEffect(() => {
+    setValue("coordinates", []);
+    return () => {
+      setValue("coordinates", []);
+      setValue("lat", null);
+      setValue("lng", null);
+    };
+  }, []);
+
   return (
     <div>
-      <Stack mb="2">
-        {fields.map((field, i) => (
-          <HStack key={i}>
-            <Text>{i + 1}</Text>
-            <Input
-              name={`lat-${i}`}
-              inputProps={{
-                placeholder: "Latitud",
-                type: "number",
-                defaultValue: (field as any).lat,
-                onChange: (e) => update(i, { lat: e.target.value }),
-              }}
-            />
-            <Input
-              name={`lng-${i}`}
-              inputProps={{
-                placeholder: "Longitud",
-                type: "number",
-                defaultValue: (field as any).lng,
-                onChange: (e) => update(i, { lng: e.target.value }),
-              }}
-            />
-            <IconButton
-              onClick={() => remove(i)}
-              _focus={{}}
-              aria-label=""
-              colorScheme="red"
-              variant="ghost"
-              icon={<X size="1.25rem" />}
-            />
-          </HStack>
-        ))}
-      </Stack>
+      <FormControl name="coordinates">
+        <Stack mb="2">
+          {fields.map((field, i) => (
+            <HStack key={i}>
+              <Text>{i + 1}</Text>
+              <Input
+                name={`lat-${i}`}
+                inputProps={{
+                  placeholder: "Latitud",
+                  type: "number",
+                  defaultValue: (field as any).lat,
+                  onChange: (e) => update(i, { lat: e.target.value }),
+                }}
+              />
+              <Input
+                name={`lng-${i}`}
+                inputProps={{
+                  placeholder: "Longitud",
+                  type: "number",
+                  defaultValue: (field as any).lng,
+                  onChange: (e) => update(i, { lng: e.target.value }),
+                }}
+              />
+              <IconButton
+                onClick={() => remove(i)}
+                _focus={{}}
+                aria-label=""
+                colorScheme="red"
+                variant="ghost"
+                icon={<X size="1.25rem" />}
+              />
+            </HStack>
+          ))}
+        </Stack>
+      </FormControl>
       <Stack ml="4" mr="12">
         <HStack alignItems="flex-end">
           <Input name="lat" inputProps={{ placeholder: "Latitud", type: "number" }} />

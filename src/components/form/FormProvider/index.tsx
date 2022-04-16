@@ -7,7 +7,7 @@ const IS_DEVELOPMENT = true;
 
 export interface FormProviderProps {
   id: string;
-  onSubmit(values: any): void;
+  onSubmit(values: any, methods: UseFormReturn<FieldValues, any>): void;
   setMethods?(methods: UseFormReturn<FieldValues, any>): void;
   defaultValues?: any;
   schema?: any;
@@ -43,7 +43,7 @@ export const FormProvider: FC<FormProviderProps> = ({
 
   return (
     <_FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)} id={id}>
+      <form onSubmit={methods.handleSubmit((values) => onSubmit(values, methods))} id={id}>
         {children}
       </form>
     </_FormProvider>

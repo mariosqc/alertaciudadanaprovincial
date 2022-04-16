@@ -1,7 +1,9 @@
 import React, { FC, useCallback, useRef, useState } from "react";
 import { GoogleMap, Polygon, DrawingManager } from "@react-google-maps/api";
 import { Marker } from "./marker";
+import { OriginalTheme, theme } from "@/themes";
 
+/*TODO: Verificar si un punto está dentro de un polígono https://developers.google.com/maps/documentation/javascript/examples/poly-containsLocation */
 interface GoogleMapsProps {
   defaultCenter?: google.maps.LatLngLiteral;
   markerList?: google.maps.LatLngLiteral[];
@@ -15,6 +17,7 @@ interface GoogleMapsProps {
     coordinates: google.maps.LatLngLiteral[];
     polygon: google.maps.Polygon;
   }): void;
+  onPolygonCompleteDrawingManagerClean?: boolean;
   onEditPolygon?(paths: google.maps.LatLngLiteral[]): void;
 }
 
@@ -26,18 +29,15 @@ export const GoogleMaps: FC<GoogleMapsProps> = ({
   polygonPathList,
   onPolygonCompleteDrawingManager,
   onEditPolygon,
+  onPolygonCompleteDrawingManagerClean,
 }) => {
-  // Store Polygon path in state
-
   const [map, setMap] = useState(null);
   const [polygon, setPolygon] = useState<google.maps.Polygon | null>(null);
 
-  // Define refs for Polygon instance and listeners
   const polygonRef = useRef<any>(null);
   const listenersRef = useRef<any>([]);
   const drawingManagerRef = useRef<any>(null);
 
-  // Call setPath with new edited path
   const _onEditPolygon = useCallback(() => {
     if (polygonRef.current) {
       const nextPath = polygonRef.current
@@ -79,6 +79,7 @@ export const GoogleMaps: FC<GoogleMapsProps> = ({
       .getPaths()
       .getArray()[0]
       .Ed.map((item: any) => ({ lat: item.lat(), lng: item.lng() }));
+    onPolygonCompleteDrawingManagerClean && polygon.setMap(null);
     onPolygonCompleteDrawingManager?.({ coordinates, polygon });
   };
 
@@ -115,6 +116,13 @@ export const GoogleMaps: FC<GoogleMapsProps> = ({
               onDragEnd={_onEditPolygon}
               onLoad={onLoadPolygon}
               onUnmount={onUnmountPolygon}
+              options={{
+                geodesic: true,
+                strokeColor: OriginalTheme.components.colors.pri["500"],
+                strokeOpacity: 1.0,
+                strokeWeight: 2,
+                fillColor: OriginalTheme.components.colors.pri["500"],
+              }}
             />
           ))}
 

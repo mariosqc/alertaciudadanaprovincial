@@ -1,15 +1,26 @@
-import { FormProvider, InputControl } from "@/components";
-import { HStack, Stack } from "@chakra-ui/react";
 import React from "react";
+
+import { HStack, Stack } from "@chakra-ui/react";
+
+import { FormProvider, InputControl } from "@/components";
+
 import { EnterPolygonCoordinates } from "./enterPolygonCoordinates/EnterPolygonCoordinates";
 
 export const NewDistrictForm = () => {
   return (
     <FormProvider
       id="new-district-form"
-      onSubmit={(values) => {
-        const { name, coordinates } = values;
-        console.log({ name, coordinates });
+      onSubmit={(values, methods) => {
+        const { name, coordinates, user } = values;
+        if (!coordinates) {
+          methods.setError("coordinates", { message: "Debe ingresar un polígono válido", type: "required" });
+          return;
+        }
+        if (coordinates?.length < 3) {
+          methods.setError("coordinates", { message: "Debe ingresar las coordenadas del polígono", type: "required" });
+          return;
+        }
+        console.log({ name, coordinates, user });
       }}
     >
       <Stack>
