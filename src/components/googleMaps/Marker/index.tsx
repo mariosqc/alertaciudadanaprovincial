@@ -10,6 +10,7 @@ export const Marker: FC<MarkerProps> = ({ positions }) => {
   return (
     <div>
       {positions.map((position, i) => (
+        /* @ts-ignore */
         <_Marker key={i} position={position} />
       ))}
     </div>

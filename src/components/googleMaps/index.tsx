@@ -1,13 +1,17 @@
 import React, { FC, useCallback, useRef, useState } from "react";
+
 import { GoogleMap, Polygon, DrawingManager } from "@react-google-maps/api";
+
+import { OriginalTheme } from "@/themes";
+
 import { Marker } from "./marker";
-import { OriginalTheme, theme } from "@/themes";
 
 /*TODO: Verificar si un punto está dentro de un polígono https://developers.google.com/maps/documentation/javascript/examples/poly-containsLocation */
 interface GoogleMapsProps {
   defaultCenter?: google.maps.LatLngLiteral;
+  defaultZoom?: number;
   markerList?: google.maps.LatLngLiteral[];
-  polygonPathList?: google.maps.LatLngLiteral[][];
+  polygonPathList?: { draggable?: boolean; editable?: boolean; path: google.maps.LatLngLiteral[] }[];
   isDrawing?: boolean;
   onClick?(event: google.maps.MapMouseEvent): void;
   onPolygonCompleteDrawingManager?({
@@ -30,9 +34,9 @@ export const GoogleMaps: FC<GoogleMapsProps> = ({
   onPolygonCompleteDrawingManager,
   onEditPolygon,
   onPolygonCompleteDrawingManagerClean,
+  defaultZoom,
 }) => {
   const [map, setMap] = useState(null);
-  const [polygon, setPolygon] = useState<google.maps.Polygon | null>(null);
 
   const polygonRef = useRef<any>(null);
   const listenersRef = useRef<any>([]);
@@ -49,7 +53,6 @@ export const GoogleMaps: FC<GoogleMapsProps> = ({
     }
   }, [onEditPolygon]);
 
-  // Bind refs to current Polygon and listeners
   const onLoadPolygon = useCallback(
     (polygon) => {
       polygonRef.current = polygon;
@@ -83,7 +86,6 @@ export const GoogleMaps: FC<GoogleMapsProps> = ({
     onPolygonCompleteDrawingManager?.({ coordinates, polygon });
   };
 
-  // Clean up refs
   const onUnmountPolygon = useCallback(() => {
     listenersRef.current.forEach((lis: any) => lis.remove());
     polygonRef.current = null;
@@ -93,9 +95,10 @@ export const GoogleMaps: FC<GoogleMapsProps> = ({
 
   return (
     <>
+      {/* @ts-ignore */}
       <GoogleMap
         mapContainerStyle={{ width: "100%", height: "100%" }}
-        options={{ maxZoom: 20, minZoom: 3 }}
+        options={{ maxZoom: 20, minZoom: 3, zoom: defaultZoom }}
         onLoad={onLoad}
         onUnmount={onUnmount}
         onClick={onClick}
@@ -103,16 +106,11 @@ export const GoogleMaps: FC<GoogleMapsProps> = ({
         {markerList && <Marker positions={markerList} />}
 
         {polygonPathList &&
-          polygonPathList.map((coordinates, index) => (
+          polygonPathList.map((polygonList, index) => (
             <Polygon
               key={index}
-              // Make the Polygon editable / draggable
-              editable
-              draggable
-              path={coordinates}
-              // Event used when manipulating and adding points
+              {...polygonList}
               onMouseUp={_onEditPolygon}
-              // Event used when dragging the whole Polygon
               onDragEnd={_onEditPolygon}
               onLoad={onLoadPolygon}
               onUnmount={onUnmountPolygon}
@@ -148,4 +146,3 @@ export const GoogleMaps: FC<GoogleMapsProps> = ({
     </>
   );
 };
-/* */

@@ -17,6 +17,7 @@ import {
 import { Button } from "@/components";
 import { Hexagon } from "react-feather";
 import { DistrictTableMenuOptions } from "./DistrictTableMenuOptions/DistrictTableMenuOptions";
+import { PolygonInformationModal } from "./polygonInformationModal/PolygonInformationModal";
 
 export const DistrictTable = () => {
   return (
@@ -45,20 +46,7 @@ export const DistrictTable = () => {
               <Text lineHeight="none">16-04-2022</Text>
             </Td>
             <Td>
-              <HStack w="max-content">
-                <Button
-                  pl="2"
-                  leftIcon={
-                    <Box mr="-0.5">
-                      <Hexagon />
-                    </Box>
-                  }
-                  size="sm"
-                  colorScheme="pri" /* variant="outline" */
-                >
-                  25 Lados
-                </Button>
-              </HStack>
+              <PolygonInformationModal />
             </Td>
             <Td>
               <DistrictTableMenuOptions />
