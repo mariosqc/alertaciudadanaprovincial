@@ -31,25 +31,33 @@ export const NewDistrictForm = () => {
             formControl={{ label: "Nombre del Distrito" }}
             inputProps={{ placeholder: "abc..." }}
           />
+        </HStack>
+        <HStack>
           <InputControl
             name="user.name"
             rules={{ required: true }}
             formControl={{ label: "Nombre del Usuario" }}
             inputProps={{ placeholder: "Juan Manuel Estrella..." }}
           />
-        </HStack>
-        <HStack>
           <InputControl
             name="user.username"
             rules={{ required: true }}
             formControl={{ label: "Nombre de Usuario" }}
             inputProps={{ placeholder: "juan_manuel_estrella_01..." }}
           />
+        </HStack>
+        <HStack>
           <InputControl
             name="user.password"
             rules={{ required: true }}
             formControl={{ label: "Contraseña" }}
-            inputProps={{ placeholder: "••••••••", type: "password" }}
+            inputProps={{ placeholder: "••••••••", type: "password", autoComplete: "on" }}
+          />
+          <InputControl
+            name="user.confirmPassword"
+            rules={{ required: true }}
+            formControl={{ label: "Confirmar Contraseña" }}
+            inputProps={{ placeholder: "••••••••", type: "password", autoComplete: "on" }}
           />
         </HStack>
         <EnterPolygonCoordinates />

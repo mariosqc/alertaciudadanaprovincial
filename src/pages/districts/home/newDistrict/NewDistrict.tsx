@@ -8,12 +8,10 @@ import {
   ModalFooter,
   ModalBody,
   useDisclosure,
-  Stack,
   HStack,
 } from "@chakra-ui/react";
 import { Button } from "@/components";
 import { NewDistrictForm } from "./NewDistrictForm";
-import { EnterPolygonCoordinates } from "./enterPolygonCoordinates/EnterPolygonCoordinates";
 
 export const NewDistrict = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -23,7 +21,14 @@ export const NewDistrict = () => {
         Nuevo Distrito
       </Button>
 
-      <Modal closeOnOverlayClick={false} isCentered isOpen={isOpen} onClose={onClose} size="2xl">
+      <Modal
+        scrollBehavior="inside"
+        closeOnOverlayClick={false}
+        isCentered
+        isOpen={isOpen}
+        onClose={onClose}
+        size="2xl"
+      >
         <ModalOverlay />
         <ModalContent mx="2">
           <ModalHeader>Agrega un nuevo distrito</ModalHeader>

@@ -15,7 +15,7 @@ export const SelectCoordinates: FC<SelectCoordinatesProps> = ({ value, onChange 
   return (
     <>
       <FormControl name="coordinates">
-        <Box borderWidth="2px" h="md">
+        <Box borderWidth="2px" h="sm">
           <GoogleMaps
             polygonPathList={polygon ? [{ path: polygon, draggable: true, editable: true }] : undefined}
             isDrawing={isActiveDrawing}
