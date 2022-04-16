@@ -9,6 +9,7 @@ import {
   ModalBody,
   useDisclosure,
   Stack,
+  HStack,
 } from "@chakra-ui/react";
 import { Button } from "@/components";
 import { NewDistrictForm } from "./NewDistrictForm";
@@ -31,12 +32,14 @@ export const NewDistrict = () => {
           </ModalBody>
 
           <ModalFooter pt="0">
-            <Button ml={3} type="submit" form="new-district-form" colorScheme="pri">
-              Guardar Distrito
-            </Button>
-            <Button variant="ghost" onClick={onClose}>
-              Cancelar
-            </Button>
+            <HStack>
+              <Button type="submit" form="new-district-form" colorScheme="pri">
+                Guardar Distrito
+              </Button>
+              <Button variant="ghost" onClick={onClose}>
+                Cancelar
+              </Button>
+            </HStack>
           </ModalFooter>
         </ModalContent>
       </Modal>
