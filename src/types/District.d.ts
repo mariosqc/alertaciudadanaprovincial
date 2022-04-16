@@ -2,6 +2,7 @@ interface District<Polygon = google.maps.LatLngAltitude[]> {
   createdAt: string;
   id: string;
   name: string;
+  area: number;
   polygon: Polygon;
   user: DistrictUser;
 }

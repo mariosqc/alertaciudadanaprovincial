@@ -1,12 +1,17 @@
-import React from "react";
+import React, { FC } from "react";
 
 import { Menu, MenuButton, MenuList, MenuItem, IconButton } from "@chakra-ui/react";
 
 import { MoreVertical } from "react-feather";
 import { ChangeNameModal } from "./options/changeName/ChangeNameModal";
 import { EditUserModal } from "./options/editUser/EditUserModal";
+import { DeleteDistrict } from "./options/deleteDistrict";
 
-export const DistrictTableMenuOptions = () => {
+interface DistrictTableMenuOptionsProps {
+  district: District;
+}
+
+export const DistrictTableMenuOptions: FC<DistrictTableMenuOptionsProps> = ({ district }) => {
   return (
     <Menu>
       <MenuButton
@@ -20,7 +25,7 @@ export const DistrictTableMenuOptions = () => {
       <MenuList>
         <ChangeNameModal />
         <EditUserModal />
-        <MenuItem>Eliminar</MenuItem>
+        <DeleteDistrict district={district} />
       </MenuList>
     </Menu>
   );

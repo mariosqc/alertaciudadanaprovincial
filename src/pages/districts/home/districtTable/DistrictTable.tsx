@@ -6,11 +6,10 @@ import { DistrictTableMenuOptions } from "./DistrictTableMenuOptions/DistrictTab
 import { PolygonInformationModal } from "./polygonInformationModal/PolygonInformationModal";
 import { database } from "@/firebase";
 import moment from "moment";
+import numeral from "numeral";
 
 export const DistrictTable = () => {
   const [districts, setDistricts] = useState<District[]>([]);
-
-  console.log("Hola");
 
   useEffect(() => {
     database.ref("/admin/districts").on("value", (snapshot) => {
@@ -70,14 +69,12 @@ export const DistrictTable = () => {
                 <Td>
                   <Text lineHeight="none">{moment(district.createdAt).format("LLL")}</Text>
                 </Td>
-                <Td>
-                  {/* {numeral(google.maps.geometry.spherical.computeArea(district.polygon) / 100).format("0,0.00")} km² */}
-                </Td>
+                <Td>{numeral(district.area).format("0,0.00")} km²</Td>
                 <Td>
                   <PolygonInformationModal polygon={district.polygon} />
                 </Td>
                 <Td>
-                  <DistrictTableMenuOptions />
+                  <DistrictTableMenuOptions district={district} />
                 </Td>
               </Tr>
             ))}

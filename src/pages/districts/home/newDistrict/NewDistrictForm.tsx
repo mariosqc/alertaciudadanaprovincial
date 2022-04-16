@@ -24,8 +24,6 @@ export const NewDistrictForm: FC<NewDistrictFormProps> = ({ onSubmit }) => {
         console.log(user, passwordConfirmation);
 
         if (user.password !== passwordConfirmation) {
-          console.log("Hola");
-
           methods.setError("user.confirmPassword", { message: "Las contraseñas no coinciden" });
           methods.setError("user.password", { message: "Las contraseñas no coinciden" });
           methods.setFocus("user.passwordConfirmation");

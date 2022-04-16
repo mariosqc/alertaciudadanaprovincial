@@ -26,6 +26,7 @@ export const NewDistrict = () => {
     const newDistrict: Omit<District<string[]>, "id"> = {
       polygon,
       createdAt: new Date().toISOString(),
+      area: Number((google.maps.geometry.spherical.computeArea(coordinates) / 100).toFixed(2)),
       name: values.name,
       user: {
         name: values.user.name,

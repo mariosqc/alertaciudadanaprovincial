@@ -36,7 +36,7 @@ export const PolygonInformationModal: FC<PolygonInformationModalProps> = ({ poly
 
   return (
     <>
-      <HStack w="max-content">
+      <HStack>
         <Button
           onClick={onOpen}
           pl="2"
@@ -48,7 +48,7 @@ export const PolygonInformationModal: FC<PolygonInformationModalProps> = ({ poly
           size="sm"
           colorScheme="pri"
         >
-          {polygon.length} Lados
+          {polygon.length > 999 ? "+999" : polygon.length} Lados
         </Button>
       </HStack>
       <Modal size="xl" isCentered isOpen={isOpen} onClose={onClose}>

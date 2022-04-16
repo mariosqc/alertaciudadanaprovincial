@@ -5,3 +5,5 @@ export * from "./form";
 export * from "./breadcrumb";
 
 export * from "./googleMaps";
+
+export * from "./alertDialog";
