@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 
 import { HStack, Stack } from "@chakra-ui/react";
 
@@ -6,7 +6,11 @@ import { FormProvider, InputControl } from "@/components";
 
 import { EnterPolygonCoordinates } from "./enterPolygonCoordinates/EnterPolygonCoordinates";
 
-export const NewDistrictForm = () => {
+interface NewDistrictFormProps {
+  onSubmit(values: any): void;
+}
+
+export const NewDistrictForm: FC<NewDistrictFormProps> = ({ onSubmit }) => {
   return (
     <FormProvider
       id="new-district-form"
@@ -38,7 +42,7 @@ export const NewDistrictForm = () => {
           return;
         }
 
-        console.log({ name, coordinates, user });
+        onSubmit({ name, coordinates, user });
       }}
     >
       <Stack>

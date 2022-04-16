@@ -98,7 +98,7 @@ export const GoogleMaps: FC<GoogleMapsProps> = ({
       {/* @ts-ignore */}
       <GoogleMap
         mapContainerStyle={{ width: "100%", height: "100%" }}
-        options={{ maxZoom: 20, minZoom: 3, zoom: defaultZoom }}
+        options={{ maxZoom: 15, minZoom: 3, zoom: defaultZoom }}
         onLoad={onLoad}
         onUnmount={onUnmount}
         onClick={onClick}

@@ -1,19 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
+
+import { database } from "@/firebase";
 import { Box } from "@chakra-ui/react";
-import { GoogleMaps } from "@/components";
 
-function MyComponent() {
-  const [positions, setPositions] = useState<google.maps.LatLngLiteral[]>([]);
+const ExamplePage = () => {
+  async function getData() {
+    const response = await database.ref("/admin/districts").get();
 
-  return (
-    <Box h="100vh">
-      <GoogleMaps
-        onClick={(e) => {
-          if (e.latLng?.toJSON()) setPositions([...positions, e.latLng?.toJSON()]);
-        }}
-      />
-    </Box>
-  );
-}
+    console.log(response.val());
+  }
 
-export default MyComponent;
+  useEffect(() => {
+    getData();
+  }, []);
+
+  return <Box m="24">ExamplePage</Box>;
+};
+
+export default ExamplePage;
