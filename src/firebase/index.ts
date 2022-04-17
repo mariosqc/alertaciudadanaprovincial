@@ -7,3 +7,5 @@ firebase.initializeApp(options);
 
 export const database = firebase.database();
 export const auth = firebase.auth();
+export * from "./refs";
+export const firebaseOptions = options;

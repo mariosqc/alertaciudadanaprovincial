@@ -7,6 +7,7 @@ import { PolygonInformationModal } from "./polygonInformationModal/PolygonInform
 import { database } from "@/firebase";
 import moment from "moment";
 import numeral from "numeral";
+import { District } from "@alerta-ciudadana/entity";
 
 export const DistrictTable = () => {
   const [districts, setDistricts] = useState<District[]>([]);

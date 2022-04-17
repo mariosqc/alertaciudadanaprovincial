@@ -15,6 +15,7 @@ import { NewDistrictForm } from "./NewDistrictForm";
 import { AnyObject } from "yup/lib/types";
 import { v4 as uuidv4 } from "uuid";
 import { database } from "@/firebase";
+import { District } from "@alerta-ciudadana/entity";
 
 export const NewDistrict = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
