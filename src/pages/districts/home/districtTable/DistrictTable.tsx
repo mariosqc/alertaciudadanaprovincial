@@ -8,27 +8,15 @@ import { database } from "@/firebase";
 import moment from "moment";
 import numeral from "numeral";
 import { District } from "@alerta-ciudadana/entity";
+import { useAction } from "src/store/actions";
+import { useSelector } from "@/store";
 
 export const DistrictTable = () => {
-  const [districts, setDistricts] = useState<District[]>([]);
+  const { getDistricts } = useAction();
+  const { districts } = useSelector(({ districts }) => districts);
 
   useEffect(() => {
-    database.ref("/admin/districts").on("value", (snapshot) => {
-      let districts = snapshot.val();
-
-      districts = Object.keys(districts || {})
-        .map((key: any) => ({
-          id: key,
-          ...districts[key],
-          polygon: districts[key].polygon.map((path: string) =>
-            /* Hacemos un split en el string para obtener las coordenadas y luego lo convertimos en un objecto */
-            path.split(",").reduce((a, v, i) => ({ ...a, [i === 0 ? "lat" : "lng"]: Number(v) }), {})
-          ),
-        }))
-        .sort((a: District, b: District) => moment(b.createdAt).diff(moment(a.createdAt)));
-
-      setDistricts(districts);
-    });
+    getDistricts();
   }, []);
 
   return (

@@ -23,6 +23,6 @@ declare module "@alerta-ciudadana/redux" {
   }
 
   interface FnReducer<State, Payload> {
-    [key: string]: (state: State, payload: PayloadAction<ResponseApi<Payload>>) => void;
+    [key: string]: (state: State, payload: PayloadAction<Payload>) => void;
   }
 }

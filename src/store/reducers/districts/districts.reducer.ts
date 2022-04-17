@@ -6,7 +6,9 @@ export interface InitialState {
   districts: District[];
 }
 
-const initialState = {} as InitialState;
+const initialState = {
+  districts: [],
+} as InitialState;
 
 const districtsSlice = createSlice({
   name: "districts",

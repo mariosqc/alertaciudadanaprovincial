@@ -23,6 +23,10 @@ const MyApp: FC<{ Component: FC; pageProps: any }> = ({ Component, pageProps }) 
     firebase.initializeApp(firebaseOptions);
   }, []);
 
+  useEffect(() => {
+    navigator.serviceWorker.getRegistration();
+  }, []);
+
   return (
     <ReduxProvider store={store}>
       <ChakraProvider theme={theme}>

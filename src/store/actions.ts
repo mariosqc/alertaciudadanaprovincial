@@ -9,6 +9,7 @@ export const useAction = () => {
   return bindActionCreators(
     {
       // ...districts,
+      ...districts,
     },
     dispatch
   );

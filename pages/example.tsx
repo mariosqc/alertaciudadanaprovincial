@@ -1,32 +1,31 @@
-import React, { useEffect, useState } from "react";
-
-import { auth, database } from "@/firebase";
-import { Box } from "@chakra-ui/react";
-import { faker } from "@faker-js/faker";
+import React from "react";
+import firebase from "firebase/compat/app";
+import { getMessaging, getToken } from "firebase/messaging";
 
 const ExamplePage = () => {
-  const [email, setEmail] = useState(faker.internet.email());
-  const [password, setPassword] = useState(faker.internet.password());
+  const messaging = firebase.messaging?.isSupported() ? getMessaging() : null;
 
-  async function getData() {
-    // const response = await auth.signInWithEmailAndPassword("Lafayette54@yahoo.com", "9VaS6q3zZxLAlwc");
-    // Lafayette54@yahoo.com 9VaS6q3zZxLAlwc
-    /*  const response = await auth.createUserWithEmailAndPassword(email, password); */
-
-    // Check if user is auth
-    const user = auth.currentUser;
-
-    console.log(user?.toJSON());
-
-    // Logout
-    // auth.signOut();
+  if (messaging) {
+    getToken(messaging, {
+      vapidKey:
+        "AAAAEA3PHtA:APA91bHv-D7TVmpQhqvzZJAGvEP0Yiw2GM_RnFN-5MVB-uSr3rOynWQctWi-1zbUPCPv6HMlgR7v-KwStv-2KSNx3fNqjcLu-e2ruEVfu_NnfkEyHZ4haseI1jpW5GzR8KRAHKKBAFIB",
+    })
+      .then((currentToken) => {
+        if (currentToken) {
+          // Send the token to your server and update the UI if necessary
+          // ...
+        } else {
+          // Show permission request UI
+          console.log("No registration token available. Request permission to generate one.");
+          // ...
+        }
+      })
+      .catch((err) => {
+        console.log("An error occurred while retrieving token. ", err);
+        // ...
+      });
   }
-
-  useEffect(() => {
-    getData();
-  }, []);
-
-  return <Box m="24">ExamplePage</Box>;
+  return <div>ExamplePage</div>;
 };
 
 export default ExamplePage;
