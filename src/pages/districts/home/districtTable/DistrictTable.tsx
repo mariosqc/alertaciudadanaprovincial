@@ -23,7 +23,6 @@ export const DistrictTable = () => {
     <FormProvider id="" onSubmit={() => {}}>
       <TableContainer>
         <Table size="sm" variant="striped">
-          <TableCaption>Imperial to metric conversion factors</TableCaption>
           <Thead>
             <Tr>
               <Th>Nombre</Th>
