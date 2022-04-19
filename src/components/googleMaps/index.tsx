@@ -13,7 +13,7 @@ interface GoogleMapsProps {
   markerList?: google.maps.LatLngLiteral[];
   polygonPathList?: { draggable?: boolean; editable?: boolean; path: google.maps.LatLngLiteral[] }[];
   isDrawing?: boolean;
-  onClick?(event: google.maps.MapMouseEvent): void;
+  onClick?({ event, coords }: { event: google.maps.MapMouseEvent; coords: google.maps.LatLngLiteral }): void;
   onPolygonCompleteDrawingManager?({
     coordinates,
     polygon,
@@ -101,7 +101,10 @@ export const GoogleMaps: FC<GoogleMapsProps> = ({
         options={{ maxZoom: 15, minZoom: 3, zoom: defaultZoom }}
         onLoad={onLoad}
         onUnmount={onUnmount}
-        onClick={onClick}
+        onClick={(e) => {
+          const coords = e.latLng?.toJSON();
+          coords && onClick?.({ event: e, coords });
+        }}
       >
         {markerList && <Marker positions={markerList} />}
 
@@ -130,10 +133,7 @@ export const GoogleMaps: FC<GoogleMapsProps> = ({
               typeof window !== "undefined"
                 ? {
                     drawingMode: window.google.maps.drawing.OverlayType.POLYGON,
-                    polylineOptions: {
-                      editable: true,
-                      draggable: true,
-                    },
+                    polylineOptions: { editable: true, draggable: true },
                   }
                 : undefined
             }
