@@ -79,9 +79,10 @@ export const GoogleMaps: FC<GoogleMapsProps> = ({
 
   const onPolygonComplete = (polygon: google.maps.Polygon) => {
     const coordinates: google.maps.LatLngLiteral[] = polygon
-      .getPaths()
-      .getArray()[0]
-      .Ed.map((item: any) => ({ lat: item.lat(), lng: item.lng() }));
+      .getPath()
+      .getArray()
+      .map((item: any) => ({ lat: item.lat(), lng: item.lng() }));
+
     onPolygonCompleteDrawingManagerClean && polygon.setMap(null);
     onPolygonCompleteDrawingManager?.({ coordinates, polygon });
   };
