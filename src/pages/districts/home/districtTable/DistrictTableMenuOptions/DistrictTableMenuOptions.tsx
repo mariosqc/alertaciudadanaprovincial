@@ -6,6 +6,7 @@ import { MoreVertical } from "react-feather";
 import { ChangeNameModal } from "./options/changeName/ChangeNameModal";
 import { EditUserModal } from "./options/editUser/EditUserModal";
 import { DeleteDistrict } from "./options/deleteDistrict";
+import { District } from "@alerta-ciudadana/entity";
 
 interface DistrictTableMenuOptionsProps {
   district: District;

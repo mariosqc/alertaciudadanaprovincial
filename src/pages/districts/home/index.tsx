@@ -22,45 +22,52 @@ export const DistrictTemplate: NextPage = () => {
         </Card.Body>
         <Divider />
         <CardContainer>
-          <HStack justifyContent="flex-end" spacing={1}>
-            <IconButton
-              size="sm"
-              aria-label="fist page"
-              icon={<ChevronsLeft size="1.25rem" />}
-              colorScheme="pri"
-              variant="ghost"
-              _focus={{}}
-            />
-            <IconButton
-              size="sm"
-              aria-label="fist page"
-              icon={<ChevronLeft size="1.25rem" />}
-              colorScheme="pri"
-              variant="ghost"
-              _focus={{}}
-            />
-            <Flex>
-              <Text userSelect="none" fontSize="sm" fontWeight="medium">
-                <chakra.span color="pri.700">10-20</chakra.span> de 25
-              </Text>
-            </Flex>
-            <IconButton
-              size="sm"
-              aria-label="last page"
-              icon={<ChevronRight size="1.25rem" />}
-              colorScheme="pri"
-              variant="ghost"
-              _focus={{}}
-            />
-            <IconButton
-              size="sm"
-              aria-label="last page"
-              icon={<ChevronsRight size="1.25rem" />}
-              colorScheme="pri"
-              variant="ghost"
-              _focus={{}}
-            />
-          </HStack>
+          <Flex align="center" justify="space-between">
+            <HStack>
+              <IconButton variant="outline" aria-label="" size="sm" colorScheme="pri" icon={<>20</>} />
+              <IconButton aria-label="" size="sm" colorScheme="pri" icon={<>50</>} />
+              <IconButton variant="outline" aria-label="" size="sm" colorScheme="pri" icon={<>100</>} />
+            </HStack>
+            <HStack>
+              <IconButton
+                size="sm"
+                aria-label="fist page"
+                icon={<ChevronsLeft size="1.25rem" />}
+                colorScheme="pri"
+                variant="ghost"
+                _focus={{}}
+              />
+              <IconButton
+                size="sm"
+                aria-label="fist page"
+                icon={<ChevronLeft size="1.25rem" />}
+                colorScheme="pri"
+                variant="ghost"
+                _focus={{}}
+              />
+              <Flex>
+                <Text userSelect="none" fontSize="sm" fontWeight="medium">
+                  <chakra.span color="pri.700">10-20</chakra.span> de 25
+                </Text>
+              </Flex>
+              <IconButton
+                size="sm"
+                aria-label="last page"
+                icon={<ChevronRight size="1.25rem" />}
+                colorScheme="pri"
+                variant="ghost"
+                _focus={{}}
+              />
+              <IconButton
+                size="sm"
+                aria-label="last page"
+                icon={<ChevronsRight size="1.25rem" />}
+                colorScheme="pri"
+                variant="ghost"
+                _focus={{}}
+              />
+            </HStack>
+          </Flex>
         </CardContainer>
       </Card.Wrapper>
     </WrapperPage>
