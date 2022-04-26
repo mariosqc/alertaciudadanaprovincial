@@ -13,6 +13,7 @@ import {
 import { Button } from "@/components";
 import { ChangeNameForm } from "./ChangeNameForm";
 import { database } from "@/firebase";
+import { District } from "@alerta-ciudadana/entity";
 interface ChangeNameModalProps {
   district: District;
 }

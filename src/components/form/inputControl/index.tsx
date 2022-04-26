@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { FormControl, FormControlProps } from "../formControl";
-import { Input, InputProps } from "../input";
+import { Input, InputProps } from "../Input";
 
 interface InputControlProps extends InputProps {
   formControl?: Omit<FormControlProps, "name">;

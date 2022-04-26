@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { Controller } from "react-hook-form";
-import { InputProps } from "../input";
+import { InputProps } from "../Input";
 import _InputMask from "react-input-mask";
 import { Input as _Input } from "@chakra-ui/react";
 import { FormControl, FormControlProps } from "../formControl";

@@ -4,7 +4,7 @@ import { GoogleMap, Polygon, DrawingManager } from "@react-google-maps/api";
 
 import { OriginalTheme } from "@/themes";
 
-import { Marker } from "./marker";
+import { Marker } from "./Marker";
 
 /*TODO: Verificar si un punto está dentro de un polígono https://developers.google.com/maps/documentation/javascript/examples/poly-containsLocation */
 interface GoogleMapsProps {

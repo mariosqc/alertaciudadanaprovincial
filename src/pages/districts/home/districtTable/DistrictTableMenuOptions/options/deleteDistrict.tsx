@@ -2,6 +2,7 @@ import { AlertDialog } from "@/components";
 import { MenuItem } from "@chakra-ui/react";
 import React, { FC, useState } from "react";
 import { database } from "@/firebase";
+import { District } from "@alerta-ciudadana/entity";
 
 interface DeleteDistrictProps {
   district: District;
