@@ -1,20 +1,26 @@
 import React from "react";
 
 import { NextPage } from "next";
-import { WrapperPage } from "@/templates";
-import { Card, CardContainer } from "@/layout";
-import { NewDistrict } from "./newDistrict/NewDistrict";
-import { DistrictTable } from "./districtTable/DistrictTable";
+
 import { Divider, Flex, HStack, IconButton, Text, chakra } from "@chakra-ui/react";
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from "react-feather";
 
+import { WrapperPage } from "@/templates";
+import { Card, CardContainer } from "@/layout";
+import { useDistrictContext } from "@/contexts";
+
+import { NewDistrict } from "./newDistrict/NewDistrict";
+import { DistrictTable } from "./districtTable/DistrictTable";
+
 export const DistrictTemplate: NextPage = () => {
+  const { districts } = useDistrictContext();
+
   return (
     <WrapperPage title="Listado de Distritos" breadcrumb={{ routes: ["districts"] }}>
       <Card.Wrapper colSpan={12}>
         <Card.Header
           title="Listado de Distritos"
-          subtitle="25 Resultados encontrados"
+          subtitle={`${districts.length} Resultados encontrados`}
           optionsRight={[<NewDistrict key={1} />]}
         />
         <Card.Body px="0">
