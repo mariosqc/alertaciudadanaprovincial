@@ -1,28 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
-import { User } from "@alerta-ciudadana/entity";
-
-import { database } from "@/firebase";
 import { Avatar, Table, TableContainer, Tbody, Td, Text, Tfoot, Th, Thead, Tr } from "@chakra-ui/react";
 
 import moment from "moment";
+import { useUserContext } from "@/contexts";
 
 export const UsersTable = () => {
-  const [users, setUsers] = useState<User[]>([]);
-
-  async function getUsers(): Promise<User[]> {
-    return new Promise((resolve) => {
-      database.ref("users").on("value", (snapshot) => {
-        let data = snapshot.val();
-        const users = Object.keys(data).map((userId) => Object.values(data[userId])[0]) as User[];
-        resolve(users);
-      });
-    });
-  }
-
-  useEffect(() => {
-    getUsers().then(setUsers);
-  }, []);
+  const { users } = useUserContext();
 
   return (
     <TableContainer>

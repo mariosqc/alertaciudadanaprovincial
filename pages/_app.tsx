@@ -17,6 +17,7 @@ import "@fontsource/open-sans/700.css";
 import "@fontsource/open-sans/800.css";
 import Head from "next/head";
 import { firebaseOptions } from "@/firebase";
+import { ContextProviders } from "@/contexts";
 
 const MyApp: FC<{ Component: FC; pageProps: any }> = ({ Component, pageProps }) => {
   useEffect(() => {
@@ -38,7 +39,9 @@ const MyApp: FC<{ Component: FC; pageProps: any }> = ({ Component, pageProps }) 
           ></script>
         </Head>
 
-        <Component {...pageProps} />
+        <ContextProviders>
+          <Component {...pageProps} />
+        </ContextProviders>
       </ChakraProvider>
     </ReduxProvider>
   );
