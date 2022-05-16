@@ -1,18 +1,22 @@
-import { AlertDialog } from "@/components";
-import { MenuItem } from "@chakra-ui/react";
 import React, { FC, useState } from "react";
-import { database } from "@/firebase";
+
 import { District } from "@alerta-ciudadana/entity";
+
+import { AlertDialog } from "@/components";
+import { useDistrictContext } from "@/contexts";
+
+import { MenuItem } from "@chakra-ui/react";
 
 interface DeleteDistrictProps {
   district: District;
 }
 
 export const DeleteDistrict: FC<DeleteDistrictProps> = ({ district }) => {
+  const { deleteDistrict } = useDistrictContext();
   const [isOpen, setIsOpen] = useState(false);
 
   async function handleDelete() {
-    await database.ref(`admin/districts/${district.id}`).remove();
+    await deleteDistrict(district.id);
     setIsOpen(false);
   }
 

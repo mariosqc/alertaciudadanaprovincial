@@ -9,11 +9,11 @@ import moment from "moment";
 import numeral from "numeral";
 import { District } from "@alerta-ciudadana/entity";
 import { useAction } from "src/store/actions";
-import { useSelector } from "@/store";
+import { useDistrictContext } from "@/contexts";
 
 export const DistrictTable = () => {
   const { getDistricts } = useAction();
-  const { districts } = useSelector(({ districts }) => districts);
+  const { districts } = useDistrictContext();
 
   useEffect(() => {
     getDistricts();
