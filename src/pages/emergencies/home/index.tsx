@@ -9,7 +9,7 @@ import { useEmergencyContext } from "@/contexts";
 import { EmergenciesTable } from "./EmergenciesTable";
 
 export const EmergenciesPage: NextPage = () => {
-  const { emergencies } = useEmergencyContext();
+  const { emergencies, pagination } = useEmergencyContext();
 
   return (
     <WrapperPage title="Emergencias" breadcrumb={{ routes: ["emergencies"] }}>
