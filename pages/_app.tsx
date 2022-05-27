@@ -21,6 +21,8 @@ import { Compose } from "@/contexts";
 import UserProvider from "src/contexts/user";
 import DistrictProvider from "src/contexts/districts";
 import EmergencyProvider from "src/contexts/emergency";
+import AuthProvider, { useAuthContext } from "src/contexts/auth";
+import { useRouter } from "next/router";
 
 const MyApp: FC<{ Component: FC; pageProps: any }> = ({ Component, pageProps }) => {
   useEffect(() => {
@@ -41,13 +43,29 @@ const MyApp: FC<{ Component: FC; pageProps: any }> = ({ Component, pageProps }) 
             defer
           ></script>
         </Head>
-
-        <Compose providers={[UserProvider, DistrictProvider, EmergencyProvider]}>
-          <Component {...pageProps} />
+        <Compose providers={[AuthProvider, UserProvider, DistrictProvider, EmergencyProvider]}>
+          <ComponentMain Component={<Component {...pageProps} />} />
         </Compose>
       </ChakraProvider>
     </ReduxProvider>
   );
+};
+
+const ComponentMain = ({ Component }: any) => {
+  const { isAuthenticated, showScreen } = useAuthContext();
+  const { push } = useRouter();
+
+  useEffect(() => {
+    if (showScreen) {
+      if (!isAuthenticated) {
+        push("/signin");
+      }
+    }
+  }, [isAuthenticated, showScreen]);
+
+  if (!showScreen) return null;
+
+  return <>{Component}</>;
 };
 
 export default MyApp;
