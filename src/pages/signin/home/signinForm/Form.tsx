@@ -5,16 +5,17 @@ import React, { FC } from "react";
 import { signinSchema } from "./schema";
 
 export interface SigninFormProps {
+  isLoading?: boolean;
   onSubmit: (values: SigninFormOnSubmit) => void;
 }
 
-export const Form: FC<SigninFormProps> = ({ onSubmit }) => {
+export const Form: FC<SigninFormProps> = ({ onSubmit, isLoading }) => {
   return (
     <FormProvider id="" onSubmit={onSubmit} schema={signinSchema}>
       <Stack>
         <InputControl formControl={{ label: "Correo electrónico" }} name="email" />
         <InputControl formControl={{ label: "Contraseña" }} name="password" inputProps={{ type: "password" }} />
-        <Button type="submit" colorScheme="pri">
+        <Button isLoading={isLoading} type="submit" colorScheme="pri">
           Iniciar Sesión
         </Button>
       </Stack>
