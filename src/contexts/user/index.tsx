@@ -4,6 +4,10 @@ import { createContext } from "@/utils";
 
 import { database } from "@/firebase";
 
+import Cookies from "universal-cookie";
+
+const cookies = new Cookies();
+
 interface UserContext {
   users: User[];
 }
@@ -14,9 +18,10 @@ const UserProvider: FC = ({ children }) => {
   const [users, setUsers] = useState<User[]>([]);
 
   function getUsers() {
-    database.ref("users").on("value", (snapshot) => {
+    const districtId = cookies.get("district_id");
+    database.ref(`users/${districtId}`).on("value", (snapshot) => {
       let data = snapshot.val();
-      const users = Object.keys(data).map((userId) => Object.values(data[userId])[0]) as User[];
+      const users = Object.keys(data).map((key) => ({ ...data[key], uid: key }));
       setUsers(users);
     });
   }
