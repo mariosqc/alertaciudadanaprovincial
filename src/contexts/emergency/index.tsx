@@ -5,6 +5,10 @@ import { database } from "@/firebase";
 import { createContext } from "@/utils";
 
 const SKIP_PAGINATION = 10;
+
+import Cookies from "universal-cookie";
+
+const cookies = new Cookies();
 interface Pagination<T> {
   perPage: number;
   take: number;
@@ -36,8 +40,10 @@ const EmergencyProvider: FC = ({ children }) => {
   const [completeInitialRender, setCompleteInitialRender] = useState(false);
 
   function getEmergencies() {
-    database.ref("district/1d3d7106-76f0-4fb9-9f5d-35ef96bb0a20").on("value", (snapshot) => {
-      let emergenciesSnapshot = snapshot.val();
+    const districtId = cookies.get("district_id");
+
+    database.ref(`district/${districtId}`).on("value", (snapshot) => {
+      let emergenciesSnapshot = snapshot.val() || [];
 
       if (emergenciesSnapshot.emergency) {
         emergenciesSnapshot = Object.keys(emergenciesSnapshot.emergency)

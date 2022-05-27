@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 
 import { NextPage } from "next";
+import Cookies from "universal-cookie";
 import { Flex, useToast } from "@chakra-ui/react";
 import { Card } from "@/layout";
 import { Form } from "./signinForm/Form";
 import { auth } from "@/firebase";
+import { useDistrictContext } from "@/contexts";
+
+const cookies = new Cookies();
 
 export const SigninPage: NextPage = () => {
   const { onSubmit, isLoading } = useLogin();
@@ -23,6 +27,7 @@ export const SigninPage: NextPage = () => {
 
 const useLogin = () => {
   const toast = useToast();
+  const { districts } = useDistrictContext();
   const [isLoading, setIsLoading] = useState(false);
 
   async function onSubmit(values: SigninFormOnSubmit) {
@@ -30,11 +35,17 @@ const useLogin = () => {
     try {
       const response = await auth.signInWithEmailAndPassword(values.email, values.password);
 
-      console.log(response);
-      setIsLoading(false);
+      if (response) {
+        const district = districts.find((d) => d.user.credentials.username === values.email);
+
+        if (district) {
+          cookies.set("user", district.user.name, { path: "/" });
+          cookies.set("district_id", district.id, { path: "/" });
+          window.location.href = "/dashboard";
+        }
+      }
     } catch (err) {
       const error: any = err;
-      console.log(error.code);
       if (["auth/user-not-found", "auth/wrong-password"].includes(error.code)) {
         toast({
           position: "top-right",

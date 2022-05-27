@@ -13,8 +13,16 @@ export const Form: FC<SigninFormProps> = ({ onSubmit, isLoading }) => {
   return (
     <FormProvider id="" onSubmit={onSubmit} schema={signinSchema}>
       <Stack>
-        <InputControl formControl={{ label: "Correo electrónico" }} name="email" />
-        <InputControl formControl={{ label: "Contraseña" }} name="password" inputProps={{ type: "password" }} />
+        <InputControl
+          inputProps={{ isDisabled: isLoading }}
+          formControl={{ label: "Correo electrónico" }}
+          name="email"
+        />
+        <InputControl
+          formControl={{ label: "Contraseña" }}
+          name="password"
+          inputProps={{ type: "password", isDisabled: isLoading }}
+        />
         <Button isLoading={isLoading} type="submit" colorScheme="pri">
           Iniciar Sesión
         </Button>

@@ -14,7 +14,7 @@ import { Button } from "@/components";
 import { NewDistrictForm } from "./NewDistrictForm";
 import { AnyObject } from "yup/lib/types";
 import { v4 as uuidv4 } from "uuid";
-import { database } from "@/firebase";
+import { database, auth } from "@/firebase";
 import { District } from "@alerta-ciudadana/entity";
 
 export const NewDistrict = () => {
@@ -29,16 +29,13 @@ export const NewDistrict = () => {
       createdAt: new Date().toISOString(),
       area: Number((google.maps.geometry.spherical.computeArea(coordinates) / 100).toFixed(2)),
       name: values.name,
-      user: {
-        name: values.user.name,
-        credentials: {
-          password: values.user.password,
-          username: values.user.username,
-        },
-      },
+      user: { name: values.user.name, credentials: { password: values.user.password, username: values.user.username } },
     };
 
     await database.ref(`/admin/districts/`).child(uuidv4()).set(newDistrict);
+    auth.createUserWithEmailAndPassword(values.user.username, values.user.password).then((user) => {
+      user.user?.updateProfile({ displayName: values.user.name });
+    });
 
     onClose();
   }
