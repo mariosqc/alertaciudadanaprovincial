@@ -1,5 +1,6 @@
 declare module "@alerta-ciudadana/entity" {
   interface Emergency {
+    id: string;
     date: string;
     emergency: string;
     phone: string;
