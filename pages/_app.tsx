@@ -20,6 +20,7 @@ import { firebaseOptions } from "@/firebase";
 import { Compose } from "@/contexts";
 import UserProvider from "src/contexts/user";
 import DistrictProvider from "src/contexts/districts";
+import EmergencyProvider from "src/contexts/emergency";
 
 const MyApp: FC<{ Component: FC; pageProps: any }> = ({ Component, pageProps }) => {
   useEffect(() => {
@@ -41,7 +42,7 @@ const MyApp: FC<{ Component: FC; pageProps: any }> = ({ Component, pageProps }) 
           ></script>
         </Head>
 
-        <Compose providers={[UserProvider, DistrictProvider]}>
+        <Compose providers={[UserProvider, DistrictProvider, EmergencyProvider]}>
           <Component {...pageProps} />
         </Compose>
       </ChakraProvider>

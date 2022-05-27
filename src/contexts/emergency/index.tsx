@@ -1,43 +1,59 @@
 import { FC, useState, useContext, useEffect } from "react";
-import { District } from "@alerta-ciudadana/entity";
-import moment from "moment";
+import { Emergency } from "@alerta-ciudadana/entity";
 
 import { database } from "@/firebase";
 import { createContext } from "@/utils";
 
-interface DistrictContext {
-  districts: District[];
+interface EmergencyContext {
+  emergencies: Emergency[];
 }
 
-const DistrictContext = createContext<DistrictContext>();
+const EmergencyContext = createContext<EmergencyContext>();
 
-const DistrictProvider: FC = ({ children }) => {
-  const [districts, setDistricts] = useState<District[]>([]);
+const EmergencyProvider: FC = ({ children }) => {
+  const [emergencies, setEmergencies] = useState<Emergency[]>([]);
 
-  function getDistricts() {
-    database.ref("admin/districts").on("value", (snapshot) => {
-      let districts = snapshot.val();
-      districts = Object.keys(districts || {})
-        .map((key: any) => ({
-          id: key,
-          ...districts[key],
-          polygon: districts[key].polygon.map((path: string) =>
-            /* Hacemos un split en el string para obtener las coordenadas y luego lo convertimos en un objecto */
-            path.split(",").reduce((a, v, i) => ({ ...a, [i === 0 ? "lat" : "lng"]: Number(v) }), {})
-          ),
-        }))
-        .sort((a: District, b: District) => moment(b.createdAt).diff(moment(a.createdAt)));
-      setDistricts(districts);
+  function getEmergencies() {
+    database.ref("district/1d3d7106-76f0-4fb9-9f5d-35ef96bb0a20").on("value", (snapshot) => {
+      let emergenciesSnapshot = snapshot.val();
+
+      if (emergenciesSnapshot.emergency) {
+        emergenciesSnapshot = Object.keys(emergenciesSnapshot.emergency)
+          .map((key) => {
+            let emergencies = (Object.entries(emergenciesSnapshot.emergency[key]) as any).map(([id, value]: any) => ({
+              ...value,
+              id,
+              userId: key,
+            }));
+
+            return emergencies;
+          })
+          .flat();
+
+        setEmergencies(emergenciesSnapshot);
+      }
     });
   }
 
   useEffect(() => {
-    getDistricts();
+    getEmergencies();
   }, []);
 
-  return <DistrictContext.Provider value={{ districts }}>{children}</DistrictContext.Provider>;
+  return <EmergencyContext.Provider value={{ emergencies }}>{children}</EmergencyContext.Provider>;
 };
 
-export const useDistrictContext = () => useContext(DistrictContext);
+export const useEmergencyContext = () => useContext(EmergencyContext);
 
-export default DistrictProvider;
+export default EmergencyProvider;
+/*  let emergencies = snapshot.val();
+      emergencies = Object.keys(emergencies || {})
+        .map((key: any) => ({
+          id: key,
+          ...emergencies[key],
+          polygon: emergencies[key].polygon.map((path: string) =>
+            Hacemos un split en el string para obtener las coordenadas y luego lo convertimos en un objecto 
+            path.split(",").reduce((a, v, i) => ({ ...a, [i === 0 ? "lat" : "lng"]: Number(v) }), {})
+          ),
+        }))
+        .sort((a: Emergency, b: Emergency) => moment(b.createdAt).diff(moment(a.createdAt)));
+      setEmergencies(emergencies); */

@@ -1,16 +1,16 @@
-import React, { FC, useCallback, useRef, useState } from "react";
+import React, { FC, Fragment, useCallback, useRef, useState } from "react";
 
 import { GoogleMap, Polygon, DrawingManager } from "@react-google-maps/api";
 
 import { OriginalTheme } from "@/themes";
 
-import { Marker } from "./Marker";
+import { Marker, MarkerProps } from "./Marker";
 
 /*TODO: Verificar si un punto está dentro de un polígono https://developers.google.com/maps/documentation/javascript/examples/poly-containsLocation */
 interface GoogleMapsProps {
   defaultCenter?: google.maps.LatLngLiteral;
   defaultZoom?: number;
-  markerList?: google.maps.LatLngLiteral[];
+  markerList?: MarkerProps[];
   polygonPathList?: { draggable?: boolean; editable?: boolean; path: google.maps.LatLngLiteral[] }[];
   isDrawing?: boolean;
   onClick?({ event, coords }: { event: google.maps.MapMouseEvent; coords: google.maps.LatLngLiteral }): void;
@@ -107,7 +107,13 @@ export const GoogleMaps: FC<GoogleMapsProps> = ({
           coords && onClick?.({ event: e, coords });
         }}
       >
-        {markerList && <Marker positions={markerList} />}
+        {markerList && (
+          <Fragment>
+            {markerList.map((marker, i) => (
+              <Marker key={i} {...marker} />
+            ))}
+          </Fragment>
+        )}
 
         {polygonPathList &&
           polygonPathList.map((polygonList, index) => (
