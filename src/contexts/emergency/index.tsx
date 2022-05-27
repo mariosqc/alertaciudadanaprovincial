@@ -88,7 +88,7 @@ const EmergencyProvider: FC = ({ children }) => {
       page: pagination.page + 1,
       take: pagination.take + pagination.perPage,
       skip: pagination.skip + pagination.perPage,
-      items: emergencies.slice(pagination.take, pagination.skip),
+      items: emergencies.slice(pagination.take + pagination.perPage, pagination.skip + pagination.perPage),
     };
     setPagination(paginationItem);
   }
