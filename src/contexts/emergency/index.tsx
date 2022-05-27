@@ -59,10 +59,10 @@ const EmergencyProvider: FC = ({ children }) => {
 
   function initialPagination(skip: number) {
     setPagination({
-      ...pagination,
       perPage: skip,
       skip,
-      items: emergencies.slice(pagination.take, skip),
+      take: 0,
+      items: emergencies.slice(0, skip),
       total: emergencies.length,
     });
   }
