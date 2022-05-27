@@ -87,9 +87,6 @@ export const EmergencyModal: FC<EmergencyModalProps> = ({ emergency }) => {
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="blue" mr={3}>
-              Close
-            </Button>
             <Button _focus={{}} onClick={onClose} variant="ghost">
               Cerrar Ventana
             </Button>
