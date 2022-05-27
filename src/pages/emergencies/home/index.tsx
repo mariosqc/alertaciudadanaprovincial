@@ -12,7 +12,7 @@ export const EmergenciesPage: NextPage = () => {
   return (
     <WrapperPage fullScreen title="Emergencias" breadcrumb={{ routes: ["emergencies"] }}>
       <Card.Wrapper colSpan={12}>
-        <Card.Header title="Listado de Emergencias" />
+        <Card.Header title="Listado de Emergencias" subtitle={`${emergencies.length} Resultados encontrados`} />
         <Card.Body h="95%">
           <GoogleMaps
             markerList={emergencies.map(({ coor, user }) => ({
