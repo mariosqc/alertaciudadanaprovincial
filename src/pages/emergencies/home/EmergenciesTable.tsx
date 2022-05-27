@@ -73,7 +73,6 @@ export const EmergenciesTable = () => {
           </Tbody>
           <Tfoot>
             <Tr>
-              <Th w="0"></Th>
               <Th>Fecha</Th>
               <Th>Emergencia</Th>
               <Th>Usuario</Th>
