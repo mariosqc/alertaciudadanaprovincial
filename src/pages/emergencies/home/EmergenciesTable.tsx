@@ -30,7 +30,6 @@ export const EmergenciesTable = () => {
         <Table mb="4" size="sm" variant="striped">
           <Thead>
             <Tr>
-              <Th w="0"></Th>
               <Th>Fecha</Th>
               <Th>Emergencia</Th>
               <Th>Usuario</Th>
@@ -53,9 +52,8 @@ export const EmergenciesTable = () => {
                 </Tr>
               </>
             )}
-            {pagination.items.map((emergency) => (
+            {pagination.items.map((emergency, i) => (
               <Tr key={emergency.id}>
-                <Td w="0"></Td>
                 <Td>{moment(emergency.date).format("LLL")}</Td>
                 <Td>{emergency.emergency}</Td>
                 <Td>{emergency.user}</Td>
@@ -104,11 +102,26 @@ export const EmergenciesTable = () => {
             ))}
           </HStack>
           <HStack>
-            <IconButton onClick={prevPage} _focus={{}} size="sm" aria-label="" icon={<ChevronLeft size="1.25rem" />} />
-            <Text>
-              {pagination.take + 1}-{pagination.skip + 1} de {pagination.total}
+            <IconButton
+              isDisabled={!pagination.take}
+              onClick={prevPage}
+              _focus={{}}
+              size="sm"
+              aria-label=""
+              icon={<ChevronLeft size="1.25rem" />}
+            />
+            <Text userSelect="none">
+              {pagination.take + 1}-{pagination.skip > pagination.total ? pagination.total : pagination.skip} de{" "}
+              {pagination.total}
             </Text>
-            <IconButton onClick={nextPage} _focus={{}} size="sm" aria-label="" icon={<ChevronRight size="1.25rem" />} />
+            <IconButton
+              isDisabled={pagination.skip > pagination.total}
+              onClick={nextPage}
+              _focus={{}}
+              size="sm"
+              aria-label=""
+              icon={<ChevronRight size="1.25rem" />}
+            />
           </HStack>
         </Flex>
       </TableContainer>

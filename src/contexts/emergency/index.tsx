@@ -4,8 +4,8 @@ import { Emergency } from "@alerta-ciudadana/entity";
 import { database } from "@/firebase";
 import { createContext } from "@/utils";
 
+const SKIP_PAGINATION = 10;
 interface Pagination<T> {
-  page: number;
   perPage: number;
   take: number;
   skip: number;
@@ -25,15 +25,15 @@ const EmergencyContext = createContext<EmergencyContext>();
 
 const EmergencyProvider: FC = ({ children }) => {
   const [emergencies, setEmergencies] = useState<Emergency[]>([]);
-  const [perPage, setPerPage] = useState(10);
+  const [perPage, setPerPage] = useState(SKIP_PAGINATION);
   const [pagination, setPagination] = useState<Pagination<Emergency>>({
-    page: 1,
     perPage,
     items: [],
     take: 0,
-    skip: 9,
+    skip: SKIP_PAGINATION,
     total: 0,
   });
+  const [completeInitialRender, setCompleteInitialRender] = useState(false);
 
   function getEmergencies() {
     database.ref("district/1d3d7106-76f0-4fb9-9f5d-35ef96bb0a20").on("value", (snapshot) => {
@@ -57,23 +57,20 @@ const EmergencyProvider: FC = ({ children }) => {
     });
   }
 
-  function initialPagination() {
-    const paginationItem: Pagination<Emergency> = {
+  function initialPagination(skip: number) {
+    setPagination({
       ...pagination,
-      perPage,
-      page: 1,
-      items: emergencies.slice(pagination.take, pagination.skip),
+      perPage: skip,
+      skip,
+      items: emergencies.slice(pagination.take, skip),
       total: emergencies.length,
-    };
-
-    setPagination(paginationItem);
+    });
   }
 
   function prevPage() {
-    if (pagination.page !== 1) {
+    if (pagination.take) {
       const paginationItem: Pagination<Emergency> = {
         ...pagination,
-        page: pagination.page - 1,
         take: pagination.take - pagination.perPage,
         skip: pagination.skip - pagination.perPage,
         items: emergencies.slice(pagination.take - pagination.perPage, pagination.skip - pagination.perPage),
@@ -85,7 +82,6 @@ const EmergencyProvider: FC = ({ children }) => {
   function nextPage() {
     const paginationItem: Pagination<Emergency> = {
       ...pagination,
-      page: pagination.page + 1,
       take: pagination.take + pagination.perPage,
       skip: pagination.skip + pagination.perPage,
       items: emergencies.slice(pagination.take + pagination.perPage, pagination.skip + pagination.perPage),
@@ -95,6 +91,7 @@ const EmergencyProvider: FC = ({ children }) => {
 
   function changeNumberPerPage(number: number) {
     setPerPage(number);
+    initialPagination(number);
   }
 
   useEffect(() => {
@@ -102,8 +99,11 @@ const EmergencyProvider: FC = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    emergencies.length && initialPagination();
-  }, [emergencies, perPage]);
+    if (emergencies.length && !completeInitialRender) {
+      initialPagination(SKIP_PAGINATION);
+      setCompleteInitialRender(true);
+    }
+  }, [emergencies]);
 
   return (
     <EmergencyContext.Provider value={{ emergencies, pagination, prevPage, nextPage, changeNumberPerPage }}>
