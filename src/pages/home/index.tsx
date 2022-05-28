@@ -46,10 +46,9 @@ export const HomePage: NextPage = () => {
         <Button colorScheme="purple">Saludo</Button>
       </HStack>
       <Text>
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusantium
-        dolores perferendis ipsa voluptates quaerat debitis, itaque eum corporis
-        ullam fugiat ducimus! Cupiditate error sunt veritatis vero reprehenderit
-        ut natus praesentium!
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusantium dolores perferendis ipsa voluptates
+        quaerat debitis, itaque eum corporis ullam fugiat ducimus! Cupiditate error sunt veritatis vero reprehenderit ut
+        natus praesentium!
       </Text>
     </Stack>
   );

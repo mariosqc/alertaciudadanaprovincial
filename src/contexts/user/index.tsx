@@ -5,6 +5,7 @@ import { createContext } from "@/utils";
 import { database } from "@/firebase";
 
 import Cookies from "universal-cookie";
+import { useAuthContext } from "../auth";
 
 const cookies = new Cookies();
 
@@ -15,20 +16,24 @@ interface UserContext {
 const UserContext = createContext<UserContext>();
 
 const UserProvider: FC = ({ children }) => {
+  const { isAuthenticated } = useAuthContext();
   const [users, setUsers] = useState<User[]>([]);
 
   function getUsers() {
     const districtId = cookies.get("district_id");
     database.ref(`users/${districtId}`).on("value", (snapshot) => {
       let data = snapshot.val();
-      const users = Object.keys(data).map((key) => ({ ...data[key], uid: key }));
-      setUsers(users);
+
+      if (data) {
+        const users = Object.keys(data).map((key) => ({ ...data[key], uid: key }));
+        setUsers(users);
+      }
     });
   }
 
   useEffect(() => {
-    getUsers();
-  }, []);
+    isAuthenticated && getUsers();
+  }, [isAuthenticated]);
 
   return <UserContext.Provider value={{ users }}>{children}</UserContext.Provider>;
 };

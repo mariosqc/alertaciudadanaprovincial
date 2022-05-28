@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "export": "yarn build && next export"
+    "export": "yarn build && next export",
+    "format": "prettier --write src/**/*.ts{,x} pages/**/*.ts{,x}",
+    "eslint": "tsc --noEmit && eslint src/**/*.ts{,x} pages/**/*.ts{,x}"
   },
   "dependencies": {
     "@chakra-ui/react": "^1.8.7",
@@ -60,6 +62,6 @@
     "@types/react-list": "^0.8.7",
     "eslint": "8.12.0",
     "eslint-config-next": "12.1.4",
-    "typescript": "4.6.3"
+    "typescript": "^4.7.2"
   }
 }

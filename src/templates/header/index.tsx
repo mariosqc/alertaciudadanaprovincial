@@ -1,13 +1,15 @@
+import { useAuthContext } from "@/contexts";
 import { Card } from "@/layout";
-import { Avatar, Flex, HStack, IconButton, Text } from "@chakra-ui/react";
+import { Box, Avatar, CloseButton, Flex, HStack, IconButton, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React from "react";
-import { Bell, Menu, Settings } from "react-feather";
+import { Bell, LogOut, Menu, Settings } from "react-feather";
 import { Navbar } from "../navbar";
 import { MenuDrawer } from "./MenuDrawer";
 
 export const Header = () => {
   const { push, pathname } = useRouter();
+  const { signOut } = useAuthContext();
 
   return (
     <Card.Wrapper rounded="none" shadow="sm">
@@ -35,7 +37,20 @@ export const Header = () => {
             icon={<Bell size="1.25rem" />}
           />
           <Avatar size="sm" />
-          <MenuDrawer />
+
+          <IconButton
+            _focus={{}}
+            display={["none", null, null, "flex"]}
+            size="sm"
+            aria-label=""
+            icon={<LogOut size="1rem" />}
+            colorScheme="red"
+            variant="ghost"
+            onClick={signOut}
+          />
+          <Box display={["flex", null, null, "none"]}>
+            <MenuDrawer />
+          </Box>
         </HStack>
       </Flex>
     </Card.Wrapper>
