@@ -23,6 +23,8 @@ interface EmergencyContext {
   pagination: Pagination<Emergency>;
   prevPage(): void;
   nextPage(): void;
+  goToFirstPage(): void;
+  goToLastPage(): void;
   changeNumberPerPage(perPage: number): void;
 }
 
@@ -30,7 +32,7 @@ const EmergencyContext = createContext<EmergencyContext>();
 
 const EmergencyProvider: FC = ({ children }) => {
   const [emergencies, setEmergencies] = useState<Emergency[]>([]);
-  const { pagination, changeNumberPerPage, nextPage, prevPage } = usePagination({
+  const { pagination, changeNumberPerPage, nextPage, prevPage, goToFirstPage, goToLastPage } = usePagination({
     allItems: emergencies,
     skip: SKIP_PAGINATION,
     name: "emergency",
@@ -65,7 +67,9 @@ const EmergencyProvider: FC = ({ children }) => {
   }, []);
 
   return (
-    <EmergencyContext.Provider value={{ emergencies, pagination, prevPage, nextPage, changeNumberPerPage }}>
+    <EmergencyContext.Provider
+      value={{ emergencies, pagination, prevPage, nextPage, changeNumberPerPage, goToFirstPage, goToLastPage }}
+    >
       {children}
     </EmergencyContext.Provider>
   );

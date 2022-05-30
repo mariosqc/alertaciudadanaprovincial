@@ -79,6 +79,27 @@ export const usePagination = <T,>({ skip, allItems, name }: UsePaginationProps<T
     setPagination(pagination);
   }
 
+  function goToFirstPage() {
+    setPagination((prev) => ({
+      ...prev,
+      perPage: prev.perPage,
+      take: 0,
+      skip,
+      items: allItemsInternal.slice(0, skip),
+    }));
+  }
+
+  function goToLastPage() {
+    const paginationItem: Pagination<T> = {
+      ...pagination,
+      take: pagination.total,
+      skip: pagination.total - pagination.perPage,
+      items: allItemsInternal.slice(pagination.total - pagination.perPage, pagination.total),
+    };
+    paginationStore(paginationItem, name);
+    setPagination(paginationItem);
+  }
+
   useEffect(() => {
     if (allItems.length) {
       setAllItemsInternal(allItems);
@@ -86,5 +107,14 @@ export const usePagination = <T,>({ skip, allItems, name }: UsePaginationProps<T
     }
   }, [allItems]);
 
-  return { allItems: allItemsInternal, perPage, pagination, prevPage, nextPage, changeNumberPerPage };
+  return {
+    allItems: allItemsInternal,
+    perPage,
+    pagination,
+    prevPage,
+    nextPage,
+    changeNumberPerPage,
+    goToFirstPage,
+    goToLastPage,
+  };
 };

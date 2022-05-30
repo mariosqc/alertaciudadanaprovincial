@@ -15,14 +15,15 @@ import {
   Flex,
   HStack,
   Divider,
+  chakra,
 } from "@chakra-ui/react";
 import { useEmergencyContext } from "@/contexts";
 import { EmergencyModal } from "./EmergencyModal";
-import { ChevronLeft, ChevronRight } from "react-feather";
+import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from "react-feather";
 import moment from "moment";
 
 export const EmergenciesTable = () => {
-  const { pagination, prevPage, nextPage, changeNumberPerPage } = useEmergencyContext();
+  const { pagination, prevPage, nextPage, changeNumberPerPage, goToFirstPage, goToLastPage } = useEmergencyContext();
 
   return (
     <>
@@ -101,26 +102,54 @@ export const EmergenciesTable = () => {
             ))}
           </HStack>
           <HStack>
+            {/* <IconButton
+              size="sm"
+              aria-label="fist page"
+              icon={<ChevronsLeft size="1.25rem" />}
+              colorScheme="pri"
+              variant="ghost"
+              _focus={{}}
+              isDisabled={!pagination.take}
+              onClick={goToFirstPage}
+            /> */}
             <IconButton
+              size="sm"
+              aria-label="fist page"
+              icon={<ChevronLeft size="1.25rem" />}
+              colorScheme="pri"
+              variant="ghost"
+              _focus={{}}
               isDisabled={!pagination.take}
               onClick={prevPage}
-              _focus={{}}
-              size="sm"
-              aria-label=""
-              icon={<ChevronLeft size="1.25rem" />}
             />
-            <Text userSelect="none">
-              {pagination.take + 1}-{pagination.skip > pagination.total ? pagination.total : pagination.skip} de{" "}
-              {pagination.total}
-            </Text>
+            <Flex>
+              <Text userSelect="none" fontSize="sm" fontWeight="medium">
+                <chakra.span color="pri.500">
+                  {pagination.take + 1}-{pagination.skip > pagination.total ? pagination.total : pagination.skip}{" "}
+                </chakra.span>{" "}
+                de {pagination.total}
+              </Text>
+            </Flex>
             <IconButton
+              size="sm"
+              aria-label="last page"
+              icon={<ChevronRight size="1.25rem" />}
+              colorScheme="pri"
+              variant="ghost"
+              _focus={{}}
               isDisabled={pagination.skip > pagination.total - 1}
               onClick={nextPage}
-              _focus={{}}
-              size="sm"
-              aria-label=""
-              icon={<ChevronRight size="1.25rem" />}
             />
+            {/* <IconButton
+              size="sm"
+              aria-label="last page"
+              icon={<ChevronsRight size="1.25rem" />}
+              colorScheme="pri"
+              variant="ghost"
+              _focus={{}}
+              isDisabled={pagination.skip > pagination.total - 1}
+              onClick={goToLastPage}
+            /> */}
           </HStack>
         </Flex>
       </TableContainer>
