@@ -4,7 +4,7 @@ import { Emergency } from "@alerta-ciudadana/entity";
 import { database } from "@/firebase";
 import { createContext } from "@/utils";
 
-const SKIP_PAGINATION = 10;
+const SKIP_PAGINATION = 25;
 
 import Cookies from "universal-cookie";
 
