@@ -114,7 +114,7 @@ export const EmergenciesTable = () => {
               {pagination.total}
             </Text>
             <IconButton
-              isDisabled={pagination.skip > pagination.total}
+              isDisabled={pagination.skip > pagination.total - 1}
               onClick={nextPage}
               _focus={{}}
               size="sm"

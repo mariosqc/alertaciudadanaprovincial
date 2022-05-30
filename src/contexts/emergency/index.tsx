@@ -7,6 +7,7 @@ import { createContext } from "@/utils";
 const SKIP_PAGINATION = 25;
 
 import Cookies from "universal-cookie";
+import { usePagination } from "@/hooks";
 
 const cookies = new Cookies();
 interface Pagination<T> {
@@ -29,15 +30,11 @@ const EmergencyContext = createContext<EmergencyContext>();
 
 const EmergencyProvider: FC = ({ children }) => {
   const [emergencies, setEmergencies] = useState<Emergency[]>([]);
-  const [perPage, setPerPage] = useState(SKIP_PAGINATION);
-  const [pagination, setPagination] = useState<Pagination<Emergency>>({
-    perPage,
-    items: [],
-    take: 0,
+  const { pagination, changeNumberPerPage, nextPage, prevPage } = usePagination({
+    allItems: emergencies,
     skip: SKIP_PAGINATION,
-    total: 0,
+    name: "emergency",
   });
-  const [completeInitialRender, setCompleteInitialRender] = useState(false);
 
   function getEmergencies() {
     const districtId = cookies.get("district_id");
@@ -63,53 +60,9 @@ const EmergencyProvider: FC = ({ children }) => {
     });
   }
 
-  function initialPagination(skip: number) {
-    setPagination({
-      perPage: skip,
-      skip,
-      take: 0,
-      items: emergencies.slice(0, skip),
-      total: emergencies.length,
-    });
-  }
-
-  function prevPage() {
-    if (pagination.take) {
-      const paginationItem: Pagination<Emergency> = {
-        ...pagination,
-        take: pagination.take - pagination.perPage,
-        skip: pagination.skip - pagination.perPage,
-        items: emergencies.slice(pagination.take - pagination.perPage, pagination.skip - pagination.perPage),
-      };
-      setPagination(paginationItem);
-    }
-  }
-
-  function nextPage() {
-    const paginationItem: Pagination<Emergency> = {
-      ...pagination,
-      take: pagination.take + pagination.perPage,
-      skip: pagination.skip + pagination.perPage,
-      items: emergencies.slice(pagination.take + pagination.perPage, pagination.skip + pagination.perPage),
-    };
-    setPagination(paginationItem);
-  }
-
-  function changeNumberPerPage(number: number) {
-    setPerPage(number);
-    initialPagination(number);
-  }
-
   useEffect(() => {
     getEmergencies();
   }, []);
-
-  useEffect(() => {
-    if (emergencies.length && !completeInitialRender) {
-      initialPagination(SKIP_PAGINATION);
-      setCompleteInitialRender(true);
-    }
-  }, [emergencies]);
 
   return (
     <EmergencyContext.Provider value={{ emergencies, pagination, prevPage, nextPage, changeNumberPerPage }}>
