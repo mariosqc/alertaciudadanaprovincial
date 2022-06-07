@@ -41,13 +41,13 @@ const EmergencyProvider: FC = ({ children }) => {
   function getEmergencies() {
     const districtId = cookies.get("district_id");
 
-    database.ref(`district/${districtId}`).on("value", (snapshot) => {
+    database.ref(`district/${districtId}/emergency`).on("value", (snapshot) => {
       let emergenciesSnapshot = snapshot.val() || [];
 
-      if (emergenciesSnapshot.emergency) {
-        emergenciesSnapshot = Object.keys(emergenciesSnapshot.emergency)
+      if (emergenciesSnapshot) {
+        emergenciesSnapshot = Object.keys(emergenciesSnapshot)
           .map((key) => {
-            let emergencies = (Object.entries(emergenciesSnapshot.emergency[key]) as any).map(([id, value]: any) => ({
+            let emergencies = (Object.entries(emergenciesSnapshot[key]) as any).map(([id, value]: any) => ({
               ...value,
               id,
               userId: key,
