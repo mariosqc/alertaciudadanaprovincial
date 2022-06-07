@@ -44,8 +44,8 @@ const MyApp: FC<{ Component: FC; pageProps: any }> = ({ Component, pageProps }) 
             defer
           ></script>
         </Head>
-        <Compose providers={[AuthProvider, UserProvider, DistrictProvider, EmergencyProvider, ComplaintProvider]}>
-          <ComponentMain Component={<Component {...pageProps} />} />
+        <Compose providers={[UserProvider, DistrictProvider, EmergencyProvider, ComplaintProvider]}>
+          <Component {...pageProps} />
         </Compose>
       </ChakraProvider>
     </ReduxProvider>

@@ -15,7 +15,7 @@ const cookies = new Cookies();
 
 const AuthProvider: FC = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [showScreen, setShowScreen] = useState(false);
+  const [showScreen, setShowScreen] = useState(true);
   const [loading, setLoading] = useState(true);
 
   function signOut() {
@@ -29,8 +29,8 @@ const AuthProvider: FC = ({ children }) => {
       if (user) {
         setIsAuthenticated(true);
       }
-      setLoading(false);
-      setShowScreen(true);
+      // setLoading(false);
+      // setShowScreen(true);
     });
   }, []);
 

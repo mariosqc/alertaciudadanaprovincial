@@ -4,12 +4,12 @@ import { Emergency } from "@alerta-ciudadana/entity";
 import { database } from "@/firebase";
 import { createContext } from "@/utils";
 
-const SKIP_PAGINATION = 25;
-
 import Cookies from "universal-cookie";
 import { usePagination } from "@/hooks";
 
 const cookies = new Cookies();
+
+const SKIP_PAGINATION = 25;
 interface Pagination<T> {
   perPage: number;
   take: number;

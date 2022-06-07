@@ -6,8 +6,11 @@ import { database } from "@/firebase";
 
 import Cookies from "universal-cookie";
 import { useAuthContext } from "../auth";
+import { usePagination } from "@/hooks";
 
 const cookies = new Cookies();
+
+const SKIP_PAGINATION = 25;
 
 interface ComplaintContext {
   complaints: Complaint[];
@@ -16,8 +19,13 @@ interface ComplaintContext {
 const ComplaintContext = createContext<ComplaintContext>();
 
 const ComplaintProvider: FC = ({ children }) => {
-  const { isAuthenticated } = useAuthContext();
+  // const { isAuthenticated } = useAuthContext();
   const [complaints, setComplaints] = useState<Complaint[]>([]);
+  const { pagination, changeNumberPerPage, nextPage, prevPage, goToFirstPage, goToLastPage } = usePagination({
+    allItems: complaints,
+    skip: SKIP_PAGINATION,
+    name: "complaint",
+  });
 
   function getComplaints() {
     const districtId = cookies.get("district_id");
@@ -40,9 +48,9 @@ const ComplaintProvider: FC = ({ children }) => {
     });
   }
 
-  useEffect(() => {
-    isAuthenticated && getComplaints();
-  }, [isAuthenticated]);
+  // useEffect(() => {
+  //   isAuthenticated && getComplaints();
+  // }, [isAuthenticated]);
 
   return <ComplaintContext.Provider value={{ complaints }}>{children}</ComplaintContext.Provider>;
 };

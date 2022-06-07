@@ -16,7 +16,7 @@ interface UserContext {
 const UserContext = createContext<UserContext>();
 
 const UserProvider: FC = ({ children }) => {
-  const { isAuthenticated } = useAuthContext();
+  // const { isAuthenticated } = useAuthContext();
   const [users, setUsers] = useState<User[]>([]);
 
   function getUsers() {
@@ -31,9 +31,9 @@ const UserProvider: FC = ({ children }) => {
     });
   }
 
-  useEffect(() => {
-    isAuthenticated && getUsers();
-  }, [isAuthenticated]);
+  // useEffect(() => {
+  //   isAuthenticated && getUsers();
+  // }, [isAuthenticated]);
 
   return <UserContext.Provider value={{ users }}>{children}</UserContext.Provider>;
 };

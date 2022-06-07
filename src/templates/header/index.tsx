@@ -9,7 +9,7 @@ import { MenuDrawer } from "./MenuDrawer";
 
 export const Header = () => {
   const { push, pathname } = useRouter();
-  const { signOut } = useAuthContext();
+  // const { signOut } = useAuthContext();
 
   return (
     <Card.Wrapper rounded="none" shadow="sm">
@@ -46,7 +46,7 @@ export const Header = () => {
             icon={<LogOut size="1rem" />}
             colorScheme="red"
             variant="ghost"
-            onClick={signOut}
+            // onClick={signOut}
           />
           <Box display={["flex", null, null, "none"]}>
             <MenuDrawer />

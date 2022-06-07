@@ -5,6 +5,8 @@ import { WrapperPage } from "@/templates";
 import { Card } from "@/layout";
 import { Button } from "@/components";
 import Link from "next/link";
+import { ComplaintsTable } from "./ComplaintsTable";
+import { useComplaintContext } from "@/contexts";
 
 export const ComplaintsPage: NextPage = () => {
   return (
@@ -12,6 +14,7 @@ export const ComplaintsPage: NextPage = () => {
       <Card.Wrapper colSpan={12}>
         <Card.Header
           title="Listado de Denuncias"
+          subtitle="Listado de denuncias registradas en el sistema"
           optionsRight={[
             <Link key="types" href="/complaints/types">
               <a>
@@ -29,7 +32,7 @@ export const ComplaintsPage: NextPage = () => {
             </Link>,
           ]}
         />
-        <Card.Body>Denuncias</Card.Body>
+        <ComplaintsTable />
       </Card.Wrapper>
     </WrapperPage>
   );
