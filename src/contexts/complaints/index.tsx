@@ -1,5 +1,5 @@
 import { FC, useState, useContext, useEffect } from "react";
-import { Complaint } from "@alerta-ciudadana/entity";
+import { Complaint, PaginatioContext, Pagination } from "@alerta-ciudadana/entity";
 import { createContext } from "@/utils";
 
 import { database } from "@/firebase";
@@ -12,7 +12,7 @@ const cookies = new Cookies();
 
 const SKIP_PAGINATION = 25;
 
-interface ComplaintContext {
+interface ComplaintContext extends PaginatioContext<Complaint> {
   complaints: Complaint[];
 }
 
@@ -52,7 +52,13 @@ const ComplaintProvider: FC = ({ children }) => {
   //   isAuthenticated && getComplaints();
   // }, [isAuthenticated]);
 
-  return <ComplaintContext.Provider value={{ complaints }}>{children}</ComplaintContext.Provider>;
+  return (
+    <ComplaintContext.Provider
+      value={{ complaints, pagination, changeNumberPerPage, nextPage, prevPage, goToFirstPage, goToLastPage }}
+    >
+      {children}
+    </ComplaintContext.Provider>
+  );
 };
 
 export const useComplaintContext = () => useContext(ComplaintContext);

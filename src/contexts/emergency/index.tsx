@@ -1,5 +1,5 @@
 import { FC, useState, useContext, useEffect } from "react";
-import { Emergency } from "@alerta-ciudadana/entity";
+import { Emergency, PaginatioContext, Pagination } from "@alerta-ciudadana/entity";
 
 import { database } from "@/firebase";
 import { createContext } from "@/utils";
@@ -10,22 +10,9 @@ import { usePagination } from "@/hooks";
 const cookies = new Cookies();
 
 const SKIP_PAGINATION = 25;
-interface Pagination<T> {
-  perPage: number;
-  take: number;
-  skip: number;
-  total: number;
-  items: T[];
-}
 
-interface EmergencyContext {
+interface EmergencyContext extends PaginatioContext<Emergency> {
   emergencies: Emergency[];
-  pagination: Pagination<Emergency>;
-  prevPage(): void;
-  nextPage(): void;
-  goToFirstPage(): void;
-  goToLastPage(): void;
-  changeNumberPerPage(perPage: number): void;
 }
 
 const EmergencyContext = createContext<EmergencyContext>();

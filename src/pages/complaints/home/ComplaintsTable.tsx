@@ -1,12 +1,12 @@
 import React from "react";
 
-import { Table, TableContainer, Tbody, Th, Thead, Tr } from "@chakra-ui/react";
+import { Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr } from "@chakra-ui/react";
 import { useComplaintContext } from "@/contexts";
 
 export const ComplaintsTable = () => {
   const { complaints } = useComplaintContext();
 
-  console.log(complaints);
+  // console.log(complaints);
 
   return (
     <>
@@ -24,8 +24,16 @@ export const ComplaintsTable = () => {
               <Th w="0"></Th>
             </Tr>
           </Thead>
+          <Tbody>
+            <Tr>
+              <Td colSpan={9}>
+                <Text py="2" textAlign="center" fontWeight="semibold">
+                  No se han encontrado emergencias
+                </Text>
+              </Td>
+            </Tr>
+          </Tbody>
         </Table>
-        <Tbody></Tbody>
       </TableContainer>
     </>
   );
