@@ -4,6 +4,7 @@ import { Table, TableContainer, Tbody, Td, Text, Tfoot, Th, Thead, Tr } from "@c
 import { useComplaintContext } from "@/contexts";
 import moment from "moment";
 import { Pagination } from "@/components";
+import { ComplaintModal } from "./EmergencyModal";
 
 export const ComplaintsTable = () => {
   const pagination = useComplaintContext();
@@ -40,7 +41,15 @@ export const ComplaintsTable = () => {
                 <Td>{complaint.user}</Td>
                 <Td>{complaint.phone}</Td>
                 <Td>{complaint.place}</Td>
-                <Td>{complaint.description}</Td>
+                <Td>
+                  {complaint.description.length > 50
+                    ? complaint.description.substring(0, 49).concat("...")
+                    : complaint.description}
+                </Td>
+                <Td>
+                  {" "}
+                  <ComplaintModal complaint={complaint} />
+                </Td>
               </Tr>
             ))}
           </Tbody>
@@ -51,6 +60,7 @@ export const ComplaintsTable = () => {
               <Th>Teléfono</Th>
               <Th>Lugar</Th>
               <Th>Denuncia</Th>
+
               <Th w="0"></Th>
             </Tr>
           </Tfoot>
