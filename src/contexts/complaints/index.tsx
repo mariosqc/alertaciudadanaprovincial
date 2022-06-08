@@ -48,9 +48,9 @@ const ComplaintProvider: FC = ({ children }) => {
     });
   }
 
-  // useEffect(() => {
-  //   isAuthenticated && getComplaints();
-  // }, [isAuthenticated]);
+  useEffect(() => {
+    getComplaints();
+  }, []);
 
   return (
     <ComplaintContext.Provider

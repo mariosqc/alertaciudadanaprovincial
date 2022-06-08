@@ -7,3 +7,5 @@ export * from "./breadcrumb";
 export * from "./googleMaps";
 
 export * from "./alertDialog";
+
+export * from "./pagination";

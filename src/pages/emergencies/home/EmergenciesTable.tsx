@@ -21,9 +21,10 @@ import { useEmergencyContext } from "@/contexts";
 import { EmergencyModal } from "./EmergencyModal";
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from "react-feather";
 import moment from "moment";
+import { Pagination } from "@/components";
 
 export const EmergenciesTable = () => {
-  const { pagination, prevPage, nextPage, changeNumberPerPage, goToFirstPage, goToLastPage } = useEmergencyContext();
+  const pagination = useEmergencyContext();
 
   return (
     <>
@@ -42,7 +43,7 @@ export const EmergenciesTable = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {pagination.items.length === 0 && (
+            {pagination.pagination.items.length === 0 && (
               <>
                 <Tr>
                   <Td colSpan={9}>
@@ -53,7 +54,7 @@ export const EmergenciesTable = () => {
                 </Tr>
               </>
             )}
-            {pagination.items.map((emergency, i) => (
+            {pagination.pagination.items.map((emergency, i) => (
               <Tr key={emergency.id}>
                 <Td>{moment(emergency.date).format("LLL")}</Td>
                 <Td>{emergency.emergency}</Td>
@@ -85,73 +86,7 @@ export const EmergenciesTable = () => {
             </Tr>
           </Tfoot>
         </Table>
-        <Divider my="3" />
-        <Flex justifyContent="space-between" px="3">
-          <HStack>
-            {[10, 25, 50, 100].map((perPage) => (
-              <IconButton
-                key={perPage}
-                variant={perPage === pagination.perPage ? "solid" : "ghost"}
-                colorScheme="pri"
-                onClick={() => changeNumberPerPage(perPage)}
-                _focus={{}}
-                size="sm"
-                aria-label=""
-                icon={<>{perPage}</>}
-              />
-            ))}
-          </HStack>
-          <HStack>
-            {/* <IconButton
-              size="sm"
-              aria-label="fist page"
-              icon={<ChevronsLeft size="1.25rem" />}
-              colorScheme="pri"
-              variant="ghost"
-              _focus={{}}
-              isDisabled={!pagination.take}
-              onClick={goToFirstPage}
-            /> */}
-            <IconButton
-              size="sm"
-              aria-label="fist page"
-              icon={<ChevronLeft size="1.25rem" />}
-              colorScheme="pri"
-              variant="ghost"
-              _focus={{}}
-              isDisabled={!pagination.take}
-              onClick={prevPage}
-            />
-            <Flex>
-              <Text userSelect="none" fontSize="sm" fontWeight="medium">
-                <chakra.span color="pri.500">
-                  {pagination.take + 1}-{pagination.skip > pagination.total ? pagination.total : pagination.skip}{" "}
-                </chakra.span>{" "}
-                de {pagination.total}
-              </Text>
-            </Flex>
-            <IconButton
-              size="sm"
-              aria-label="last page"
-              icon={<ChevronRight size="1.25rem" />}
-              colorScheme="pri"
-              variant="ghost"
-              _focus={{}}
-              isDisabled={pagination.skip > pagination.total - 1}
-              onClick={nextPage}
-            />
-            {/* <IconButton
-              size="sm"
-              aria-label="last page"
-              icon={<ChevronsRight size="1.25rem" />}
-              colorScheme="pri"
-              variant="ghost"
-              _focus={{}}
-              isDisabled={pagination.skip > pagination.total - 1}
-              onClick={goToLastPage}
-            /> */}
-          </HStack>
-        </Flex>
+        <Pagination {...pagination} />
       </TableContainer>
     </>
   );

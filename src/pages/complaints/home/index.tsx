@@ -9,12 +9,14 @@ import { ComplaintsTable } from "./ComplaintsTable";
 import { useComplaintContext } from "@/contexts";
 
 export const ComplaintsPage: NextPage = () => {
+  const { complaints } = useComplaintContext();
+
   return (
     <WrapperPage title="Denuncias" breadcrumb={{ routes: ["complaints"] }}>
       <Card.Wrapper colSpan={12}>
         <Card.Header
           title="Listado de Denuncias"
-          subtitle="Listado de denuncias registradas en el sistema"
+          subtitle={`${complaints.length} Resultados encontrados`}
           optionsRight={[
             <Link key="types" href="/complaints/types">
               <a>

@@ -5,12 +5,13 @@ declare module "@alerta-ciudadana/entity" {
     avatarUrl: string;
     coordinates: [number, number];
     date: string;
-    meesage: string;
+    message: string;
     phone: string;
     place: string;
     status: string;
     timestamp: string;
     token: string;
     user: string;
+    description: string;
   }
 }
