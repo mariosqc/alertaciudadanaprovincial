@@ -11,7 +11,7 @@ export const ComplaintReportsPage: NextPage = () => {
   return (
     <WrapperPage fullScreen title="Reportes de Denuncias" breadcrumb={{ routes: ["complaints", "complaintReports"] }}>
       <Card.Wrapper colSpan={12}>
-        <Card.Header title="Reportes de Emergencias" subtitle={`${complaints.length} Resultados encontrados`} />
+        <Card.Header title="Reportes de Denuncias" subtitle={`${complaints.length} Resultados encontrados`} />
         <Card.Body h="95%">
           <GoogleMaps
             markerList={complaints.map(({ coordinates, user }) => ({

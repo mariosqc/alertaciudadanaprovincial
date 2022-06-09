@@ -24,7 +24,7 @@ export const ComplaintsTable = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {pagination.pagination.items.length === 0 && (
+            {pagination.pagination.items.length === 0 ? (
               <>
                 <Tr>
                   <Td colSpan={9}>
@@ -34,24 +34,25 @@ export const ComplaintsTable = () => {
                   </Td>
                 </Tr>
               </>
+            ) : (
+              pagination.pagination.items.map((complaint, i) => (
+                <Tr key={complaint.id}>
+                  <Td>{moment(complaint.date).format("LLL")}</Td>
+                  <Td>{complaint.user}</Td>
+                  <Td>{complaint.phone}</Td>
+                  <Td>{complaint.place}</Td>
+                  <Td>
+                    {complaint.description.length > 50
+                      ? complaint.description.substring(0, 49).concat("...")
+                      : complaint.description}
+                  </Td>
+                  <Td>
+                    {" "}
+                    <ComplaintModal complaint={complaint} />
+                  </Td>
+                </Tr>
+              ))
             )}
-            {pagination.pagination.items.map((complaint, i) => (
-              <Tr key={complaint.id}>
-                <Td>{moment(complaint.date).format("LLL")}</Td>
-                <Td>{complaint.user}</Td>
-                <Td>{complaint.phone}</Td>
-                <Td>{complaint.place}</Td>
-                <Td>
-                  {complaint.description.length > 50
-                    ? complaint.description.substring(0, 49).concat("...")
-                    : complaint.description}
-                </Td>
-                <Td>
-                  {" "}
-                  <ComplaintModal complaint={complaint} />
-                </Td>
-              </Tr>
-            ))}
           </Tbody>
           <Tfoot>
             <Tr>

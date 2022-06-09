@@ -32,7 +32,7 @@ const ComplaintProvider: FC = ({ children }) => {
     database.ref(`district/${districtId}/complaint`).on("value", (snapshot) => {
       let districtsSnapshot = snapshot.val();
 
-      districtsSnapshot = Object.keys(districtsSnapshot)
+      districtsSnapshot = Object.keys(districtsSnapshot || {})
         .map((key) => {
           let districts = (Object.entries(districtsSnapshot[key]) as any).map(([id, value]: any) => ({
             ...value,
