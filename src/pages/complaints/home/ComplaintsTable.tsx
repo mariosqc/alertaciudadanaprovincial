@@ -29,7 +29,7 @@ export const ComplaintsTable = () => {
                 <Tr>
                   <Td colSpan={9}>
                     <Text py="2" textAlign="center" fontWeight="semibold">
-                      No se han encontrado emergencias
+                      No se han encontrado denuncias
                     </Text>
                   </Td>
                 </Tr>
