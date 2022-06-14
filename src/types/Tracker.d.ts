@@ -1,3 +1,17 @@
 declare module "@alerta-ciudadana/entity" {
-  interface Tracker {}
+  interface Tracker {
+    id: string;
+    activator: true;
+    foto: string;
+    g: string;
+    l: [number, number];
+    lat_old: number;
+    lng_old: number;
+    phone: string;
+    place: string;
+    tipe: string;
+    token: string;
+    user: string;
+    video: string;
+  }
 }

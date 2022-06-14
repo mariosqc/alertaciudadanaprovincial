@@ -24,6 +24,7 @@ import EmergencyProvider from "src/contexts/emergency";
 import ComplaintProvider from "src/contexts/complaints";
 import AuthProvider, { useAuthContext } from "src/contexts/auth";
 import { useRouter } from "next/router";
+import TrackerProvider from "src/contexts/trackers";
 
 const MyApp: FC<{ Component: FC; pageProps: any }> = ({ Component, pageProps }) => {
   useEffect(() => {
@@ -44,7 +45,7 @@ const MyApp: FC<{ Component: FC; pageProps: any }> = ({ Component, pageProps }) 
             defer
           ></script>
         </Head>
-        <Compose providers={[UserProvider, DistrictProvider, EmergencyProvider, ComplaintProvider]}>
+        <Compose providers={[UserProvider, DistrictProvider, EmergencyProvider, ComplaintProvider, TrackerProvider]}>
           <Component {...pageProps} />
         </Compose>
       </ChakraProvider>

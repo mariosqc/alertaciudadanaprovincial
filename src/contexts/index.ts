@@ -4,3 +4,4 @@ export * from "./districts";
 export * from "./emergency";
 export * from "./auth";
 export * from "./complaints";
+export * from "./trackers";
