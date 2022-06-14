@@ -7,14 +7,29 @@ import Cookies from "universal-cookie";
 
 const cookies = new Cookies();
 
+interface AttendEmergency {
+  attending: boolean;
+  tracker: Tracker | undefined;
+}
 interface TrackerContext {
   trackers: Tracker[];
+  newTrackerDetected?: Tracker;
+  attendEmergency: AttendEmergency;
+  setAttendEmergency(attendEmergency: AttendEmergency): void;
 }
 
 const TrackerContext = createContext<TrackerContext>();
 
 const TrackerProvider: FC = ({ children }) => {
   const [trackers, setTrackers] = useState<Tracker[]>([]);
+
+  const [newTrackerDetected, setNewTrackerDetected] = useState<Tracker>();
+
+  const [newNumberOfTrackers, setNewNumberOfTrackers] = useState(0);
+  const [attendEmergency, setAttendEmergency] = useState<AttendEmergency>({
+    attending: false,
+    tracker: undefined,
+  });
 
   function getTrackers() {
     const districtId = cookies.get("district_id");
@@ -23,10 +38,7 @@ const TrackerProvider: FC = ({ children }) => {
 
       if (trackersSnapshot) {
         trackersSnapshot = Object.keys(trackersSnapshot).map((key) => {
-          return {
-            ...trackersSnapshot[key as any],
-            id: key,
-          };
+          return { ...trackersSnapshot[key as any], id: key };
         });
 
         setTrackers(trackersSnapshot);
@@ -35,24 +47,25 @@ const TrackerProvider: FC = ({ children }) => {
   }
 
   useEffect(() => {
+    if (trackers.length !== 0) {
+      if (trackers.length > newNumberOfTrackers) {
+        setNewTrackerDetected([...trackers].pop());
+        setNewNumberOfTrackers(trackers.length);
+      }
+    }
+  }, [trackers]);
+
+  useEffect(() => {
     getTrackers();
   }, []);
 
-  return <TrackerContext.Provider value={{ trackers }}>{children}</TrackerContext.Provider>;
+  return (
+    <TrackerContext.Provider value={{ trackers, newTrackerDetected, attendEmergency, setAttendEmergency }}>
+      {children}
+    </TrackerContext.Provider>
+  );
 };
 
 export const useTrackerContext = () => useContext(TrackerContext);
 
 export default TrackerProvider;
-/*  let tracker = snapshot.val();
-      tracker = Object.keys(tracker || {})
-        .map((key: any) => ({
-          id: key,
-          ...tracker[key],
-          polygon: tracker[key].polygon.map((path: string) =>
-            Hacemos un split en el string para obtener las coordenadas y luego lo convertimos en un objecto 
-            path.split(",").reduce((a, v, i) => ({ ...a, [i === 0 ? "lat" : "lng"]: Number(v) }), {})
-          ),
-        }))
-        .sort((a: Tracker, b: Tracker) => moment(b.createdAt).diff(moment(a.createdAt)));
-      setTrackers(tracker); */

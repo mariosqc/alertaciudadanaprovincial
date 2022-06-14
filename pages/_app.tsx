@@ -25,6 +25,7 @@ import ComplaintProvider from "src/contexts/complaints";
 import AuthProvider, { useAuthContext } from "src/contexts/auth";
 import { useRouter } from "next/router";
 import TrackerProvider from "src/contexts/trackers";
+import { NewTrackerModal } from "@/components";
 
 const MyApp: FC<{ Component: FC; pageProps: any }> = ({ Component, pageProps }) => {
   useEffect(() => {
@@ -46,7 +47,7 @@ const MyApp: FC<{ Component: FC; pageProps: any }> = ({ Component, pageProps }) 
           ></script>
         </Head>
         <Compose providers={[UserProvider, DistrictProvider, EmergencyProvider, ComplaintProvider, TrackerProvider]}>
-          <Component {...pageProps} />
+          <ComponentMain Component={<Component {...pageProps} />} />
         </Compose>
       </ChakraProvider>
     </ReduxProvider>
@@ -54,20 +55,12 @@ const MyApp: FC<{ Component: FC; pageProps: any }> = ({ Component, pageProps }) 
 };
 
 const ComponentMain = ({ Component }: any) => {
-  const { isAuthenticated, showScreen } = useAuthContext();
-  const { push } = useRouter();
-
-  useEffect(() => {
-    if (showScreen) {
-      if (!isAuthenticated) {
-        push("/signin");
-      }
-    }
-  }, [isAuthenticated, showScreen]);
-
-  if (!showScreen) return null;
-
-  return <>{Component}</>;
+  return (
+    <>
+      <NewTrackerModal />
+      {Component}
+    </>
+  );
 };
 
 export default MyApp;

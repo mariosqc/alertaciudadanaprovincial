@@ -9,3 +9,5 @@ export * from "./googleMaps";
 export * from "./alertDialog";
 
 export * from "./pagination";
+
+export * from "./newTrackerModal";
