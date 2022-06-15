@@ -5,8 +5,11 @@ import { NextPage } from "next";
 import { GeneralList, GeneralModalAdd, WrapperPage } from "@/templates";
 
 import { Card } from "@/layout";
+import { useEmergencyContext } from "@/contexts";
 
 export const EmergencyTypesPage: NextPage = () => {
+  const { typesOfEmergencies } = useEmergencyContext();
+
   async function onSubmit(values: any) {
     console.log(values);
   }
@@ -19,15 +22,7 @@ export const EmergencyTypesPage: NextPage = () => {
           subtitle="Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut id architecto velit, corporis facere aliquam."
           optionsRight={[<GeneralModalAdd isLoading={false} key="add" onSubmit={onSubmit} />]}
         />
-        <GeneralList
-          items={[
-            { id: "1", title: "Title 1" },
-            { id: "2", title: "Title 2" },
-            { id: "3", title: "Title 3" },
-            { id: "4", title: "Title 4" },
-            { id: "5", title: "Title 5" },
-          ]}
-        />
+        <GeneralList items={typesOfEmergencies} />
       </Card.Wrapper>
     </WrapperPage>
   );

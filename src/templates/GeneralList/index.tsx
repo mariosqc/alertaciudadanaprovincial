@@ -1,6 +1,5 @@
 import React, { FC } from "react";
 
-import { WrapperPage } from "@/templates";
 import ReactList from "react-list";
 import {
   Menu,
@@ -20,16 +19,10 @@ import {
 } from "@chakra-ui/react";
 import { Card } from "@/layout";
 import { MoreVertical, Frown } from "react-feather";
-
-interface GeneralListItem {
-  id: string;
-  title: string;
-  subtitle?: string;
-  avatar?: string;
-}
+import { EntityType } from "@alerta-ciudadana/entity";
 
 interface GeneralListProps {
-  items: GeneralListItem[];
+  items: EntityType[];
 }
 
 export const GeneralList: FC<GeneralListProps> = ({ items }) => {
@@ -49,7 +42,7 @@ export const GeneralList: FC<GeneralListProps> = ({ items }) => {
       )}
       <ReactList
         length={items.length}
-        itemRenderer={(index, key) => {
+        itemRenderer={(index) => {
           return (
             <>
               {index !== 0 && <Divider />}
@@ -57,13 +50,10 @@ export const GeneralList: FC<GeneralListProps> = ({ items }) => {
                 <ListItem>
                   <Flex alignItems="center" justifyContent="space-between">
                     <HStack>
-                      <Avatar w="10" h="10" />
+                      <Avatar w="10" h="10" src={items[index].icon} />
                       <Box>
                         <Text lineHeight="none" fontWeight="semibold">
-                          {items[index].title}
-                        </Text>
-                        <Text fontSize="sm" color="gray.500">
-                          {items[index].subtitle}
+                          {items[index].name}
                         </Text>
                       </Box>
                     </HStack>
