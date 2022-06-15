@@ -14,13 +14,16 @@ import {
 import { Plus } from "react-feather";
 
 import { Button } from "@/components";
+import { AddingTypeForm } from "./AddingTypeForm";
 
 interface GeneralModalAddProps {
   isLoading: boolean;
+  onSubmit: (data: any) => void;
 }
 
-export const GeneralModalAdd: FC<GeneralModalAddProps> = ({ isLoading }) => {
+export const GeneralModalAdd: FC<GeneralModalAddProps> = ({ isLoading, onSubmit }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+
   return (
     <>
       <IconButton
@@ -37,10 +40,19 @@ export const GeneralModalAdd: FC<GeneralModalAddProps> = ({ isLoading }) => {
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Modal Title</ModalHeader>
-          <ModalBody>sadasd</ModalBody>
+          <ModalBody>
+            <AddingTypeForm onSubmit={onSubmit} />
+          </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="blue" mr={3} isLoading={isLoading} loadingText="Guardando...">
+            <Button
+              form="adding-type-form"
+              type="submit"
+              colorScheme="blue"
+              mr={3}
+              isLoading={isLoading}
+              loadingText="Guardando..."
+            >
               Guardar
             </Button>
             <Button isDisabled={isLoading} onClick={isLoading ? undefined : onClose} variant="ghost">

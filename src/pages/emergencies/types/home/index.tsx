@@ -7,13 +7,17 @@ import { GeneralList, GeneralModalAdd, WrapperPage } from "@/templates";
 import { Card } from "@/layout";
 
 export const EmergencyTypesPage: NextPage = () => {
+  async function onSubmit(values: any) {
+    console.log(values);
+  }
+
   return (
     <WrapperPage title="Tipos de Emergencias">
       <Card.Wrapper colSpan={12}>
         <Card.Header
           title="Tipos de Emergencias"
           subtitle="Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut id architecto velit, corporis facere aliquam."
-          optionsRight={[<GeneralModalAdd isLoading={false} key="add" />]}
+          optionsRight={[<GeneralModalAdd isLoading={false} key="add" onSubmit={onSubmit} />]}
         />
         <GeneralList
           items={[
