@@ -11,7 +11,7 @@ import { TrackerModal } from "./TrackerModal";
 import Cookies from "universal-cookie";
 
 export const TrackerPage: NextPage = () => {
-  const { trackers, setAttendEmergency, newTrackerDetected } = useTrackerContext();
+  const { trackers, setAttendEmergency } = useTrackerContext();
   const { districts } = useDistrictContext();
 
   const polygon = useMemo<google.maps.LatLngAltitude[]>(() => {
@@ -31,9 +31,12 @@ export const TrackerPage: NextPage = () => {
               markerList={trackers.map((tracker) => ({
                 position: { lat: tracker.l[0], lng: tracker.l[1] },
                 icon: {
-                  url: `https://firebasestorage.googleapis.com/v0/b/alerta-ciudadana-fe9d9.appspot.com/o/Iconos%20emergencia%2F${removeAccents(
-                    tracker.tipe.toLowerCase()
-                  )}.png?alt=media`,
+                  url:
+                    tracker.tipe === "Esperando..."
+                      ? "https://firebasestorage.googleapis.com/v0/b/alerta-ciudadana-provincial.appspot.com/o/icons%2Fspin.gif?alt=media&token=5dcf56c3-5f0e-413a-b75d-37ddf49db10e"
+                      : `https://firebasestorage.googleapis.com/v0/b/alerta-ciudadana-fe9d9.appspot.com/o/Iconos%20emergencia%2F${removeAccents(
+                          tracker.tipe.toLowerCase()
+                        )}.png?alt=media`,
                   scaledSize: new google.maps.Size(36, 36),
                 },
                 onClick: () => {

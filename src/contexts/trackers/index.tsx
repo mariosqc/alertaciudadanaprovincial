@@ -51,6 +51,9 @@ const TrackerProvider: FC = ({ children }) => {
       if (trackers.length > newNumberOfTrackers) {
         setNewTrackerDetected([...trackers].pop());
         setNewNumberOfTrackers(trackers.length);
+      } else {
+        setNewTrackerDetected(undefined);
+        setAttendEmergency({ attending: false, tracker: undefined });
       }
     }
   }, [trackers]);

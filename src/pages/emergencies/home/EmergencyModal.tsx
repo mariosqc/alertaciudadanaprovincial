@@ -1,10 +1,26 @@
-import { Button, Divider, Flex, IconButton, List, ListItem, Text, useDisclosure } from "@chakra-ui/react";
+import {
+  Button,
+  Divider,
+  Flex,
+  IconButton,
+  List,
+  ListItem,
+  Text,
+  useDisclosure,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  Box,
+} from "@chakra-ui/react";
 import React, { FC } from "react";
 import { Info } from "react-feather";
-import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, Box } from "@chakra-ui/react";
 import { Emergency } from "@alerta-ciudadana/entity";
 import { GoogleMaps } from "@/components";
 import moment from "moment";
+import removeAccents from "remove-accents";
 
 interface EmergencyModalProps {
   emergency: Emergency;
@@ -80,7 +96,17 @@ export const EmergencyModal: FC<EmergencyModalProps> = ({ emergency }) => {
               <Box flex="1.5">
                 <GoogleMaps
                   defaultCenter={{ lat: emergency.coor[0], lng: emergency.coor[1] }}
-                  markerList={[{ position: { lat: emergency.coor[0], lng: emergency.coor[1] } }]}
+                  markerList={[
+                    {
+                      position: { lat: emergency.coor[0], lng: emergency.coor[1] },
+                      icon: {
+                        url: `https://firebasestorage.googleapis.com/v0/b/alerta-ciudadana-fe9d9.appspot.com/o/Iconos%20emergencia%2F${removeAccents(
+                          emergency.emergency.toLowerCase()
+                        )}.png?alt=media`,
+                        scaledSize: new google.maps.Size(36, 36),
+                      },
+                    },
+                  ]}
                 />
               </Box>
             </Flex>
