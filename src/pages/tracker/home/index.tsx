@@ -1,7 +1,7 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 
 import { NextPage } from "next";
-import store from "store";
+import removeAccents from "remove-accents";
 
 import { WrapperPage } from "@/templates";
 import { Card } from "@/layout";
@@ -11,7 +11,7 @@ import { TrackerModal } from "./TrackerModal";
 import Cookies from "universal-cookie";
 
 export const TrackerPage: NextPage = () => {
-  const { trackers, setAttendEmergency } = useTrackerContext();
+  const { trackers, setAttendEmergency, newTrackerDetected } = useTrackerContext();
   const { districts } = useDistrictContext();
 
   const polygon = useMemo<google.maps.LatLngAltitude[]>(() => {
@@ -30,6 +30,12 @@ export const TrackerPage: NextPage = () => {
               polygonPathList={[{ path: polygon }]}
               markerList={trackers.map((tracker) => ({
                 position: { lat: tracker.l[0], lng: tracker.l[1] },
+                icon: {
+                  url: `https://firebasestorage.googleapis.com/v0/b/alerta-ciudadana-fe9d9.appspot.com/o/Iconos%20emergencia%2F${removeAccents(
+                    tracker.tipe.toLowerCase()
+                  )}.png?alt=media`,
+                  scaledSize: new google.maps.Size(36, 36),
+                },
                 onClick: () => {
                   setAttendEmergency({ attending: true, tracker });
                 },
