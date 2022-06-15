@@ -19,7 +19,7 @@ export const EmergencyTypesPage: NextPage = () => {
       <Card.Wrapper colSpan={12}>
         <Card.Header
           title="Tipos de Emergencias"
-          subtitle="Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut id architecto velit, corporis facere aliquam."
+          subtitle={`${typesOfEmergencies.length} Resultados encontrados`}
           optionsRight={[<GeneralModalAdd isLoading={false} key="add" onSubmit={onSubmit} />]}
         />
         <GeneralList items={typesOfEmergencies} />
