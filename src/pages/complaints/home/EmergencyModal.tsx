@@ -13,8 +13,6 @@ interface ComplaintModalProps {
 export const ComplaintModal: FC<ComplaintModalProps> = ({ complaint }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  console.log(complaint);
-
   return (
     <>
       <IconButton

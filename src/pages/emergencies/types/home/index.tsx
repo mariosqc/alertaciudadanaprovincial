@@ -6,12 +6,21 @@ import { GeneralList, GeneralModalAdd, WrapperPage } from "@/templates";
 
 import { Card } from "@/layout";
 import { useEmergencyContext } from "@/contexts";
+import { storage, database } from "@/firebase";
+
+import removeAccents from "remove-accents";
 
 export const EmergencyTypesPage: NextPage = () => {
   const { typesOfEmergencies } = useEmergencyContext();
 
   async function onSubmit(values: any) {
-    console.log(values);
+    const name = removeAccents(values.name.toLowerCase().replace(/ /g, "_"));
+    await storage.ref(`emergency-types/${name}`).put(values.icon);
+
+    await database.ref(`province/temergency`).push({
+      name,
+      icon: `https://firebasestorage.googleapis.com/v0/b/alerta-ciudadana-provincial.appspot.com/o/emergency-types%2F${name}?alt=media`,
+    });
   }
 
   return (
