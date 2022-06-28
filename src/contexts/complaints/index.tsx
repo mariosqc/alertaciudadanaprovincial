@@ -1,8 +1,9 @@
 import { FC, useState, useContext, useEffect, useMemo } from "react";
 import { Complaint, EntityType, PaginatioContext, Pagination } from "@alerta-ciudadana/entity";
 import { createContext } from "@/utils";
+import removeAccents from "remove-accents";
 
-import { database } from "@/firebase";
+import { database, storage } from "@/firebase";
 
 import Cookies from "universal-cookie";
 import { useAuthContext } from "../auth";
@@ -15,6 +16,8 @@ const SKIP_PAGINATION = 25;
 interface ComplaintContext extends PaginatioContext<Complaint> {
   typesOfComplaints: EntityType[];
   complaints: Complaint[];
+  createComplaintType(values: { name: string; icon: File }): Promise<void>;
+  deleteComplaintType(entity: EntityType): Promise<void>;
 }
 
 const ComplaintContext = createContext<ComplaintContext>();
@@ -65,6 +68,22 @@ const ComplaintProvider: FC = ({ children }) => {
     });
   }
 
+  async function createComplaintType(values: { name: string; icon: File }) {
+    const name = removeAccents(values.name.toLowerCase().replace(/ /g, "_"));
+    await storage.ref(`complaint-types/${name}`).put(values.icon);
+
+    await database.ref(`district/${districtId}/tDenuncia`).push({
+      name: values.name,
+      icon: `https://firebasestorage.googleapis.com/v0/b/alerta-ciudadana-provincial.appspot.com/o/complaint-types%2F${name}?alt=media`,
+    });
+  }
+
+  async function deleteComplaintType(entity: EntityType) {
+    const name = removeAccents(entity.name.toLowerCase().replace(/ /g, "_"));
+    await database.ref(`district/${districtId}/tDenuncia/${entity.id}`).remove();
+    await storage.ref(`complaint-types/${name}`).delete();
+  }
+
   useEffect(() => {
     getComplaints();
     getTypesOfComplaints();
@@ -81,6 +100,8 @@ const ComplaintProvider: FC = ({ children }) => {
         prevPage,
         goToFirstPage,
         goToLastPage,
+        createComplaintType,
+        deleteComplaintType,
       }}
     >
       {children}

@@ -6,7 +6,8 @@ import React from "react";
 
 export const ListingsPanel = () => {
   const { typesOfEmergencies, createEmergencyType, deleteEmergencyType } = useEmergencyContext();
-  const { typesOfComplaints } = useComplaintContext();
+  const { typesOfComplaints, createComplaintType, deleteComplaintType } = useComplaintContext();
+
   return (
     <div>
       <Card.Header
@@ -24,17 +25,17 @@ export const ListingsPanel = () => {
             </Flex>
             <GeneralList items={typesOfEmergencies} onDelete={deleteEmergencyType} />
           </GridItem>
-          {/* <GridItem colSpan={6}>
+          <GridItem colSpan={6}>
             <GridItem colSpan={6}>
               <Flex justifyContent="space-between">
                 <Text fontSize="lg" fontWeight="semibold">
                   Tipos de Denuncias
                 </Text>
-                <GeneralModalAdd onSubmit={() => {}} isLoading={false} />
+                <GeneralModalAdd createNewItem={createComplaintType} isLoading={false} />
               </Flex>
-              <GeneralList items={typesOfComplaints} />
+              <GeneralList items={typesOfComplaints} onDelete={deleteComplaintType} />
             </GridItem>
-          </GridItem> */}
+          </GridItem>
         </SimpleGrid>
       </Card.Body>
     </div>
