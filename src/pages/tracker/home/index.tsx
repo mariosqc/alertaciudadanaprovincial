@@ -6,13 +6,14 @@ import removeAccents from "remove-accents";
 import { WrapperPage } from "@/templates";
 import { Card } from "@/layout";
 import { GoogleMaps } from "@/components";
-import { useDistrictContext, useTrackerContext } from "@/contexts";
+import { useDistrictContext, useSettingsContext, useTrackerContext } from "@/contexts";
 import { TrackerModal } from "./TrackerModal";
 import Cookies from "universal-cookie";
 
 export const TrackerPage: NextPage = () => {
   const { trackers, setAttendEmergency } = useTrackerContext();
   const { districts } = useDistrictContext();
+  const { centralCoordinates } = useSettingsContext();
 
   const polygon = useMemo<google.maps.LatLngAltitude[]>(() => {
     const districtId = new Cookies().get("district_id");
@@ -28,6 +29,7 @@ export const TrackerPage: NextPage = () => {
           <Card.Body h="95%">
             <GoogleMaps
               polygonPathList={[{ path: polygon }]}
+              defaultCenter={centralCoordinates}
               markerList={trackers.map((tracker) => {
                 const url =
                   tracker.tipe === "Esperando..."

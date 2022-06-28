@@ -14,6 +14,7 @@ import {
   Flex,
 } from "@chakra-ui/react";
 import { GoogleMaps, Button, FormProvider, Input } from "@/components";
+import { useSettingsContext } from "@/contexts";
 
 interface SetCenterCoordinatesProps {
   isDisabled: boolean;
@@ -21,14 +22,13 @@ interface SetCenterCoordinatesProps {
 
 export const SetCenterCoordinates: FC<SetCenterCoordinatesProps> = ({ isDisabled }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [centerCoord] = useState({
-    lat: 19.097612354575226,
-    lng: -72.1192613916425,
-    text: "",
-  });
+  const { centralCoordinates, setNewCentralCoordinates } = useSettingsContext();
+
+  const [newCoor, setNewCoor] = useState<google.maps.LatLngLiteral>(centralCoordinates);
 
   async function handleUpdate() {
-    console.log("centerCoord", centerCoord);
+    await setNewCentralCoordinates;
+    onClose();
   }
 
   return (
@@ -50,7 +50,12 @@ export const SetCenterCoordinates: FC<SetCenterCoordinatesProps> = ({ isDisabled
           </ModalHeader>
           <ModalBody px="2">
             <Box h="xl">
-              <GoogleMaps defaultZoom={10} defaultCenter={centerCoord} />
+              <GoogleMaps
+                defaultZoom={10}
+                defaultCenter={newCoor}
+                markerList={[{ position: newCoor }]}
+                onClick={({ coords }) => setNewCoor(coords)}
+              />
             </Box>
           </ModalBody>
 
@@ -67,7 +72,7 @@ export const SetCenterCoordinates: FC<SetCenterCoordinatesProps> = ({ isDisabled
                   name="lat"
                   inputProps={{
                     isReadOnly: true,
-                    value: centerCoord.lat.toFixed(10),
+                    value: newCoor.lat.toFixed(10),
                     width: "36",
                     textAlign: "center",
                   }}
@@ -77,7 +82,7 @@ export const SetCenterCoordinates: FC<SetCenterCoordinatesProps> = ({ isDisabled
                   name="lng"
                   inputProps={{
                     isReadOnly: true,
-                    value: centerCoord.lng.toFixed(10),
+                    value: newCoor.lng.toFixed(10),
                     width: "36",
                     textAlign: "center",
                   }}

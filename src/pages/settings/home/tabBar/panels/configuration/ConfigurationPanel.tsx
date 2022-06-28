@@ -5,8 +5,10 @@ import { Card, CardContainer } from "@/layout";
 import { SetCenterCoordinates } from "./SetCenterCoordinates";
 import { Box, Divider, Flex, HStack, Stack } from "@chakra-ui/react";
 import { FormControl, Button, FormProvider, InputControl, InputMaskControl } from "@/components";
+import { useSettingsContext } from "@/contexts";
 
 export const ConfigurationPanel = () => {
+  const { phone, version, centralCoordinates } = useSettingsContext();
   const [isEditting, setIsEditting] = useState(false);
 
   return (
@@ -25,8 +27,8 @@ export const ConfigurationPanel = () => {
             >
               <Flex flexDir={["column", null, null, "row"]}>
                 <HStack mb={["2", null, null, "0"]} mr="2" alignItems="center">
-                  <InputControl name="lat" inputProps={{ isReadOnly: true }} />
-                  <InputControl name="lng" inputProps={{ isReadOnly: true }} />
+                  <InputControl name="lat" inputProps={{ isReadOnly: true, defaultValue: centralCoordinates.lat }} />
+                  <InputControl name="lng" inputProps={{ isReadOnly: true, defaultValue: centralCoordinates.lng }} />
                 </HStack>
                 <SetCenterCoordinates isDisabled={!isEditting} />
               </Flex>
@@ -43,12 +45,12 @@ export const ConfigurationPanel = () => {
               mask="+1 (999) 999-9999"
               formControl={{ label: "Teléfono", helperText: "Teléfono de contacto." }}
               name="phone"
-              inputProps={{ isDisabled: !isEditting }}
+              inputProps={{ isDisabled: !isEditting, defaultValue: phone }}
             />
             <InputControl
               formControl={{ label: "Versión", helperText: "Versión actual de la aplicación." }}
               name="version"
-              inputProps={{ isDisabled: !isEditting }}
+              inputProps={{ isDisabled: !isEditting, defaultValue: version }}
             />
           </Stack>
         </FormProvider>

@@ -22,6 +22,7 @@ import UserProvider from "src/contexts/user";
 import DistrictProvider from "src/contexts/districts";
 import EmergencyProvider from "src/contexts/emergency";
 import ComplaintProvider from "src/contexts/complaints";
+import SettingsProvider from "src/contexts/settings";
 import AuthProvider, { useAuthContext } from "src/contexts/auth";
 import { useRouter } from "next/router";
 import TrackerProvider from "src/contexts/trackers";
@@ -46,7 +47,16 @@ const MyApp: FC<{ Component: FC; pageProps: any }> = ({ Component, pageProps }) 
             defer
           ></script>
         </Head>
-        <Compose providers={[UserProvider, DistrictProvider, EmergencyProvider, ComplaintProvider, TrackerProvider]}>
+        <Compose
+          providers={[
+            SettingsProvider,
+            UserProvider,
+            DistrictProvider,
+            EmergencyProvider,
+            ComplaintProvider,
+            TrackerProvider,
+          ]}
+        >
           <ComponentMain Component={<Component {...pageProps} />} />
         </Compose>
       </ChakraProvider>
