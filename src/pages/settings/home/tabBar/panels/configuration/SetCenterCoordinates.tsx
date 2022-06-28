@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useMemo, useState } from "react";
 
 import {
   Modal,
@@ -26,8 +26,20 @@ export const SetCenterCoordinates: FC<SetCenterCoordinatesProps> = ({ isDisabled
 
   const [newCoor, setNewCoor] = useState<google.maps.LatLngLiteral>(centralCoordinates);
 
+  const MapComponent = useMemo(
+    () => (
+      <GoogleMaps
+        defaultZoom={10}
+        defaultCenter={centralCoordinates}
+        markerList={[{ position: newCoor }]}
+        onClick={({ coords }) => setNewCoor(coords)}
+      />
+    ),
+    [centralCoordinates]
+  );
+
   async function handleUpdate() {
-    await setNewCentralCoordinates;
+    await setNewCentralCoordinates(newCoor);
     onClose();
   }
 
@@ -49,14 +61,7 @@ export const SetCenterCoordinates: FC<SetCenterCoordinatesProps> = ({ isDisabled
             </Text>
           </ModalHeader>
           <ModalBody px="2">
-            <Box h="xl">
-              <GoogleMaps
-                defaultZoom={10}
-                defaultCenter={newCoor}
-                markerList={[{ position: newCoor }]}
-                onClick={({ coords }) => setNewCoor(coords)}
-              />
-            </Box>
+            <Box h="xl">{MapComponent}</Box>
           </ModalBody>
 
           <ModalFooter

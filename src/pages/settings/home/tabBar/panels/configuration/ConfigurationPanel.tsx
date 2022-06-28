@@ -30,7 +30,7 @@ export const ConfigurationPanel = () => {
                   <InputControl name="lat" inputProps={{ isReadOnly: true, defaultValue: centralCoordinates.lat }} />
                   <InputControl name="lng" inputProps={{ isReadOnly: true, defaultValue: centralCoordinates.lng }} />
                 </HStack>
-                <SetCenterCoordinates isDisabled={!isEditting} />
+                <SetCenterCoordinates isDisabled={false} />
               </Flex>
             </FormControl>
             <InputControl

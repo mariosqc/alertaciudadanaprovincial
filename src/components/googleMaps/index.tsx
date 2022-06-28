@@ -66,12 +66,22 @@ export const GoogleMaps: FC<GoogleMapsProps> = ({
     [_onEditPolygon]
   );
 
-  const onLoad = useCallback(function callback(map) {
-    const bounds = new window.google.maps.LatLngBounds();
-    bounds.extend(defaultCenter || { lat: 19.410694, lng: -70.643761 });
-    map.fitBounds(bounds);
-    setMap(map);
-  }, []);
+  const onLoad = useCallback(
+    function callback(map) {
+      const bounds = new window.google.maps.LatLngBounds();
+
+      if (defaultCenter && defaultCenter.lat !== 0 && defaultCenter.lng !== 0) {
+        bounds.extend(defaultCenter);
+        map.fitBounds(bounds);
+        setMap(map);
+      } else {
+        bounds.extend({ lat: 19.410694, lng: -70.643761 });
+        map.fitBounds(bounds);
+        setMap(map);
+      }
+    },
+    [defaultCenter]
+  );
 
   const onUnmount = useCallback(function callback(map) {
     setMap(null);
