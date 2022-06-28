@@ -1,7 +1,9 @@
 import { FC, useState, useContext, useEffect, useMemo } from "react";
+import removeAccents from "remove-accents";
+
 import { Emergency, EntityType, PaginatioContext, Pagination } from "@alerta-ciudadana/entity";
 
-import { database } from "@/firebase";
+import { database, storage } from "@/firebase";
 import { createContext } from "@/utils";
 
 import Cookies from "universal-cookie";
@@ -14,6 +16,7 @@ const SKIP_PAGINATION = 25;
 interface EmergencyContext extends PaginatioContext<Emergency> {
   emergencies: Emergency[];
   typesOfEmergencies: EntityType[];
+  createEmergencyType: (values: { name: string; icon: File }) => Promise<void>;
 }
 
 const EmergencyContext = createContext<EmergencyContext>();
@@ -62,6 +65,18 @@ const EmergencyProvider: FC = ({ children }) => {
     });
   }
 
+  async function createEmergencyType(values: { name: string; icon: File }) {
+    console.log({ values });
+
+    const name = removeAccents(values.name.toLowerCase().replace(/ /g, "_"));
+    await storage.ref(`emergency-types/${name}`).put(values.icon);
+
+    await database.ref(`district/${districtId}/tEmergency`).push({
+      name,
+      icon: `https://firebasestorage.googleapis.com/v0/b/alerta-ciudadana-provincial.appspot.com/o/emergency-types%2F${name}?alt=media`,
+    });
+  }
+
   useEffect(() => {
     getEmergencies();
     getTypesOfEmergencies();
@@ -73,6 +88,7 @@ const EmergencyProvider: FC = ({ children }) => {
         emergencies,
         pagination,
         typesOfEmergencies,
+        createEmergencyType,
         prevPage,
         nextPage,
         changeNumberPerPage,

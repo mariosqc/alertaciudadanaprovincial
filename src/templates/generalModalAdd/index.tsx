@@ -39,7 +39,7 @@ export const GeneralModalAdd: FC<GeneralModalAddProps> = ({ isLoading, onSubmit 
       <Modal closeOnEsc={!isLoading} closeOnOverlayClick={!isLoading} isCentered isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Modal Title</ModalHeader>
+          <ModalHeader>Nuevo item</ModalHeader>
           <ModalBody>
             <AddingTypeForm onSubmit={onSubmit} />
           </ModalBody>

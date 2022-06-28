@@ -1,5 +1,5 @@
-import { FC, useState, useContext, useEffect } from "react";
-import { Complaint, PaginatioContext, Pagination } from "@alerta-ciudadana/entity";
+import { FC, useState, useContext, useEffect, useMemo } from "react";
+import { Complaint, EntityType, PaginatioContext, Pagination } from "@alerta-ciudadana/entity";
 import { createContext } from "@/utils";
 
 import { database } from "@/firebase";
@@ -13,6 +13,7 @@ const cookies = new Cookies();
 const SKIP_PAGINATION = 25;
 
 interface ComplaintContext extends PaginatioContext<Complaint> {
+  typesOfComplaints: EntityType[];
   complaints: Complaint[];
 }
 
@@ -21,11 +22,14 @@ const ComplaintContext = createContext<ComplaintContext>();
 const ComplaintProvider: FC = ({ children }) => {
   // const { isAuthenticated } = useAuthContext();
   const [complaints, setComplaints] = useState<Complaint[]>([]);
+  const [typesOfComplaints, setTypesOfComplaints] = useState<EntityType[]>([]);
   const { pagination, changeNumberPerPage, nextPage, prevPage, goToFirstPage, goToLastPage } = usePagination({
     allItems: complaints,
     skip: SKIP_PAGINATION,
     name: "complaint",
   });
+
+  const districtId = useMemo(() => cookies.get("district_id"), []);
 
   function getComplaints() {
     const districtId = cookies.get("district_id");
@@ -48,13 +52,36 @@ const ComplaintProvider: FC = ({ children }) => {
     });
   }
 
+  function getTypesOfComplaints() {
+    database.ref(`district/${districtId}/tDenuncia`).on("value", (snapshot) => {
+      let typesOfComplaints = snapshot.val() || [];
+
+      typesOfComplaints = Object.keys(typesOfComplaints).map((key) => ({
+        id: key,
+        ...typesOfComplaints[key],
+      }));
+
+      setTypesOfComplaints(typesOfComplaints);
+    });
+  }
+
   useEffect(() => {
     getComplaints();
+    getTypesOfComplaints();
   }, []);
 
   return (
     <ComplaintContext.Provider
-      value={{ complaints, pagination, changeNumberPerPage, nextPage, prevPage, goToFirstPage, goToLastPage }}
+      value={{
+        complaints,
+        pagination,
+        typesOfComplaints,
+        changeNumberPerPage,
+        nextPage,
+        prevPage,
+        goToFirstPage,
+        goToLastPage,
+      }}
     >
       {children}
     </ComplaintContext.Provider>

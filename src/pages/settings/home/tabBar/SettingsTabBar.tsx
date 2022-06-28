@@ -4,6 +4,7 @@ import { Tabs, TabList, TabPanels, Tab, TabPanel, GridItem, Text } from "@chakra
 import { Card } from "@/layout";
 import { ConfigurationPanel } from "./panels/configuration/ConfigurationPanel";
 import { MessagesListPanel } from "./panels/messagesList/MessagesListPanel";
+import { ListingsPanel } from "./panels/listings/ListingsPanel";
 
 export const SettingsTabBar = () => {
   return (
@@ -34,6 +35,14 @@ export const SettingsTabBar = () => {
               _focus={{}}
             >
               <Text w="max-content">Cambiar Contraseña</Text>
+            </Tab>{" "}
+            <Tab
+              py="3"
+              _selected={{ bg: "pri.50", borderColor: "pri.500", color: "pri.700" }}
+              fontWeight="medium"
+              _focus={{}}
+            >
+              <Text w="max-content">Listados</Text>
             </Tab>
           </TabList>
         </Card.Wrapper>
@@ -48,6 +57,9 @@ export const SettingsTabBar = () => {
             </TabPanel>
             <TabPanel p="0">
               <p>three!</p>
+            </TabPanel>
+            <TabPanel p="0">
+              <ListingsPanel />
             </TabPanel>
           </TabPanels>
         </Card.Wrapper>
