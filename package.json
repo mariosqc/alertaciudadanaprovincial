@@ -26,6 +26,7 @@
     "@types/react-input-mask": "^3.0.1",
     "@types/sort-object-keys": "^1.1.0",
     "@types/uuid": "^8.3.4",
+    "@types/video-react": "^0.15.0",
     "apexcharts": "^3.35.0",
     "firebase": "^9.6.10",
     "firebase-admin": "^10.0.2",
@@ -47,6 +48,7 @@
     "react-list": "^0.8.17",
     "react-loading": "^2.0.3",
     "react-number-format": "^4.9.1",
+    "react-player": "^2.10.1",
     "react-redux": "^8.0.0",
     "react-scrollbars-custom": "^4.0.27",
     "remove-accents": "^0.4.2",
@@ -55,6 +57,7 @@
     "universal-cookie": "^4.0.4",
     "use-debounce": "^7.0.1",
     "uuid": "^8.3.2",
+    "video-react": "^0.15.0",
     "yup": "^0.32.11"
   },
   "devDependencies": {

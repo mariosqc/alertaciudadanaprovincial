@@ -28,21 +28,25 @@ export const TrackerPage: NextPage = () => {
           <Card.Body h="95%">
             <GoogleMaps
               polygonPathList={[{ path: polygon }]}
-              markerList={trackers.map((tracker) => ({
-                position: { lat: tracker.l[0], lng: tracker.l[1] },
-                icon: {
-                  url:
-                    tracker.tipe === "Esperando..."
-                      ? "https://firebasestorage.googleapis.com/v0/b/alerta-ciudadana-provincial.appspot.com/o/icons%2Fspin.gif?alt=media&token=5dcf56c3-5f0e-413a-b75d-37ddf49db10e"
-                      : `https://firebasestorage.googleapis.com/v0/b/alerta-ciudadana-fe9d9.appspot.com/o/Iconos%20emergencia%2F${removeAccents(
-                          tracker.tipe.toLowerCase()
-                        )}.png?alt=media`,
-                  scaledSize: new google.maps.Size(36, 36),
-                },
-                onClick: () => {
-                  setAttendEmergency({ attending: true, tracker });
-                },
-              }))}
+              markerList={trackers.map((tracker) => {
+                const url =
+                  tracker.tipe === "Esperando..."
+                    ? "https://firebasestorage.googleapis.com/v0/b/alerta-ciudadana-provincial.appspot.com/o/icons%2Fspin.gif?alt=media&token=5dcf56c3-5f0e-413a-b75d-37ddf49db10e"
+                    : `https://firebasestorage.googleapis.com/v0/b/alerta-ciudadana-provincial.appspot.com/o/emergency-types%2F${removeAccents(
+                        tracker.tipe.toLowerCase()
+                      )}?alt=media`;
+
+                return {
+                  position: { lat: tracker.l[0], lng: tracker.l[1] },
+                  icon: {
+                    url,
+                    scaledSize: new google.maps.Size(36, 36),
+                  },
+                  onClick: () => {
+                    setAttendEmergency({ attending: true, tracker });
+                  },
+                };
+              })}
             />
           </Card.Body>
         </Card.Wrapper>
