@@ -13,5 +13,6 @@ declare module "@alerta-ciudadana/entity" {
     token: string;
     user: string;
     description: string;
+    type: string;
   }
 }

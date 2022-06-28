@@ -17,6 +17,7 @@ export const ComplaintsTable = () => {
             <Tr>
               <Th>Fecha</Th>
               <Th>Usuario</Th>
+              <Th>Tipo de Denuncia</Th>
               <Th>Teléfono</Th>
               <Th>Lugar</Th>
               <Th>Denuncia</Th>
@@ -39,6 +40,7 @@ export const ComplaintsTable = () => {
                 <Tr key={complaint.id}>
                   <Td>{moment(complaint.date).format("LLL")}</Td>
                   <Td>{complaint.user}</Td>
+                  <Td>{complaint.type || <Text textAlign="center">-</Text>}</Td>
                   <Td>{complaint.phone}</Td>
                   <Td>{complaint.place}</Td>
                   <Td>

@@ -16,6 +16,7 @@ const SKIP_PAGINATION = 25;
 interface ComplaintContext extends PaginatioContext<Complaint> {
   typesOfComplaints: EntityType[];
   complaints: Complaint[];
+  sortTable: (sort: "asc" | "desc", field: keyof Complaint) => void;
   createComplaintType(values: { name: string; icon: File }): Promise<void>;
   deleteComplaintType(entity: EntityType): Promise<void>;
 }
@@ -84,6 +85,18 @@ const ComplaintProvider: FC = ({ children }) => {
     await storage.ref(`complaint-types/${name}`).delete();
   }
 
+  async function sortTable(sort: "asc" | "desc", field: keyof Complaint) {
+    const sortedComplaints = [...complaints].sort((a, b) => {
+      if (sort === "asc") {
+        return a[field] > b[field] ? 1 : -1;
+      } else {
+        return a[field] > b[field] ? -1 : 1;
+      }
+    });
+
+    setComplaints(sortedComplaints);
+  }
+
   useEffect(() => {
     getComplaints();
     getTypesOfComplaints();
@@ -102,6 +115,7 @@ const ComplaintProvider: FC = ({ children }) => {
         goToLastPage,
         createComplaintType,
         deleteComplaintType,
+        sortTable,
       }}
     >
       {children}
