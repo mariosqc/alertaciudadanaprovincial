@@ -9,7 +9,7 @@ import { ListingsPanel } from "./panels/listings/ListingsPanel";
 export const SettingsTabBar = () => {
   return (
     <GridItem colSpan={12}>
-      <Tabs colorScheme="pri">
+      <Tabs defaultIndex={3} colorScheme="pri">
         <Card.Wrapper overflowX="auto" overflowY="hidden" shadow="sm" mb={["1", null, null, "2"]}>
           <TabList borderColor="gray.200" borderBottomWidth="1px">
             <Tab

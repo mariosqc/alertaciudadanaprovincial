@@ -17,6 +17,7 @@ interface EmergencyContext extends PaginatioContext<Emergency> {
   emergencies: Emergency[];
   typesOfEmergencies: EntityType[];
   createEmergencyType: (values: { name: string; icon: File }) => Promise<void>;
+  deleteEmergencyType: (entity: EntityType) => Promise<void>;
 }
 
 const EmergencyContext = createContext<EmergencyContext>();
@@ -66,15 +67,19 @@ const EmergencyProvider: FC = ({ children }) => {
   }
 
   async function createEmergencyType(values: { name: string; icon: File }) {
-    console.log({ values });
-
     const name = removeAccents(values.name.toLowerCase().replace(/ /g, "_"));
     await storage.ref(`emergency-types/${name}`).put(values.icon);
 
     await database.ref(`district/${districtId}/tEmergency`).push({
-      name,
+      name: values.name,
       icon: `https://firebasestorage.googleapis.com/v0/b/alerta-ciudadana-provincial.appspot.com/o/emergency-types%2F${name}?alt=media`,
     });
+  }
+
+  async function deleteEmergencyType(entity: EntityType) {
+    const name = removeAccents(entity.name.toLowerCase().replace(/ /g, "_"));
+    await database.ref(`district/${districtId}/tEmergency/${entity.id}`).remove();
+    await storage.ref(`emergency-types/${name}`).delete();
   }
 
   useEffect(() => {
@@ -88,12 +93,13 @@ const EmergencyProvider: FC = ({ children }) => {
         emergencies,
         pagination,
         typesOfEmergencies,
-        createEmergencyType,
         prevPage,
         nextPage,
         changeNumberPerPage,
         goToFirstPage,
         goToLastPage,
+        deleteEmergencyType,
+        createEmergencyType,
       }}
     >
       {children}

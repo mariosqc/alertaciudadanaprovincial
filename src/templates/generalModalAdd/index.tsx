@@ -18,11 +18,17 @@ import { AddingTypeForm } from "./AddingTypeForm";
 
 interface GeneralModalAddProps {
   isLoading: boolean;
-  onSubmit: (data: any) => void;
+  createNewItem: (values: { name: string; icon: File }) => Promise<void>;
 }
 
-export const GeneralModalAdd: FC<GeneralModalAddProps> = ({ isLoading, onSubmit }) => {
+export const GeneralModalAdd: FC<GeneralModalAddProps> = ({ isLoading, createNewItem }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  async function onSubmit(values: any) {
+    await createNewItem(values);
+
+    onClose();
+  }
 
   return (
     <>

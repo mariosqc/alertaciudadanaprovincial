@@ -1,15 +1,12 @@
 import { useComplaintContext, useEmergencyContext } from "@/contexts";
 import { Card } from "@/layout";
 import { GeneralList, GeneralModalAdd } from "@/templates";
-import { Flex, GridItem, List, ListItem, SimpleGrid, Text } from "@chakra-ui/react";
+import { Flex, GridItem, SimpleGrid, Text } from "@chakra-ui/react";
 import React from "react";
 
 export const ListingsPanel = () => {
-  const { typesOfEmergencies, createEmergencyType } = useEmergencyContext();
+  const { typesOfEmergencies, createEmergencyType, deleteEmergencyType } = useEmergencyContext();
   const { typesOfComplaints } = useComplaintContext();
-
-  console.log(typesOfComplaints);
-
   return (
     <div>
       <Card.Header
@@ -23,11 +20,11 @@ export const ListingsPanel = () => {
               <Text fontSize="lg" fontWeight="semibold">
                 Tipos de emergencias
               </Text>
-              <GeneralModalAdd onSubmit={createEmergencyType} isLoading={false} />
+              <GeneralModalAdd createNewItem={createEmergencyType} isLoading={false} />
             </Flex>
-            <GeneralList items={typesOfEmergencies} />
+            <GeneralList items={typesOfEmergencies} onDelete={deleteEmergencyType} />
           </GridItem>
-          <GridItem colSpan={6}>
+          {/* <GridItem colSpan={6}>
             <GridItem colSpan={6}>
               <Flex justifyContent="space-between">
                 <Text fontSize="lg" fontWeight="semibold">
@@ -37,7 +34,7 @@ export const ListingsPanel = () => {
               </Flex>
               <GeneralList items={typesOfComplaints} />
             </GridItem>
-          </GridItem>
+          </GridItem> */}
         </SimpleGrid>
       </Card.Body>
     </div>

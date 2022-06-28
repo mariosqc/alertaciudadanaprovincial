@@ -23,9 +23,10 @@ import { EntityType } from "@alerta-ciudadana/entity";
 
 interface GeneralListProps {
   items: EntityType[];
+  onDelete: (item: EntityType) => void;
 }
 
-export const GeneralList: FC<GeneralListProps> = ({ items }) => {
+export const GeneralList: FC<GeneralListProps> = ({ items, onDelete }) => {
   return (
     <List>
       {items.length === 0 && (
@@ -72,7 +73,7 @@ export const GeneralList: FC<GeneralListProps> = ({ items }) => {
                             <Text>Editar</Text>
                           </MenuItem>
                           <MenuItem>
-                            <Text>Eliminar</Text>
+                            <Text onClick={() => onDelete(items[index])}>Eliminar</Text>
                           </MenuItem>
                         </MenuList>
                       </Menu>
