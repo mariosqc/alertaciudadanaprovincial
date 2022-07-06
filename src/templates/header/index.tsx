@@ -20,8 +20,6 @@ export const Header = () => {
     [districts]
   );
 
-  console.log(hasSuperAdmin);
-
   function signOut() {
     cookies.remove("user");
     cookies.remove("hasSuperAdmin");
