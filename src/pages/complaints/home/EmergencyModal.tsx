@@ -1,4 +1,4 @@
-import { Button, Divider, Flex, IconButton, List, ListItem, Text, useDisclosure } from "@chakra-ui/react";
+import { Button, Divider, Flex, IconButton, Image, List, ListItem, Text, useDisclosure } from "@chakra-ui/react";
 import React, { FC, useMemo } from "react";
 import { Info } from "react-feather";
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, Box } from "@chakra-ui/react";
@@ -77,6 +77,13 @@ export const ComplaintModal: FC<ComplaintModalProps> = ({ complaint }) => {
                   </ListItem>
                   <Divider my="2" />
                 </List>
+                {complaint.avatarUrl ? (
+                  <Image src={complaint.avatarUrl} alt="" />
+                ) : (
+                  <Text fontWeight="semibold" color="gray.400" textAlign="center">
+                    No hay imágenes para mostrar
+                  </Text>
+                )}
               </Box>
               <Box flex="1.5">
                 <GoogleMaps

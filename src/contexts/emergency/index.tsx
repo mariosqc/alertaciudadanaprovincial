@@ -1,13 +1,14 @@
 import { FC, useState, useContext, useEffect, useMemo } from "react";
 import removeAccents from "remove-accents";
 
-import { Emergency, EntityType, PaginatioContext, Pagination } from "@alerta-ciudadana/entity";
+import { Emergency, EntityType, PaginatioContext } from "@alerta-ciudadana/entity";
 
 import { database, storage } from "@/firebase";
 import { createContext } from "@/utils";
 
 import Cookies from "universal-cookie";
 import { usePagination } from "@/hooks";
+import moment from "moment";
 
 const cookies = new Cookies();
 
@@ -15,15 +16,20 @@ const SKIP_PAGINATION = 25;
 
 interface EmergencyContext extends PaginatioContext<Emergency> {
   emergencies: Emergency[];
+  allEmergencies: Emergency[];
   typesOfEmergencies: EntityType[];
   createEmergencyType: (values: { name: string; icon: File }) => Promise<void>;
+  filterByDates: (startDate: string, endDate: string) => void;
   deleteEmergencyType: (entity: EntityType) => Promise<void>;
+  filterEmergenciesByType: (name?: string) => void;
+  findEmergencies(values: { field: string; query: string }): void;
 }
 
 const EmergencyContext = createContext<EmergencyContext>();
 
 const EmergencyProvider: FC = ({ children }) => {
   const [emergencies, setEmergencies] = useState<Emergency[]>([]);
+  const [allEmergencies, setAllEmergencies] = useState<Emergency[]>([]);
   const [typesOfEmergencies, setTypesOfEmergencies] = useState<EntityType[]>([]);
   const { pagination, changeNumberPerPage, nextPage, prevPage, goToFirstPage, goToLastPage } = usePagination({
     allItems: emergencies,
@@ -50,6 +56,7 @@ const EmergencyProvider: FC = ({ children }) => {
           .flat();
 
         setEmergencies(emergenciesSnapshot);
+        setAllEmergencies(emergenciesSnapshot);
       }
     });
   }
@@ -82,6 +89,44 @@ const EmergencyProvider: FC = ({ children }) => {
     await storage.ref(`emergency-types/${name}`).delete();
   }
 
+  async function filterEmergenciesByType(emergencyType?: string) {
+    if (!emergencyType) {
+      setEmergencies(allEmergencies);
+      return;
+    }
+
+    const emergenciesFinded = allEmergencies.filter((e) => e.emergency === emergencyType);
+    setEmergencies(emergenciesFinded);
+  }
+
+  async function filterByDates(startDate: string, endDate: string) {
+    const emergenciesFinded = allEmergencies.filter((e) => {
+      const compareDate = moment(e.date);
+      const startDateCompare = moment(startDate).subtract(1, "days");
+      const endDateCompare = moment(endDate);
+      return compareDate.isBetween(startDateCompare, endDateCompare);
+    });
+
+    setEmergencies(emergenciesFinded);
+  }
+
+  async function findEmergencies(values: { field: string; query: string }) {
+    console.log(values);
+
+    if (values.query === "") {
+      setEmergencies(allEmergencies);
+      return;
+    }
+
+    const emergenciesFinded = allEmergencies.filter((e) => {
+      const field = e[values.field as keyof Emergency];
+      const query = values.query;
+      return String(field).toLowerCase().includes(query.toLowerCase());
+    });
+
+    setEmergencies(emergenciesFinded);
+  }
+
   useEffect(() => {
     getEmergencies();
     getTypesOfEmergencies();
@@ -91,6 +136,7 @@ const EmergencyProvider: FC = ({ children }) => {
     <EmergencyContext.Provider
       value={{
         emergencies,
+        allEmergencies,
         pagination,
         typesOfEmergencies,
         prevPage,
@@ -100,6 +146,9 @@ const EmergencyProvider: FC = ({ children }) => {
         goToLastPage,
         deleteEmergencyType,
         createEmergencyType,
+        filterEmergenciesByType,
+        filterByDates,
+        findEmergencies,
       }}
     >
       {children}

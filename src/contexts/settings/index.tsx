@@ -5,34 +5,30 @@ import { createContext } from "@/utils";
 import Cookies from "universal-cookie";
 
 interface SettingsContext {
-  phone: string;
-  version: string;
+  appSettings: AppSettings | undefined;
   centralCoordinates: google.maps.LatLngLiteral;
   setNewCentralCoordinates: (coordinates: google.maps.LatLngLiteral) => Promise<void>;
+  setSettings: (settings: AppSettings) => Promise<void>;
 }
 const cookies = new Cookies();
 
 const SettingsContext = createContext<SettingsContext>();
 
 const SettingsProvider: FC = ({ children }) => {
-  const [phone, setPhone] = useState<string>("");
-  const [version, setVersion] = useState<string>("");
+  const [appSettings, setAppSettings] = useState<AppSettings>();
   const [centralCoordinates, setCentralCoordinates] = useState<google.maps.LatLngLiteral>({ lat: 0, lng: 0 });
   const districtId = useMemo(() => cookies.get("district_id"), []);
 
   async function getSettings() {
     database.ref("settings").on("value", (snapshot) => {
       const settings = snapshot.val();
-      const { phone, version } = settings.app;
-
-      setPhone(phone);
-      setVersion(version);
+      setAppSettings(settings.app);
     });
 
     database.ref(`admin/districts/${districtId}/centralCoordinates`).on("value", (snapshot) => {
       const centralCoordinates = snapshot.val();
 
-      const [lat, lng] = centralCoordinates.split(",").map((coordinate: string) => parseFloat(coordinate));
+      const [lat, lng] = (centralCoordinates || "0,0").split(",").map((coordinate: string) => parseFloat(coordinate));
 
       setCentralCoordinates({ lat, lng });
     });
@@ -42,12 +38,16 @@ const SettingsProvider: FC = ({ children }) => {
     await database.ref(`admin/districts/${districtId}/centralCoordinates`).set(`${newCoor.lat},${newCoor.lng}`);
   }
 
+  async function setSettings(values: AppSettings) {
+    await database.ref("settings/app").set(values);
+  }
+
   useEffect(() => {
     getSettings();
   }, []);
 
   return (
-    <SettingsContext.Provider value={{ phone, version, centralCoordinates, setNewCentralCoordinates }}>
+    <SettingsContext.Provider value={{ appSettings, centralCoordinates, setNewCentralCoordinates, setSettings }}>
       {children}
     </SettingsContext.Provider>
   );

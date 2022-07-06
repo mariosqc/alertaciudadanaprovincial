@@ -29,9 +29,9 @@ export const EmergencyTypesPage: NextPage = () => {
         <Card.Header
           title="Tipos de Emergencias"
           subtitle={`${typesOfEmergencies.length} Resultados encontrados`}
-          optionsRight={[<GeneralModalAdd isLoading={false} key="add" onSubmit={onSubmit} />]}
+          optionsRight={[<GeneralModalAdd isLoading={false} key="add" createNewItem={onSubmit} />]}
         />
-        <GeneralList items={typesOfEmergencies} />
+        <GeneralList items={typesOfEmergencies} onDelete={() => {}} />
       </Card.Wrapper>
     </WrapperPage>
   );

@@ -19,7 +19,6 @@ export const NewMessageModal = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   async function onSubmit(values: any) {
-    console.log(values);
     setIsLoading(true);
   }
 

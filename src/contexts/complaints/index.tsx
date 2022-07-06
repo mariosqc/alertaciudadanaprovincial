@@ -8,6 +8,7 @@ import { database, storage } from "@/firebase";
 import Cookies from "universal-cookie";
 import { useAuthContext } from "../auth";
 import { usePagination } from "@/hooks";
+import moment from "moment";
 
 const cookies = new Cookies();
 
@@ -19,6 +20,8 @@ interface ComplaintContext extends PaginatioContext<Complaint> {
   sortTable: (sort: "asc" | "desc", field: keyof Complaint) => void;
   createComplaintType(values: { name: string; icon: File }): Promise<void>;
   deleteComplaintType(entity: EntityType): Promise<void>;
+  filterComplaintsByType(name?: string): void;
+  filterByDates(startDate: string, endDate: string): void;
 }
 
 const ComplaintContext = createContext<ComplaintContext>();
@@ -26,6 +29,7 @@ const ComplaintContext = createContext<ComplaintContext>();
 const ComplaintProvider: FC = ({ children }) => {
   // const { isAuthenticated } = useAuthContext();
   const [complaints, setComplaints] = useState<Complaint[]>([]);
+  const [allComplaints, setAllComplaints] = useState<Complaint[]>([]);
   const [typesOfComplaints, setTypesOfComplaints] = useState<EntityType[]>([]);
   const { pagination, changeNumberPerPage, nextPage, prevPage, goToFirstPage, goToLastPage } = usePagination({
     allItems: complaints,
@@ -53,6 +57,7 @@ const ComplaintProvider: FC = ({ children }) => {
         .flat();
 
       setComplaints(districtsSnapshot);
+      setAllComplaints(districtsSnapshot);
     });
   }
 
@@ -97,6 +102,25 @@ const ComplaintProvider: FC = ({ children }) => {
     setComplaints(sortedComplaints);
   }
 
+  async function filterComplaintsByType(complaintType: string) {
+    if (!complaintType) {
+      setComplaints(allComplaints);
+      return;
+    }
+    const emergenciesFinded = allComplaints.filter((e) => e.type === complaintType);
+    setComplaints(emergenciesFinded);
+  }
+
+  async function filterByDates(startDate: string, endDate: string) {
+    const emergenciesFinded = allComplaints.filter((e) => {
+      const compareDate = moment(e.date);
+      const startDateCompare = moment(startDate).subtract(1, "days");
+      const endDateCompare = moment(endDate);
+      return compareDate.isBetween(startDateCompare, endDateCompare);
+    });
+    setComplaints(emergenciesFinded);
+  }
+
   useEffect(() => {
     getComplaints();
     getTypesOfComplaints();
@@ -116,6 +140,8 @@ const ComplaintProvider: FC = ({ children }) => {
         createComplaintType,
         deleteComplaintType,
         sortTable,
+        filterComplaintsByType,
+        filterByDates,
       }}
     >
       {children}

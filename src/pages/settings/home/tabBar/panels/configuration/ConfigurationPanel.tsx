@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Card, CardContainer } from "@/layout";
 
@@ -8,8 +8,17 @@ import { FormControl, Button, FormProvider, InputControl, InputMaskControl } fro
 import { useSettingsContext } from "@/contexts";
 
 export const ConfigurationPanel = () => {
-  const { phone, version, centralCoordinates } = useSettingsContext();
+  const { appSettings, centralCoordinates, setSettings } = useSettingsContext();
   const [isEditting, setIsEditting] = useState(false);
+  const [version, setVersion] = useState("");
+  const [phone, setPhone] = useState("");
+
+  useEffect(() => {
+    if (appSettings) {
+      setVersion(appSettings.version);
+      setPhone(appSettings.phone);
+    }
+  }, [appSettings]);
 
   return (
     <>
@@ -18,7 +27,12 @@ export const ConfigurationPanel = () => {
         subtitle="Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus deserunt reprehenderit corporis sed repudiandae maxime."
       />
       <Card.Body>
-        <FormProvider id="" onSubmit={() => {}}>
+        <FormProvider
+          id="configuration-form"
+          onSubmit={async () => {
+            await setSettings({ version, phone });
+          }}
+        >
           <Stack maxW="2xl">
             <FormControl
               name="coords"
@@ -45,12 +59,26 @@ export const ConfigurationPanel = () => {
               mask="+1 (999) 999-9999"
               formControl={{ label: "Teléfono", helperText: "Teléfono de contacto." }}
               name="phone"
-              inputProps={{ isDisabled: !isEditting, defaultValue: phone }}
+              inputProps={{
+                isDisabled: !isEditting,
+                defaultValue: appSettings?.phone,
+                value: phone,
+                onChange: (e) => {
+                  setPhone(e.target.value);
+                },
+              }}
             />
             <InputControl
               formControl={{ label: "Versión", helperText: "Versión actual de la aplicación." }}
               name="version"
-              inputProps={{ isDisabled: !isEditting, defaultValue: version }}
+              inputProps={{
+                isDisabled: !isEditting,
+                defaultValue: appSettings?.version,
+                value: version,
+                onChange: (e) => {
+                  setVersion(e.target.value);
+                },
+              }}
             />
           </Stack>
         </FormProvider>
@@ -69,7 +97,9 @@ export const ConfigurationPanel = () => {
           {isEditting ? (
             <HStack>
               <Button onClick={() => setIsEditting(false)}>Cancelar</Button>
-              <Button colorScheme="pri">Guardar Cambios</Button>
+              <Button form="configuration-form" type="submit" colorScheme="pri">
+                Guardar Cambios
+              </Button>
             </HStack>
           ) : (
             <Button onClick={() => setIsEditting(true)} colorScheme="orange">

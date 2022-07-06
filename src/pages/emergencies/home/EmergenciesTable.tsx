@@ -1,44 +1,61 @@
 import React from "react";
 
-import {
-  Tag,
-  Table,
-  TableContainer,
-  Tbody,
-  Td,
-  Text,
-  Tfoot,
-  Th,
-  Thead,
-  Tr,
-  IconButton,
-  Flex,
-  HStack,
-  Divider,
-  chakra,
-} from "@chakra-ui/react";
+import { Tag, Table, TableContainer, Tbody, Td, Text, Tfoot, Th, Thead, Tr, Box } from "@chakra-ui/react";
 import { useEmergencyContext } from "@/contexts";
 import { EmergencyModal } from "./EmergencyModal";
-import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from "react-feather";
 import moment from "moment";
-import { Pagination } from "@/components";
+import { FormProvider, Input, Pagination } from "@/components";
+import { useDebouncedCallback } from "use-debounce";
+import { Emergency } from "@alerta-ciudadana/entity";
 
 export const EmergenciesTable = () => {
   const pagination = useEmergencyContext();
 
+  const debounced = useDebouncedCallback(findEmergencies, 250);
+
+  async function findEmergencies(values: { field: string; query: string }) {
+    console.log(values);
+
+    if (values.query === "") {
+      return;
+    }
+
+    const emergenciesFinded = pagination.allEmergencies.filter((e) => {
+      const field = e[values.field as keyof Emergency];
+      const query = values.query;
+      return String(field).toLowerCase().includes(query.toLowerCase());
+    });
+
+    console.log(emergenciesFinded);
+  }
+
   return (
-    <>
+    <FormProvider id="" onSubmit={() => {}}>
       <TableContainer py="3">
         <Table mb="4" size="sm" variant="striped">
           <Thead>
             <Tr>
-              <Th>Fecha</Th>
-              <Th>Emergencia</Th>
-              <Th>Usuario</Th>
-              <Th>Lugar</Th>
-              <Th>Teléfono</Th>
-              <Th>Estado</Th>
-              <Th>Valoración</Th>
+              {[
+                { label: "Fecha", field: "date" },
+                { label: "Emergencia", field: "emergency" },
+                { label: "Usuario", field: "user" },
+                { label: "Lugar", field: "place" },
+                { label: "Teléfono", field: "phone" },
+                { label: "Estado", field: "status" },
+                { label: "Valoración", field: "values" },
+              ].map((column) => (
+                <Th key={column.label}>
+                  <Box mb="1">
+                    <Text mb="1">{column.label}</Text>
+                    <Input
+                      name="date"
+                      inputProps={{
+                        onChange: (e) => debounced({ field: column.field, query: e.target.value }),
+                      }}
+                    />
+                  </Box>
+                </Th>
+              ))}
               <Th w="0"></Th>
             </Tr>
           </Thead>
@@ -88,6 +105,6 @@ export const EmergenciesTable = () => {
         </Table>
         <Pagination {...pagination} />
       </TableContainer>
-    </>
+    </FormProvider>
   );
 };

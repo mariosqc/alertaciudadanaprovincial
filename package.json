@@ -55,7 +55,7 @@
     "sort-object-keys": "^1.1.3",
     "store": "^2.0.12",
     "universal-cookie": "^4.0.4",
-    "use-debounce": "^7.0.1",
+    "use-debounce": "^8.0.1",
     "uuid": "^8.3.2",
     "video-react": "^0.15.0",
     "yup": "^0.32.11"

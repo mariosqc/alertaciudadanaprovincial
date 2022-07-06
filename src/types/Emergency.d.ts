@@ -11,5 +11,6 @@ declare module "@alerta-ciudadana/entity" {
     user: string;
     video: string;
     coor: [number, number];
+    values: string;
   }
 }

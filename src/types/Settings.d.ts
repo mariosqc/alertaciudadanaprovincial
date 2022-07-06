@@ -1,11 +1,11 @@
 interface Settings {
   app: AppSettings;
   map: MapSettings;
-  phone: string;
 }
 
 interface AppSettings {
-  version: number;
+  version: string;
+  phone: string;
 }
 
 interface MapSettings {
