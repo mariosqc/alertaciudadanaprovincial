@@ -12,8 +12,6 @@ import moment from "moment";
 
 const cookies = new Cookies();
 
-const SKIP_PAGINATION = 25;
-
 interface ComplaintContext extends PaginatioContext<Complaint> {
   typesOfComplaints: EntityType[];
   complaints: Complaint[];
@@ -33,7 +31,6 @@ const ComplaintProvider: FC = ({ children }) => {
   const [typesOfComplaints, setTypesOfComplaints] = useState<EntityType[]>([]);
   const { pagination, changeNumberPerPage, nextPage, prevPage, goToFirstPage, goToLastPage } = usePagination({
     allItems: complaints,
-    skip: SKIP_PAGINATION,
     name: "complaint",
   });
 

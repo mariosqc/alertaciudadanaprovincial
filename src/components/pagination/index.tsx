@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 
 import {
   Tag,
@@ -30,23 +30,29 @@ export const Pagination: FC<PaginatioProps> = ({
   pagination,
   prevPage,
 }) => {
+  useEffect(() => {
+    console.log(pagination);
+  }, []);
+
   return (
     <div>
       <Divider my="3" />
       <Flex justifyContent="space-between" px="3">
         <HStack>
-          {[10, 25, 50, 100].map((perPage) => (
-            <IconButton
-              key={perPage}
-              variant={perPage === pagination.perPage ? "solid" : "ghost"}
-              colorScheme="pri"
-              onClick={() => changeNumberPerPage(perPage)}
-              _focus={{}}
-              size="sm"
-              aria-label=""
-              icon={<>{perPage}</>}
-            />
-          ))}
+          {[10, 25, 50, 100].map((perPage) => {
+            return (
+              <IconButton
+                key={perPage}
+                variant={perPage === pagination.perPage ? "solid" : "ghost"}
+                colorScheme="pri"
+                onClick={() => changeNumberPerPage(perPage)}
+                _focus={{}}
+                size="sm"
+                aria-label=""
+                icon={<>{perPage}</>}
+              />
+            );
+          })}
         </HStack>
         <HStack>
           {/* <IconButton

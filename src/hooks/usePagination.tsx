@@ -10,7 +10,6 @@ interface Pagination<T> {
 }
 
 interface UsePaginationProps<T> {
-  skip: number;
   allItems: T[];
   name: string;
 }
@@ -20,21 +19,26 @@ function paginationStore<T>(pagination: Pagination<T>, name: string) {
   store.set(`${name}-table-pagination`, newPagination);
 }
 
-export const usePagination = <T,>({ skip, allItems, name }: UsePaginationProps<T>) => {
+export const usePagination = <T,>({ allItems, name }: UsePaginationProps<T>) => {
+  const paginationLocalStorage = useMemo<Pagination<T>>(() => store.get(`${name}-table-pagination`) || 25, []);
+
   const [allItemsInternal, setAllItemsInternal] = useState<T[]>([]);
-  const [perPage, setPerPage] = useState(skip);
+  const [perPage, setPerPage] = useState(paginationLocalStorage.skip);
   const [pagination, setPagination] = useState<Pagination<T>>({
-    perPage: skip,
+    perPage: paginationLocalStorage.skip,
     items: [],
     take: 0,
-    skip,
+    skip: paginationLocalStorage.skip,
     total: 0,
   });
 
-  // useMemo(() => {
-  //   const paginationStored: Pagination<T> = store.get(`${name}-table-pagination`);
-  //   setPagination((prev) => ({ ...paginationStored, items: prev.items }));
-  // }, []);
+  useEffect(() => {
+    const paginationStored: Pagination<T> = store.get(`${name}-table-pagination`);
+
+    if (paginationStored) {
+      setPagination((prev) => ({ ...paginationStored, items: prev.items }));
+    }
+  }, []);
 
   function initialPagination(skip: number) {
     const pagination = { perPage: skip, skip, take: 0, items: allItems.slice(0, skip), total: allItems.length };
@@ -84,8 +88,8 @@ export const usePagination = <T,>({ skip, allItems, name }: UsePaginationProps<T
       ...prev,
       perPage: prev.perPage,
       take: 0,
-      skip,
-      items: allItemsInternal.slice(0, skip),
+      skip: paginationLocalStorage.skip,
+      items: allItemsInternal.slice(0, paginationLocalStorage.skip),
     }));
   }
 
@@ -103,7 +107,7 @@ export const usePagination = <T,>({ skip, allItems, name }: UsePaginationProps<T
   useEffect(() => {
     if (allItems.length) {
       setAllItemsInternal(allItems);
-      initialPagination(skip);
+      initialPagination(paginationLocalStorage.skip);
     }
   }, [allItems]);
 
