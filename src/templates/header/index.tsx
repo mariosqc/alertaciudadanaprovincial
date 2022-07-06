@@ -65,14 +65,14 @@ export const Header = () => {
             icon={<Settings size="1.25rem" />}
             onClick={() => push("/settings")}
           />
-          <IconButton
+          {/* <IconButton
             aria-label="Settings"
             size="sm"
             variant="ghost"
             _focus={{}}
             colorScheme="green"
             icon={<Bell size="1.25rem" />}
-          />
+          /> */}
           <Avatar size="sm" />
 
           <IconButton
