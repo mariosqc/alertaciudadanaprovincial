@@ -73,7 +73,6 @@ export const Header = () => {
             colorScheme="green"
             icon={<Bell size="1.25rem" />}
           /> */}
-          <Avatar size="sm" />
 
           <IconButton
             _focus={{}}
