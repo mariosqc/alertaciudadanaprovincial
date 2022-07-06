@@ -12,8 +12,6 @@ import moment from "moment";
 
 const cookies = new Cookies();
 
-const SKIP_PAGINATION = 25;
-
 interface EmergencyContext extends PaginatioContext<Emergency> {
   emergencies: Emergency[];
   allEmergencies: Emergency[];
@@ -33,7 +31,6 @@ const EmergencyProvider: FC = ({ children }) => {
   const [typesOfEmergencies, setTypesOfEmergencies] = useState<EntityType[]>([]);
   const { pagination, changeNumberPerPage, nextPage, prevPage, goToFirstPage, goToLastPage } = usePagination({
     allItems: emergencies,
-    skip: SKIP_PAGINATION,
     name: "emergency",
   });
   const districtId = useMemo(() => cookies.get("district_id"), []);
