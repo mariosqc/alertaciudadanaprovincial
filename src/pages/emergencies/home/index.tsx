@@ -18,13 +18,13 @@ export const EmergenciesPage: NextPage = () => {
           title="Listado de Emergencias"
           subtitle={`${emergencies.length} Resultados encontrados`}
           optionsRight={[
-            <Link key="types" href="/emergencies/types">
-              <a>
-                <Button variant="outline" w="24" colorScheme="pri" size="sm">
-                  Tipos
-                </Button>
-              </a>
-            </Link>,
+            // <Link key="types" href="/emergencies/types">
+            //   <a>
+            //     <Button variant="outline" w="24" colorScheme="pri" size="sm">
+            //       Tipos
+            //     </Button>
+            //   </a>
+            // </Link>,
             <Link key="reports" href="/emergencies/reports">
               <a>
                 <Button variant="outline" w="24" colorScheme="green" size="sm">

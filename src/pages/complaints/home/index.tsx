@@ -18,13 +18,13 @@ export const ComplaintsPage: NextPage = () => {
           title="Listado de Denuncias"
           subtitle={`${complaints.length} Resultados encontrados`}
           optionsRight={[
-            <Link key="types" href="/complaints/types">
-              <a>
-                <Button variant="outline" w="24" colorScheme="pri" size="sm">
-                  Tipos
-                </Button>
-              </a>
-            </Link>,
+            // <Link key="types" href="/complaints/types">
+            //   <a>
+            //     <Button variant="outline" w="24" colorScheme="pri" size="sm">
+            //       Tipos
+            //     </Button>
+            //   </a>
+            // </Link>,
             <Link key="reports" href="/complaints/reports">
               <a>
                 <Button variant="outline" w="24" colorScheme="green" size="sm">

@@ -99,7 +99,7 @@ export const EmergenciesTable = () => {
             </Tr>
           </Tfoot>
         </Table>
-        <Pagination name="emergencies" {...pagination} />
+        <Pagination {...pagination} />
       </TableContainer>
     </FormProvider>
   );

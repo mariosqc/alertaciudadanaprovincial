@@ -30,19 +30,18 @@ export const Pagination: FC<PaginatioProps> = ({
   pagination,
   prevPage,
 }) => {
-  useEffect(() => {
-    console.log(pagination);
-  }, []);
-
   return (
     <div>
       <Divider my="3" />
       <Flex justifyContent="space-between" px="3">
         <HStack>
           {[10, 25, 50, 100].map((perPage) => {
+            console.log(perPage === pagination.perPage);
+
             return (
               <IconButton
                 key={perPage}
+                id={perPage === pagination.perPage ? "solid" : "ghost"}
                 variant={perPage === pagination.perPage ? "solid" : "ghost"}
                 colorScheme="pri"
                 onClick={() => changeNumberPerPage(perPage)}
