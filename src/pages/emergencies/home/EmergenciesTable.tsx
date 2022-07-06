@@ -14,8 +14,6 @@ export const EmergenciesTable = () => {
   const debounced = useDebouncedCallback(findEmergencies, 250);
 
   async function findEmergencies(values: { field: string; query: string }) {
-    console.log(values);
-
     if (values.query === "") {
       return;
     }
@@ -25,8 +23,6 @@ export const EmergenciesTable = () => {
       const query = values.query;
       return String(field).toLowerCase().includes(query.toLowerCase());
     });
-
-    console.log(emergenciesFinded);
   }
 
   return (
@@ -103,7 +99,7 @@ export const EmergenciesTable = () => {
             </Tr>
           </Tfoot>
         </Table>
-        <Pagination {...pagination} />
+        <Pagination name="emergencies" {...pagination} />
       </TableContainer>
     </FormProvider>
   );
