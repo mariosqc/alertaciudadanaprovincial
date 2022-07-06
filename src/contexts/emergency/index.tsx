@@ -111,8 +111,6 @@ const EmergencyProvider: FC = ({ children }) => {
   }
 
   async function findEmergencies(values: { field: string; query: string }) {
-    console.log(values);
-
     if (values.query === "") {
       setEmergencies(allEmergencies);
       return;
