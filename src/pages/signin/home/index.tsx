@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import { NextPage } from "next";
 import Cookies from "universal-cookie";
-import { Flex, useToast } from "@chakra-ui/react";
+import { Flex, Image, Stack, useToast } from "@chakra-ui/react";
 import { Card } from "@/layout";
 import { Form } from "./signinForm/Form";
 import { auth, database } from "@/firebase";
@@ -15,12 +15,22 @@ export const SigninPage: NextPage = () => {
 
   return (
     <Flex bgColor="#eceff3" h="100vh" w="100vw" alignItems="center" justifyContent="center">
-      <Card.Wrapper w="sm">
-        <Card.Header title="Iniciar Sesión" />
-        <Card.Container>
-          <Form onSubmit={onSubmit} isLoading={isLoading} />
-        </Card.Container>
-      </Card.Wrapper>
+      <Stack>
+        <Image
+          mb="2"
+          userSelect="none"
+          mx="auto"
+          w="36"
+          src="https://firebasestorage.googleapis.com/v0/b/alerta-ciudadana-provincial.appspot.com/o/logos%2Flogito.png?alt=media"
+          alt=""
+        />
+        <Card.Wrapper w="sm">
+          <Card.Header title="Iniciar Sesión" />
+          <Card.Container>
+            <Form onSubmit={onSubmit} isLoading={isLoading} />
+          </Card.Container>
+        </Card.Wrapper>
+      </Stack>
     </Flex>
   );
 };

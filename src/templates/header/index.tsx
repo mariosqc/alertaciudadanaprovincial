@@ -1,9 +1,9 @@
-import { useAuthContext, useDistrictContext } from "@/contexts";
+import { useDistrictContext } from "@/contexts";
 import { Card } from "@/layout";
-import { Box, Avatar, CloseButton, Flex, HStack, IconButton, Text, Select, Tag } from "@chakra-ui/react";
+import { Box, Flex, HStack, IconButton, Text, Select, Tag, Image } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React, { useMemo } from "react";
-import { Bell, LogOut, Menu, Settings } from "react-feather";
+import { LogOut, Settings } from "react-feather";
 import Cookies from "universal-cookie";
 import { Navbar } from "../navbar";
 import { MenuDrawer } from "./MenuDrawer";
@@ -30,8 +30,16 @@ export const Header = () => {
   return (
     <Card.Wrapper rounded="none" shadow="sm">
       <Flex h={["16", null, null, "auto"]} px="6" alignItems="center" justifyContent="space-between">
-        <Flex>
-          <Text mr="12">Titulo aqui</Text>
+        <Flex alignItems="center">
+          <Box mr="5">
+            <Image
+              userSelect="none"
+              mx="auto"
+              w="28"
+              src="https://firebasestorage.googleapis.com/v0/b/alerta-ciudadana-provincial.appspot.com/o/logos%2Flogito.png?alt=media"
+              alt=""
+            />
+          </Box>
           <Navbar />
         </Flex>
         <HStack>
