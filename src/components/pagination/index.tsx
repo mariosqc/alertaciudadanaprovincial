@@ -36,7 +36,7 @@ export const Pagination: FC<PaginatioProps> = ({
       <Flex justifyContent="space-between" px="3">
         <HStack>
           {[10, 25, 50, 100].map((perPage) => {
-            console.log(perPage === pagination.perPage);
+            // console.log(perPage === pagination.perPage);
 
             return (
               <IconButton

@@ -1,12 +1,14 @@
 import React from "react";
 
-import { Tag, Table, TableContainer, Tbody, Td, Text, Tfoot, Th, Thead, Tr, Box } from "@chakra-ui/react";
+import { Tag, Table, TableContainer, Tbody, Td, Text, Tfoot, Th, Thead, Tr, Box, IconButton } from "@chakra-ui/react";
 import { useEmergencyContext } from "@/contexts";
 import { EmergencyModal } from "./EmergencyModal";
 import moment from "moment";
 import { FormProvider, Input, Pagination } from "@/components";
 import { useDebouncedCallback } from "use-debounce";
 import { Emergency } from "@alerta-ciudadana/entity";
+import { Check } from "react-feather";
+import { AttendEmergencyModal } from "./AttendEmergencyModal";
 
 export const EmergenciesTable = () => {
   const pagination = useEmergencyContext();
@@ -32,26 +34,29 @@ export const EmergenciesTable = () => {
           <Thead>
             <Tr>
               {[
-                { label: "Fecha", field: "date" },
-                { label: "Emergencia", field: "emergency" },
-                { label: "Usuario", field: "user" },
-                { label: "Lugar", field: "place" },
-                { label: "Teléfono", field: "phone" },
-                { label: "Estado", field: "status" },
-                { label: "Valoración", field: "values" },
+                { label: "Fecha", field: "date", finded: true },
+                { label: "Emergencia", field: "emergency", finded: true },
+                { label: "Usuario", field: "user", finded: true },
+                { label: "Lugar", field: "place", finded: true },
+                { label: "Teléfono", field: "phone", finded: true },
+                { label: "Estado", field: "status", finded: false },
+                { label: "Valoración", field: "values", finded: false },
               ].map((column) => (
                 <Th key={column.label}>
                   <Box mb="1">
                     <Text mb="1">{column.label}</Text>
-                    <Input
-                      name="date"
-                      inputProps={{
-                        onChange: (e) => debounced({ field: column.field, query: e.target.value }),
-                      }}
-                    />
+                    {column.finded && (
+                      <Input
+                        name="date"
+                        inputProps={{
+                          onChange: (e) => debounced({ field: column.field, query: e.target.value }),
+                        }}
+                      />
+                    )}
                   </Box>
                 </Th>
               ))}
+              <Th w="0"></Th>
               <Th w="0"></Th>
             </Tr>
           </Thead>
@@ -80,6 +85,9 @@ export const EmergenciesTable = () => {
                   </Tag>
                 </Td>
                 <Td></Td>
+                <Td>
+                  <AttendEmergencyModal emergency={emergency} />
+                </Td>
                 <Td>
                   <EmergencyModal emergency={emergency} />
                 </Td>

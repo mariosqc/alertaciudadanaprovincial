@@ -9,8 +9,11 @@ declare module "@alerta-ciudadana/entity" {
     timestamp: string;
     token: string;
     user: string;
+    userId: string;
     video: string;
     coor: [number, number];
     values: string;
+    attended: boolean;
+    assessment: boolean;
   }
 }
