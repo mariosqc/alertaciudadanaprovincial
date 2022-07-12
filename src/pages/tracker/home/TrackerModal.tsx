@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 import {
   Modal,
@@ -7,12 +7,12 @@ import {
   ModalHeader,
   ModalFooter,
   ModalBody,
-  ModalCloseButton,
   useDisclosure,
   SimpleGrid,
   GridItem,
   List,
   ListItem,
+  Box,
 } from "@chakra-ui/react";
 import { Button } from "@/components";
 import { useTrackerContext } from "@/contexts";
@@ -22,7 +22,7 @@ import ReactPlayer from "react-player";
 export const TrackerModal = () => {
   const { attendEmergency, setAttendEmergency } = useTrackerContext();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [comodin, setComodin] = useState<any>();
+  const [comodin, setComodin] = useState<Tracker>();
 
   if (attendEmergency.attending) {
   }
@@ -42,7 +42,7 @@ export const TrackerModal = () => {
           <ModalContent>
             <ModalHeader>{comodin.tipe}</ModalHeader>
             <ModalBody>
-              <SimpleGrid columns={12}>
+              <SimpleGrid spacing={5} columns={12}>
                 <GridItem colSpan={6}>
                   <List spacing={3}>
                     <ListItem>
@@ -56,6 +56,19 @@ export const TrackerModal = () => {
                     </ListItem>
                     <ListItem>
                       <strong>Tipo de emergencia:</strong> {comodin.tipe}
+                    </ListItem>
+                    <ListItem>
+                      <strong>Audios:</strong>
+                      <Box>
+                        <List>
+                          {Object.values(comodin?.voz || {}).map(({ mensaje_voz }) => (
+                            <ListItem className="audio-container" key={mensaje_voz}>
+                              {/* @ts-ignore */}
+                              <ReactPlayer url={mensaje_voz} controls />
+                            </ListItem>
+                          ))}
+                        </List>
+                      </Box>
                     </ListItem>
                   </List>
                 </GridItem>

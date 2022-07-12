@@ -22,3 +22,15 @@ img[alt="Google"][draggable=false] {
 div.gmnoprint {
   display: none;
 }
+
+audio {
+  width: 300px !important;
+  height: 54px !important;
+}
+
+.audio-container > div{ 
+  width: 0px !important;
+  height: 60px !important;
+
+
+}

@@ -13,5 +13,6 @@ declare module "@alerta-ciudadana/entity" {
     token: string;
     user: string;
     video: string;
+    voz: Record<string, { mensaje_voz: string }>;
   }
 }
