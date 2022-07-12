@@ -10,12 +10,16 @@ import { ComplaintReportModal } from "./ComplaintReportModal";
 import { HStack, useDisclosure } from "@chakra-ui/react";
 import { Complaint } from "@alerta-ciudadana/entity";
 import { ComplaintFilter } from "./ComplaintFilter";
+import { useCurrentDistrictPolygon } from "@/hooks";
 
 export const ComplaintReportsPage: NextPage = () => {
   const { complaints } = useComplaintContext();
-  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [complaintSelected, setComplaintSelected] = useState<Complaint>();
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const { polygon } = useCurrentDistrictPolygon();
 
   return (
     <>
@@ -27,6 +31,7 @@ export const ComplaintReportsPage: NextPage = () => {
               <ComplaintFilter />
             </HStack>
             <GoogleMaps
+              polygonPathList={[{ path: polygon }]}
               markerList={complaints.map((complaint) => ({
                 position: { lat: complaint.coordinates[0], lng: complaint.coordinates[1] },
                 onClick: () => {

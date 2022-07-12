@@ -11,11 +11,13 @@ import { Emergency } from "@alerta-ciudadana/entity";
 import { EmergencyReportModal } from "./EmergencyReportModal";
 import removeAccents from "remove-accents";
 import { EmergencyFilter } from "./EmergencyFilter";
+import { useCurrentDistrictPolygon } from "@/hooks";
 
 export const EmergencyReportsPage: NextPage = () => {
   const { emergencies } = useEmergencyContext();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [emergencySelected, setEmergencySelected] = useState<Emergency>();
+  const { polygon } = useCurrentDistrictPolygon();
 
   return (
     <>
@@ -31,6 +33,7 @@ export const EmergencyReportsPage: NextPage = () => {
               <EmergencyFilter />
             </HStack>
             <GoogleMaps
+              polygonPathList={[{ path: polygon }]}
               markerList={emergencies.map((emergency) => ({
                 position: { lat: emergency.coor[0], lng: emergency.coor[1] },
                 onClick: () => {

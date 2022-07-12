@@ -21,6 +21,7 @@ import { Emergency } from "@alerta-ciudadana/entity";
 import { GoogleMaps } from "@/components";
 import moment from "moment";
 import removeAccents from "remove-accents";
+import { useCurrentDistrictPolygon } from "@/hooks";
 
 interface EmergencyModalProps {
   emergency: Emergency;
@@ -28,6 +29,7 @@ interface EmergencyModalProps {
 
 export const EmergencyModal: FC<EmergencyModalProps> = ({ emergency }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { polygon } = useCurrentDistrictPolygon();
 
   return (
     <>
@@ -95,6 +97,7 @@ export const EmergencyModal: FC<EmergencyModalProps> = ({ emergency }) => {
               </Box>
               <Box flex="1.5">
                 <GoogleMaps
+                  polygonPathList={[{ path: polygon }]}
                   defaultCenter={{ lat: emergency.coor[0], lng: emergency.coor[1] }}
                   markerList={[
                     {

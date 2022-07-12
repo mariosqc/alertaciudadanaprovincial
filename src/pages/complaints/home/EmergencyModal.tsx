@@ -6,6 +6,7 @@ import { Complaint } from "@alerta-ciudadana/entity";
 import { GoogleMaps } from "@/components";
 import moment from "moment";
 import removeAccents from "remove-accents";
+import { useCurrentDistrictPolygon } from "@/hooks";
 
 interface ComplaintModalProps {
   complaint: Complaint;
@@ -13,6 +14,8 @@ interface ComplaintModalProps {
 
 export const ComplaintModal: FC<ComplaintModalProps> = ({ complaint }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const { polygon } = useCurrentDistrictPolygon();
 
   const urlIcon = useMemo(() => {
     return `https://firebasestorage.googleapis.com/v0/b/alerta-ciudadana-provincial.appspot.com/o/complaint-types%2F${removeAccents(
@@ -87,6 +90,7 @@ export const ComplaintModal: FC<ComplaintModalProps> = ({ complaint }) => {
               </Box>
               <Box flex="1.5">
                 <GoogleMaps
+                  polygonPathList={[{ path: polygon }]}
                   defaultCenter={{ lat: complaint.coordinates[0], lng: complaint.coordinates[1] }}
                   markerList={[
                     {
