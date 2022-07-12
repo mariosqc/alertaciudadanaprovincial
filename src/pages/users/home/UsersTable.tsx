@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Avatar, Table, TableContainer, Tbody, Td, Text, Tfoot, Th, Thead, Tr } from "@chakra-ui/react";
+import { Avatar, Table, TableContainer, Tag, Tbody, Td, Text, Tfoot, Th, Thead, Tr } from "@chakra-ui/react";
 
 import moment from "moment";
 import { useUserContext } from "@/contexts";
@@ -17,9 +17,11 @@ export const UsersTable = () => {
           <Tr>
             <Th w="0"></Th>
             <Th>Nombre</Th>
+            <Th>Correo electrónico</Th>
             <Th>Teléfono</Th>
             <Th>Fecha de Creación</Th>
             <Th>Sexo</Th>
+            <Th textAlign="center">Puntos</Th>
             <Th w="0"></Th>
             <Th w="0"></Th>
           </Tr>
@@ -42,13 +44,19 @@ export const UsersTable = () => {
                 <Avatar w="8" h="8" src={user.avatarUrl} />
               </Td>
               <Td>{user.name}</Td>
+              <Td>{user.email}</Td>
               <Td>{user.phone}</Td>
               <Td>
                 <Text lineHeight="none">{moment(user.date).format("LLL")}</Text>
               </Td>
               <Td>{user.sex}</Td>
+              <Td textAlign="center">
+                <Tag variant="solid" colorScheme="cyan">
+                  {user.points}
+                </Tag>
+              </Td>
               <Td>
-                <InactivateUser />
+                <InactivateUser user={user} />
               </Td>
               <Td>
                 <UserModal user={user} />

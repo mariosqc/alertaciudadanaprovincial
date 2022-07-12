@@ -13,6 +13,9 @@ import {
   VStack,
   Avatar,
   Text,
+  ListItem,
+  List,
+  Divider,
 } from "@chakra-ui/react";
 import React, { FC } from "react";
 import { Info } from "react-feather";
@@ -23,7 +26,6 @@ interface UserModalProps {
 
 export const UserModal: FC<UserModalProps> = ({ user }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  console.log(user);
 
   return (
     <>
@@ -40,10 +42,10 @@ export const UserModal: FC<UserModalProps> = ({ user }) => {
       <Modal isCentered isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Detalles del usuario</ModalHeader>
+          <ModalHeader px="4">Detalles del usuario</ModalHeader>
           <ModalCloseButton />
-          <ModalBody>
-            <VStack spacing={0}>
+          <ModalBody px="4">
+            <VStack mb="4" spacing={0}>
               <Avatar src={user.avatarUrl} size="2xl" />
               <Text fontWeight="medium" fontSize="2xl">
                 {user.name}
@@ -51,11 +53,45 @@ export const UserModal: FC<UserModalProps> = ({ user }) => {
               <Text>{user.email}</Text>
               <Text>{user.phone}</Text>
             </VStack>
-            <VStack>sdad</VStack>
+            <List spacing={3}>
+              <ListItem lineHeight="none">
+                <Text fontSize="sm" color="gray.500">
+                  UId
+                </Text>
+                <Text fontWeight="medium">{user.uid}</Text>
+              </ListItem>
+              <Divider />
+              <ListItem lineHeight="none">
+                <Text fontSize="sm" color="gray.500">
+                  IMEI
+                </Text>
+                <Text fontWeight="medium">{user.imei}</Text>
+              </ListItem>
+              <Divider />
+              <ListItem lineHeight="none">
+                <Text fontSize="sm" color="gray.500">
+                  Estado
+                </Text>
+                <Text fontWeight="medium">{String(user.access)}</Text>
+              </ListItem>
+              <Divider />
+              <ListItem lineHeight="none">
+                <Text fontSize="sm" color="gray.500">
+                  Puntos
+                </Text>
+                <Text fontWeight="medium">{user.points}</Text>
+              </ListItem>
+              <Divider />
+              <ListItem lineHeight="none">
+                <Text fontSize="sm" color="gray.500">
+                  Sexo
+                </Text>
+                <Text fontWeight="medium">{user.sex}</Text>
+              </ListItem>
+            </List>
           </ModalBody>
-
-          <ModalFooter>
-            <Button colorScheme="blue" w="full" onClick={onClose}>
+          <ModalFooter px="4">
+            <Button colorScheme="pri" w="full" onClick={onClose}>
               Aceptar
             </Button>
           </ModalFooter>

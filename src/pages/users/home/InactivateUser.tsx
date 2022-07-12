@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from "react";
+import React, { FC, useMemo, useRef } from "react";
 import { UserCheck, UserX } from "react-feather";
 
 import {
@@ -12,20 +12,38 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { Button } from "@/components";
+import { User } from "@alerta-ciudadana/entity";
+import { useUserContext } from "@/contexts";
+import { useDebounce } from "use-debounce";
 
-export const InactivateUser = () => {
+interface InactivateUserProps {
+  user: User;
+}
+
+export const InactivateUser: FC<InactivateUserProps> = ({ user }) => {
+  const { updateUser } = useUserContext();
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef(null);
-  const isActive = useMemo(() => true, []);
+
+  const access = useMemo(() => user.access, [user]);
+
+  const [accessDebounce] = useDebounce(user.access, 750);
+
+  async function handleInactiveUser() {
+    await updateUser({ userId: user.uid, user: { ...user, access: !access } });
+    onClose();
+  }
+
   return (
     <>
       <IconButton
         onClick={onOpen}
         _focus={{}}
         size="sm"
-        colorScheme={isActive ? "green" : "red"}
+        colorScheme={access ? "green" : "red"}
         aria-label="emegergency-modal-button"
-        icon={isActive ? <UserCheck size="1.25rem" /> : <UserX size="1.25rem" />}
+        icon={access ? <UserCheck size="1.25rem" /> : <UserX size="1.25rem" />}
       />
 
       <AlertDialog isCentered isOpen={isOpen} leastDestructiveRef={cancelRef} onClose={onClose}>
@@ -35,12 +53,12 @@ export const InactivateUser = () => {
               Alerta de Seguridad
             </AlertDialogHeader>
 
-            <AlertDialogBody>Desea desactivar este usuario?</AlertDialogBody>
+            <AlertDialogBody>Desea {!accessDebounce ? "activar" : "desactivar"} este usuario?</AlertDialogBody>
 
             <AlertDialogFooter>
               <Button onClick={onClose}>Cancelar</Button>
-              <Button colorScheme="red" ml={3}>
-                Desactivar
+              <Button colorScheme="red" ml={3} onClick={handleInactiveUser}>
+                {!accessDebounce ? "Activar" : "Desactivar"}
               </Button>
             </AlertDialogFooter>
           </AlertDialogContent>

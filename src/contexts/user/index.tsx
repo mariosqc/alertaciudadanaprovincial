@@ -1,4 +1,4 @@
-import { FC, useState, useContext, useEffect } from "react";
+import { FC, useState, useContext, useEffect, useMemo } from "react";
 import { User } from "@alerta-ciudadana/entity";
 import { createContext } from "@/utils";
 
@@ -12,6 +12,7 @@ const cookies = new Cookies();
 
 interface UserContext {
   users: User[];
+  updateUser: (values: { userId: string; user: User }) => Promise<void>;
 }
 
 const UserContext = createContext<UserContext>();
@@ -23,9 +24,9 @@ const UserProvider: FC = ({ children }) => {
     allItems: users,
     name: "emergency",
   });
+  const districtId = useMemo(() => cookies.get("district_id"), []);
 
   function getUsers() {
-    const districtId = cookies.get("district_id");
     database.ref(`users/${districtId}`).on("value", (snapshot) => {
       let data = snapshot.val();
 
@@ -34,6 +35,10 @@ const UserProvider: FC = ({ children }) => {
         setUsers(users);
       }
     });
+  }
+
+  async function updateUser({ user, userId }: { userId: string; user: User }) {
+    await database.ref(`users/${districtId}/${userId}`).update(user);
   }
 
   useEffect(
@@ -45,7 +50,7 @@ const UserProvider: FC = ({ children }) => {
     ]
   );
 
-  return <UserContext.Provider value={{ users }}>{children}</UserContext.Provider>;
+  return <UserContext.Provider value={{ users, updateUser }}>{children}</UserContext.Provider>;
 };
 
 export const useUserContext = () => useContext(UserContext);
