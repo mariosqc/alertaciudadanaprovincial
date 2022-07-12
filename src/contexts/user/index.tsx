@@ -6,6 +6,7 @@ import { database } from "@/firebase";
 
 import Cookies from "universal-cookie";
 import { useAuthContext } from "../auth";
+import { usePagination } from "@/hooks";
 
 const cookies = new Cookies();
 
@@ -18,6 +19,10 @@ const UserContext = createContext<UserContext>();
 const UserProvider: FC = ({ children }) => {
   // const { isAuthenticated } = useAuthContext();
   const [users, setUsers] = useState<User[]>([]);
+  const { pagination, changeNumberPerPage, nextPage, prevPage, goToFirstPage, goToLastPage } = usePagination({
+    allItems: users,
+    name: "emergency",
+  });
 
   function getUsers() {
     const districtId = cookies.get("district_id");
