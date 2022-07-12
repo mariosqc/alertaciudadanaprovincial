@@ -4,6 +4,8 @@ import { Avatar, Table, TableContainer, Tbody, Td, Text, Tfoot, Th, Thead, Tr } 
 
 import moment from "moment";
 import { useUserContext } from "@/contexts";
+import { UserModal } from "./UserModal";
+import { InactivateUser } from "./InactivateUser";
 
 export const UsersTable = () => {
   const { users } = useUserContext();
@@ -18,6 +20,7 @@ export const UsersTable = () => {
             <Th>Teléfono</Th>
             <Th>Fecha de Creación</Th>
             <Th>Sexo</Th>
+            <Th w="0"></Th>
             <Th w="0"></Th>
           </Tr>
         </Thead>
@@ -44,7 +47,12 @@ export const UsersTable = () => {
                 <Text lineHeight="none">{moment(user.date).format("LLL")}</Text>
               </Td>
               <Td>{user.sex}</Td>
-              <Td></Td>
+              <Td>
+                <InactivateUser />
+              </Td>
+              <Td>
+                <UserModal user={user} />
+              </Td>
             </Tr>
           ))}
         </Tbody>
