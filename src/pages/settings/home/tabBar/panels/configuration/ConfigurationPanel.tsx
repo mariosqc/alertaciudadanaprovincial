@@ -30,7 +30,7 @@ export const ConfigurationPanel = () => {
         <FormProvider
           id="configuration-form"
           onSubmit={async () => {
-            await setSettings({ version, phone });
+            await setSettings({ version, phone, defaultMessages: appSettings?.defaultMessages || [] });
           }}
         >
           <Stack maxW="2xl">
