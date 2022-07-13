@@ -18,6 +18,7 @@ export const ComplaintsTable = () => {
               <Th>Fecha</Th>
               <Th>Usuario</Th>
               <Th>Tipo de Denuncia</Th>
+              <Th>Estado</Th>
               <Th>Teléfono</Th>
               <Th>Lugar</Th>
               <Th>Denuncia</Th>
@@ -41,6 +42,7 @@ export const ComplaintsTable = () => {
                   <Td>{moment(complaint.date).format("LLL")}</Td>
                   <Td>{complaint.user}</Td>
                   <Td>{complaint.type || <Text textAlign="center">-</Text>}</Td>
+                  <Td>{complaint.status}</Td>
                   <Td>{complaint.phone}</Td>
                   <Td>{complaint.place}</Td>
                   <Td>

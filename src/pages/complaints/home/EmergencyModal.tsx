@@ -1,4 +1,16 @@
-import { Button, Divider, Flex, IconButton, Image, List, ListItem, Text, useDisclosure } from "@chakra-ui/react";
+import {
+  Avatar,
+  Button,
+  Divider,
+  Flex,
+  HStack,
+  IconButton,
+  Image,
+  List,
+  ListItem,
+  Text,
+  useDisclosure,
+} from "@chakra-ui/react";
 import React, { FC, useMemo } from "react";
 import { Info } from "react-feather";
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, Box } from "@chakra-ui/react";
@@ -7,6 +19,7 @@ import { GoogleMaps } from "@/components";
 import moment from "moment";
 import removeAccents from "remove-accents";
 import { useCurrentDistrictPolygon } from "@/hooks";
+import { ChangeStatusMenu } from "./ChangeStatusMenu";
 
 interface ComplaintModalProps {
   complaint: Complaint;
@@ -35,10 +48,13 @@ export const ComplaintModal: FC<ComplaintModalProps> = ({ complaint }) => {
         icon={<Info />}
       />
 
-      <Modal size="5xl" isCentered isOpen={isOpen} onClose={onClose}>
+      <Modal scrollBehavior="inside" size="5xl" isCentered isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent rounded="sm">
-          <ModalHeader>Detalles de la denuncia</ModalHeader>
+          <ModalHeader display="flex" justifyContent="space-between" alignItems="center">
+            <Text>Detalles de la denuncia</Text>
+            <ChangeStatusMenu complaint={complaint} />
+          </ModalHeader>
 
           <ModalBody>
             <Flex>
@@ -52,10 +68,12 @@ export const ComplaintModal: FC<ComplaintModalProps> = ({ complaint }) => {
                   </ListItem>
                   <Divider my="2" />
                   <ListItem>
-                    <Text lineHeight="3" color="gray.500" fontSize="sm">
+                    <Text lineHeight="3" color="gray.500" fontSize="sm" mb="2">
                       Usuario:
                     </Text>
-                    <Text fontWeight="semibold">{complaint.user}</Text>
+                    <HStack>
+                      <Avatar size="sm" /> <Text fontWeight="semibold">{complaint.user}</Text>
+                    </HStack>
                   </ListItem>
                   <Divider my="2" />
                   <ListItem>
@@ -108,7 +126,7 @@ export const ComplaintModal: FC<ComplaintModalProps> = ({ complaint }) => {
 
           <ModalFooter>
             <Button _focus={{}} onClick={onClose} variant="ghost">
-              Cerrar Ventana
+              Cerrar
             </Button>
           </ModalFooter>
         </ModalContent>

@@ -20,6 +20,7 @@ interface ComplaintContext extends PaginatioContext<Complaint> {
   deleteComplaintType(entity: EntityType): Promise<void>;
   filterComplaintsByType(name?: string): void;
   filterByDates(startDate: string, endDate: string): void;
+  changeStatus(complaint: Complaint, status: string): Promise<void>;
 }
 
 const ComplaintContext = createContext<ComplaintContext>();
@@ -118,6 +119,10 @@ const ComplaintProvider: FC = ({ children }) => {
     setComplaints(emergenciesFinded);
   }
 
+  async function changeStatus(complaint: Complaint, status: string) {
+    await database.ref(`district/${districtId}/complaint/${complaint.userId}/${complaint.id}`).update({ status });
+  }
+
   useEffect(() => {
     getComplaints();
     getTypesOfComplaints();
@@ -139,6 +144,7 @@ const ComplaintProvider: FC = ({ children }) => {
         sortTable,
         filterComplaintsByType,
         filterByDates,
+        changeStatus,
       }}
     >
       {children}
