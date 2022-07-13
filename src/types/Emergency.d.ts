@@ -15,5 +15,6 @@ declare module "@alerta-ciudadana/entity" {
     values: string;
     attended: boolean;
     assessment: boolean;
+    voz: Record<string, { mensaje_voz: string }>;
   }
 }

@@ -1,11 +1,6 @@
 import {
-  Button,
-  Divider,
   Flex,
   IconButton,
-  List,
-  ListItem,
-  Text,
   useDisclosure,
   Modal,
   ModalOverlay,
@@ -14,14 +9,17 @@ import {
   ModalFooter,
   ModalBody,
   Box,
+  ButtonGroup,
 } from "@chakra-ui/react";
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import { Info } from "react-feather";
 import { Emergency } from "@alerta-ciudadana/entity";
-import { GoogleMaps } from "@/components";
-import moment from "moment";
+import { Button, GoogleMaps } from "@/components";
 import removeAccents from "remove-accents";
 import { useCurrentDistrictPolygon } from "@/hooks";
+import { InformationSection } from "./InformationSection";
+import { VideoSection } from "./VideoSection";
+import { AudioSection } from "./AudioSection";
 
 interface EmergencyModalProps {
   emergency: Emergency;
@@ -30,6 +28,10 @@ interface EmergencyModalProps {
 export const EmergencyModal: FC<EmergencyModalProps> = ({ emergency }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { polygon } = useCurrentDistrictPolygon();
+
+  const [sectionActive, setSectionActive] = useState<"INFORMATION" | "AUDIO" | "VIDEO">("INFORMATION");
+
+  console.log(emergency);
 
   return (
     <>
@@ -50,50 +52,30 @@ export const EmergencyModal: FC<EmergencyModalProps> = ({ emergency }) => {
 
           <ModalBody>
             <Flex>
-              <Box mr="4" flex="1">
-                <List>
-                  <ListItem>
-                    <Text lineHeight="3" color="gray.500" fontSize="sm">
-                      Fecha:
-                    </Text>
-                    <Text fontWeight="semibold">{moment(emergency.date).format("LLL")}</Text>
-                  </ListItem>
-                  <Divider my="2" />
-                  <ListItem>
-                    <Text lineHeight="3" color="gray.500" fontSize="sm">
-                      Emergencia:
-                    </Text>
-                    <Text fontWeight="semibold">{emergency.emergency}</Text>
-                  </ListItem>
-                  <Divider my="2" />
-                  <ListItem>
-                    <Text lineHeight="3" color="gray.500" fontSize="sm">
-                      Usuario:
-                    </Text>
-                    <Text fontWeight="semibold">{emergency.user}</Text>
-                  </ListItem>
-                  <Divider my="2" />
-                  <ListItem>
-                    <Text lineHeight="3" color="gray.500" fontSize="sm">
-                      Lugar:
-                    </Text>
-                    <Text fontWeight="semibold">{emergency.place}</Text>
-                  </ListItem>
-                  <Divider my="2" />
-                  <ListItem>
-                    <Text lineHeight="3" color="gray.500" fontSize="sm">
-                      Estado:
-                    </Text>
-                    <Text fontWeight="semibold">{emergency.status}</Text>
-                  </ListItem>
-                  <Divider my="2" />
-                  <ListItem>
-                    <Text lineHeight="3" color="gray.500" fontSize="sm">
-                      Valoración:
-                    </Text>
-                  </ListItem>
-                  <Divider my="2" />
-                </List>
+              <Box minH="80" mr="4" flex="1">
+                <ButtonGroup mb="4" size="sm" isAttached>
+                  <Button
+                    colorScheme={sectionActive === "INFORMATION" ? "pri" : "gray"}
+                    onClick={() => setSectionActive("INFORMATION")}
+                  >
+                    Información
+                  </Button>
+                  <Button
+                    colorScheme={sectionActive === "AUDIO" ? "pri" : "gray"}
+                    onClick={() => setSectionActive("AUDIO")}
+                  >
+                    Mensajes de voz
+                  </Button>
+                  <Button
+                    colorScheme={sectionActive === "VIDEO" ? "pri" : "gray"}
+                    onClick={() => setSectionActive("VIDEO")}
+                  >
+                    Video
+                  </Button>
+                </ButtonGroup>
+                {sectionActive === "INFORMATION" && <InformationSection emergency={emergency} />}
+                {sectionActive === "AUDIO" && <AudioSection emergency={emergency} />}
+                {sectionActive === "VIDEO" && <VideoSection emergency={emergency} />}
               </Box>
               <Box flex="1.5">
                 <GoogleMaps
