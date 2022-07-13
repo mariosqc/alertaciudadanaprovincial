@@ -26,7 +26,7 @@ export const AttendEmergencyModal: FC<AttendEmergencyModalProps> = ({ emergency 
   const [isLoading, setIsLoading] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = React.useRef(null);
-  const [assessment, setAssessment] = useState(false);
+  const [assessment, setAssessment] = useState(true);
 
   const districtId = useMemo(() => cookies.get("district_id"), []);
 
@@ -35,7 +35,7 @@ export const AttendEmergencyModal: FC<AttendEmergencyModalProps> = ({ emergency 
     const { userId, id } = emergency;
     await database
       .ref(`/district/${districtId}/emergency/${userId}/${id}`)
-      .update({ attended: true, values: assessment ? "Verdadero" : "Falso" });
+      .update({ attended: true, status: "Atendida", values: assessment ? "Verdadero" : "Falso" });
     setIsLoading(false);
     onClose();
   }
