@@ -84,7 +84,11 @@ export const EmergenciesTable = () => {
                     {emergency.status}
                   </Tag>
                 </Td>
-                <Td></Td>
+                <Td>
+                  <Tag size="sm" colorScheme={emergency.values === "Verdadero" ? "green" : "red"}>
+                    {String(emergency.values)}
+                  </Tag>
+                </Td>
                 <Td>
                   <AttendEmergencyModal emergency={emergency} />
                 </Td>
