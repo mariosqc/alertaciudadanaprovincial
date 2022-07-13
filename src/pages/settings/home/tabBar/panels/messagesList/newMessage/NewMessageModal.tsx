@@ -13,13 +13,18 @@ import {
 import { Button } from "@/components";
 
 import { NewMessageForm } from "./NewMessageForm";
+import { useSettingsContext } from "@/contexts";
 
 export const NewMessageModal = () => {
+  const { addingDefaultMessages, appSettings } = useSettingsContext();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isLoading, setIsLoading] = useState(false);
 
   async function onSubmit(values: any) {
     setIsLoading(true);
+    await addingDefaultMessages(values.message);
+    setIsLoading(false);
+    onClose();
   }
 
   return (

@@ -9,6 +9,8 @@ interface SettingsContext {
   centralCoordinates: google.maps.LatLngLiteral;
   setNewCentralCoordinates: (coordinates: google.maps.LatLngLiteral) => Promise<void>;
   setSettings: (settings: AppSettings) => Promise<void>;
+  addingDefaultMessages(msg: string): Promise<void>;
+  removeDefaultMessage(id: string): Promise<void>;
 }
 const cookies = new Cookies();
 
@@ -22,7 +24,14 @@ const SettingsProvider: FC = ({ children }) => {
   async function getSettings() {
     database.ref("settings").on("value", (snapshot) => {
       const settings = snapshot.val();
-      setAppSettings(settings.app);
+
+      const defaultMessages =
+        Object.entries(settings.defaultMessages || {}).map(([key, value]: any) => ({
+          id: key,
+          ...value,
+        })) || [];
+
+      setAppSettings({ ...settings.app, defaultMessages });
     });
 
     database.ref(`admin/districts/${districtId}/centralCoordinates`).on("value", (snapshot) => {
@@ -42,12 +51,33 @@ const SettingsProvider: FC = ({ children }) => {
     await database.ref("settings/app").set(values);
   }
 
+  async function addingDefaultMessages(message: string) {
+    await database.ref("settings/defaultMessages").push({
+      message,
+      timestamp: Date.now(),
+    });
+  }
+
+  // Remove default message
+  async function removeDefaultMessage(id: string) {
+    await database.ref(`settings/defaultMessages/${id}`).remove();
+  }
+
   useEffect(() => {
     getSettings();
   }, []);
 
   return (
-    <SettingsContext.Provider value={{ appSettings, centralCoordinates, setNewCentralCoordinates, setSettings }}>
+    <SettingsContext.Provider
+      value={{
+        appSettings,
+        centralCoordinates,
+        setNewCentralCoordinates,
+        addingDefaultMessages,
+        setSettings,
+        removeDefaultMessage,
+      }}
+    >
       {children}
     </SettingsContext.Provider>
   );
