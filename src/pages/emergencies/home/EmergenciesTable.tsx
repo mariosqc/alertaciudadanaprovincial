@@ -72,33 +72,31 @@ export const EmergenciesTable = () => {
                 </Tr>
               </>
             )}
-            {pagination.pagination.items
-              .filter((item) => item.voz)
-              .map((emergency, i) => (
-                <Tr key={emergency.id}>
-                  <Td>{moment(emergency.date).format("LLL")}</Td>
-                  <Td>{emergency.emergency}</Td>
-                  <Td>{emergency.user}</Td>
-                  <Td>{emergency.place}</Td>
-                  <Td>{emergency.phone}</Td>
-                  <Td>
-                    <Tag variant="solid" size="sm" colorScheme={emergency.status === "Por Atender" ? "red" : "green"}>
-                      {emergency.status}
-                    </Tag>
-                  </Td>
-                  <Td>
-                    <Tag size="sm" colorScheme={emergency.values === "Verdadero" ? "green" : "red"}>
-                      {String(emergency.values)}
-                    </Tag>
-                  </Td>
-                  <Td>
-                    <AttendEmergencyModal emergency={emergency} />
-                  </Td>
-                  <Td>
-                    <EmergencyModal emergency={emergency} />
-                  </Td>
-                </Tr>
-              ))}
+            {pagination.pagination.items.map((emergency, i) => (
+              <Tr key={emergency.id}>
+                <Td>{moment(emergency.date).format("LLL")}</Td>
+                <Td>{emergency.emergency}</Td>
+                <Td>{emergency.user}</Td>
+                <Td>{emergency.place}</Td>
+                <Td>{emergency.phone}</Td>
+                <Td>
+                  <Tag variant="solid" size="sm" colorScheme={emergency.status === "Por Atender" ? "red" : "green"}>
+                    {emergency.status}
+                  </Tag>
+                </Td>
+                <Td>
+                  <Tag size="sm" colorScheme={emergency.values === "Verdadero" ? "green" : "red"}>
+                    {String(emergency.values)}
+                  </Tag>
+                </Td>
+                <Td>
+                  <AttendEmergencyModal emergency={emergency} />
+                </Td>
+                <Td>
+                  <EmergencyModal emergency={emergency} />
+                </Td>
+              </Tr>
+            ))}
           </Tbody>
           <Tfoot>
             <Tr>
