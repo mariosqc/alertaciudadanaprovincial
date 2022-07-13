@@ -1,6 +1,7 @@
 import {
   Avatar,
   Button,
+  ButtonGroup,
   Divider,
   Flex,
   HStack,
@@ -11,7 +12,7 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
-import React, { FC, useMemo } from "react";
+import React, { FC, useMemo, useState } from "react";
 import { Info } from "react-feather";
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, Box } from "@chakra-ui/react";
 import { Complaint } from "@alerta-ciudadana/entity";
@@ -20,6 +21,8 @@ import moment from "moment";
 import removeAccents from "remove-accents";
 import { useCurrentDistrictPolygon } from "@/hooks";
 import { ChangeStatusMenu } from "./ChangeStatusMenu";
+import { ComplaintMap } from "./ComplaintMap";
+import { CmplaintMessage } from "./CmplaintMessage";
 
 interface ComplaintModalProps {
   complaint: Complaint;
@@ -27,6 +30,7 @@ interface ComplaintModalProps {
 
 export const ComplaintModal: FC<ComplaintModalProps> = ({ complaint }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [viewLateral, setViewLateral] = useState<"MAP" | "MESSAGE">("MAP");
 
   const { polygon } = useCurrentDistrictPolygon();
 
@@ -107,23 +111,30 @@ export const ComplaintModal: FC<ComplaintModalProps> = ({ complaint }) => {
                 )}
               </Box>
               <Box flex="1.5">
-                <GoogleMaps
-                  polygonPathList={[{ path: polygon }]}
-                  defaultCenter={{ lat: complaint.coordinates[0], lng: complaint.coordinates[1] }}
-                  markerList={[
-                    {
-                      position: { lat: complaint.coordinates[0], lng: complaint.coordinates[1] },
-                      icon: {
-                        scaledSize: new google.maps.Size(36, 36),
-                        url: urlIcon,
-                      },
-                    },
-                  ]}
-                />
+                <ButtonGroup mb="2" size="sm" isAttached>
+                  <Button
+                    colorScheme={viewLateral === "MAP" ? "pri" : "gray"}
+                    onClick={() => setViewLateral("MAP")}
+                    _focus={{}}
+                  >
+                    Mapa
+                  </Button>
+                  <Button
+                    colorScheme={viewLateral === "MESSAGE" ? "pri" : "gray"}
+                    onClick={() => setViewLateral("MESSAGE")}
+                    _focus={{}}
+                  >
+                    Mensajes
+                  </Button>
+                </ButtonGroup>
+                {viewLateral === "MAP" ? (
+                  <ComplaintMap polygon={polygon} complaint={complaint} urlIcon={urlIcon} />
+                ) : (
+                  <CmplaintMessage complaint={complaint} />
+                )}
               </Box>
             </Flex>
           </ModalBody>
-
           <ModalFooter>
             <Button _focus={{}} onClick={onClose} variant="ghost">
               Cerrar
