@@ -31,8 +31,6 @@ export const EmergencyModal: FC<EmergencyModalProps> = ({ emergency }) => {
 
   const [sectionActive, setSectionActive] = useState<"INFORMATION" | "AUDIO" | "VIDEO">("INFORMATION");
 
-  console.log(emergency);
-
   return (
     <>
       <IconButton
