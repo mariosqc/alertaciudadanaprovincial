@@ -1,4 +1,7 @@
 import { FC, useState, useContext, useEffect } from "react";
+
+import Sound from "react-sound";
+
 import { Tracker } from "@alerta-ciudadana/entity";
 
 import { database } from "@/firebase";
@@ -64,6 +67,7 @@ const TrackerProvider: FC = ({ children }) => {
 
   return (
     <TrackerContext.Provider value={{ trackers, newTrackerDetected, attendEmergency, setAttendEmergency }}>
+      {/* <>{<Sound loop url="/public_alert.mp3" playStatus="PLAYING" />}</> */}
       {children}
     </TrackerContext.Provider>
   );
