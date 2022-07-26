@@ -20,19 +20,19 @@ import { Tracker } from "@alerta-ciudadana/entity";
 import ReactPlayer from "react-player";
 
 export const TrackerModal = () => {
-  const { attendEmergency, setAttendEmergency } = useTrackerContext();
+  // const { attendEmergency, setAttendEmergency } = useTrackerContext();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [comodin, setComodin] = useState<Tracker>();
 
-  if (attendEmergency.attending) {
-  }
-  const attendingCurrentEmergency = useMemo<Tracker | undefined>(() => {
-    if (attendEmergency.attending) {
-      onOpen();
-      setComodin(attendEmergency.tracker);
-      return attendEmergency.tracker;
-    } else return undefined;
-  }, [attendEmergency]);
+  // if (attendEmergency.attending) {
+  // }
+  // const attendingCurrentEmergency = useMemo<Tracker | undefined>(() => {
+  //   if (attendEmergency.attending) {
+  //     onOpen();
+  //     setComodin(attendEmergency.tracker);
+  //     return attendEmergency.tracker;
+  //   } else return undefined;
+  // }, [attendEmergency]);
 
   return (
     <Modal closeOnEsc={false} closeOnOverlayClick={false} size="3xl" isCentered isOpen={isOpen} onClose={onClose}>
@@ -84,7 +84,7 @@ export const TrackerModal = () => {
                 mr={3}
                 onClick={() => {
                   onClose();
-                  setAttendEmergency({ attending: false, tracker: undefined });
+                  // setAttendEmergency({ attending: false, tracker: undefined });
                 }}
               >
                 Cerrar

@@ -16,9 +16,9 @@ interface AttendEmergency {
 }
 interface TrackerContext {
   trackers: Tracker[];
-  newTrackerDetected?: Tracker;
-  attendEmergency: AttendEmergency;
-  setAttendEmergency(attendEmergency: AttendEmergency): void;
+  newTrackerDetected: boolean;
+  newTracker: { tracker?: Tracker; attending: boolean };
+  setNewTracker(value: { tracker?: Tracker; attending: boolean }): void;
 }
 
 const TrackerContext = createContext<TrackerContext>();
@@ -26,13 +26,12 @@ const TrackerContext = createContext<TrackerContext>();
 const TrackerProvider: FC = ({ children }) => {
   const [trackers, setTrackers] = useState<Tracker[]>([]);
 
-  const [newTrackerDetected, setNewTrackerDetected] = useState<Tracker>();
-
-  const [newNumberOfTrackers, setNewNumberOfTrackers] = useState(0);
-  const [attendEmergency, setAttendEmergency] = useState<AttendEmergency>({
-    attending: false,
+  const [trackerLengths, setTrackerLengths] = useState(0);
+  const [newTracker, setNewTracker] = useState<{ tracker?: Tracker; attending: boolean }>({
     tracker: undefined,
+    attending: false,
   });
+  const [newTrackerDetected, setNewTrackerDetected] = useState(false);
 
   function getTrackers() {
     const districtId = cookies.get("district_id");
@@ -49,16 +48,21 @@ const TrackerProvider: FC = ({ children }) => {
     });
   }
 
+  console.log(trackers);
+
   useEffect(() => {
-    if (trackers.length !== 0) {
-      if (trackers.length > newNumberOfTrackers) {
-        setNewTrackerDetected([...trackers].pop());
-        setNewNumberOfTrackers(trackers.length);
-      } else {
-        setNewTrackerDetected(undefined);
-        setAttendEmergency({ attending: false, tracker: undefined });
-      }
+    const countTrackers = trackers.length;
+    if (trackerLengths < countTrackers) {
+      setNewTracker({ tracker: trackers[countTrackers - 1], attending: false });
+      setNewTrackerDetected(true);
     }
+
+    if (countTrackers === 0) {
+      setNewTracker({ tracker: undefined, attending: false });
+      setNewTrackerDetected(false);
+    }
+
+    setTrackerLengths(countTrackers);
   }, [trackers]);
 
   useEffect(() => {
@@ -66,7 +70,7 @@ const TrackerProvider: FC = ({ children }) => {
   }, []);
 
   return (
-    <TrackerContext.Provider value={{ trackers, newTrackerDetected, attendEmergency, setAttendEmergency }}>
+    <TrackerContext.Provider value={{ trackers, newTrackerDetected, newTracker, setNewTracker }}>
       {/* <>{<Sound loop url="/public_alert.mp3" playStatus="PLAYING" />}</> */}
       {children}
     </TrackerContext.Provider>

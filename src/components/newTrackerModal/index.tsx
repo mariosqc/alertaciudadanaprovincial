@@ -7,7 +7,6 @@ import {
   ModalHeader,
   ModalFooter,
   ModalBody,
-  ModalCloseButton,
   useDisclosure,
   Button,
 } from "@chakra-ui/react";
@@ -15,7 +14,7 @@ import { useTrackerContext } from "@/contexts";
 import { useRouter } from "next/router";
 
 export const NewTrackerModal = () => {
-  const { newTrackerDetected, setAttendEmergency } = useTrackerContext();
+  const { newTrackerDetected, setNewTracker } = useTrackerContext();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const { push, pathname } = useRouter();
@@ -23,6 +22,8 @@ export const NewTrackerModal = () => {
   useEffect(() => {
     newTrackerDetected && onOpen();
   }, [newTrackerDetected]);
+
+  console.log(newTrackerDetected);
 
   return (
     <Modal closeOnOverlayClick={false} isCentered isOpen={isOpen} onClose={onClose}>
@@ -37,7 +38,7 @@ export const NewTrackerModal = () => {
             variant="ghost"
             onClick={() => {
               onClose();
-              setAttendEmergency({ attending: false, tracker: undefined });
+              // setNewTracker({ attending: false, tracker: undefined });
             }}
           >
             Cerrar
@@ -45,10 +46,10 @@ export const NewTrackerModal = () => {
           <Button
             colorScheme="pri"
             onClick={() => {
-              setAttendEmergency({
-                attending: true,
-                tracker: newTrackerDetected,
-              });
+              // setNewTracker({
+              //   attending: true,
+              //   tracker: undefined,
+              // });
               pathname !== "/tracker" && push("/tracker");
               onClose();
             }}
