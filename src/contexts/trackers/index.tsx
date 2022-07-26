@@ -18,7 +18,10 @@ interface TrackerContext {
   trackers: Tracker[];
   newTrackerDetected: boolean;
   newTracker: { tracker?: Tracker; attending: boolean };
+  attendEmergency: AttendEmergency;
   setNewTracker(value: { tracker?: Tracker; attending: boolean }): void;
+  setAttendEmergency(values: AttendEmergency): void;
+  setNewTrackerDetected(value: boolean): void;
 }
 
 const TrackerContext = createContext<TrackerContext>();
@@ -32,6 +35,7 @@ const TrackerProvider: FC = ({ children }) => {
     attending: false,
   });
   const [newTrackerDetected, setNewTrackerDetected] = useState(false);
+  const [attendEmergency, setAttendEmergency] = useState<AttendEmergency>({ attending: false, tracker: undefined });
 
   function getTrackers() {
     const districtId = cookies.get("district_id");
@@ -48,10 +52,8 @@ const TrackerProvider: FC = ({ children }) => {
     });
   }
 
-  console.log(trackers);
-
   useEffect(() => {
-    const countTrackers = trackers.length;
+    const countTrackers = trackers.filter((tracker) => !tracker?.visited).length;
     if (trackerLengths < countTrackers) {
       setNewTracker({ tracker: trackers[countTrackers - 1], attending: false });
       setNewTrackerDetected(true);
@@ -70,8 +72,18 @@ const TrackerProvider: FC = ({ children }) => {
   }, []);
 
   return (
-    <TrackerContext.Provider value={{ trackers, newTrackerDetected, newTracker, setNewTracker }}>
-      {/* <>{<Sound loop url="/public_alert.mp3" playStatus="PLAYING" />}</> */}
+    <TrackerContext.Provider
+      value={{
+        trackers,
+        newTrackerDetected,
+        newTracker,
+        attendEmergency,
+        setAttendEmergency,
+        setNewTracker,
+        setNewTrackerDetected,
+      }}
+    >
+      <>{newTrackerDetected && <Sound loop url="/public_alert.mp3" playStatus="PLAYING" />}</>
       {children}
     </TrackerContext.Provider>
   );

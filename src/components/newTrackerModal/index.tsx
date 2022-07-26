@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 
 import {
   Modal,
@@ -12,18 +12,31 @@ import {
 } from "@chakra-ui/react";
 import { useTrackerContext } from "@/contexts";
 import { useRouter } from "next/router";
+import { database } from "@/firebase";
+import Cookies from "universal-cookie";
+
+const cookies = new Cookies();
 
 export const NewTrackerModal = () => {
-  const { newTrackerDetected, setNewTracker } = useTrackerContext();
+  const { newTrackerDetected, newTracker, setNewTracker, setAttendEmergency, setNewTrackerDetected } =
+    useTrackerContext();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const { push, pathname } = useRouter();
 
+  async function updateTracker() {
+    await database.ref(`district/${districtId}/follow/location/${newTracker.tracker?.id}`).update({ visited: true });
+    setNewTracker({ attending: true, tracker: newTracker.tracker });
+    setAttendEmergency({ attending: true, tracker: newTracker.tracker });
+    pathname !== "/tracker" && push("/tracker");
+    onClose();
+  }
+
+  const districtId = useMemo(() => cookies.get("district_id"), []);
+
   useEffect(() => {
     newTrackerDetected && onOpen();
   }, [newTrackerDetected]);
-
-  console.log(newTrackerDetected);
 
   return (
     <Modal closeOnOverlayClick={false} isCentered isOpen={isOpen} onClose={onClose}>
@@ -38,22 +51,13 @@ export const NewTrackerModal = () => {
             variant="ghost"
             onClick={() => {
               onClose();
-              // setNewTracker({ attending: false, tracker: undefined });
+              setNewTracker({ attending: false, tracker: undefined });
+              setNewTrackerDetected(false);
             }}
           >
             Cerrar
           </Button>
-          <Button
-            colorScheme="pri"
-            onClick={() => {
-              // setNewTracker({
-              //   attending: true,
-              //   tracker: undefined,
-              // });
-              pathname !== "/tracker" && push("/tracker");
-              onClose();
-            }}
-          >
+          <Button colorScheme="pri" onClick={() => updateTracker()}>
             Atender
           </Button>
         </ModalFooter>

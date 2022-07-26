@@ -14,5 +14,6 @@ declare module "@alerta-ciudadana/entity" {
     user: string;
     video: string;
     voz: Record<string, { mensaje_voz: string }>;
+    visited: boolean;
   }
 }

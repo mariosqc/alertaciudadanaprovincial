@@ -39,7 +39,7 @@ export const TrackerPage: NextPage = () => {
               position: { lat: tracker.l[0], lng: tracker.l[1] },
               icon: { url, scaledSize: new google.maps.Size(36, 36) },
               onClick: () => {
-                // setAttendEmergency({ attending: true, tracker });
+                setAttendEmergency({ attending: true, tracker });
               },
             };
           })}
