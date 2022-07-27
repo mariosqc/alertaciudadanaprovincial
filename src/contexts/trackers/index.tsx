@@ -68,6 +68,14 @@ const TrackerProvider: FC = ({ children }) => {
   }, [trackers]);
 
   useEffect(() => {
+    if (attendEmergency.attending) {
+      const trackersUpdated = trackers.find((tracker) => tracker.id === attendEmergency.tracker?.id);
+
+      if (trackersUpdated) setAttendEmergency((prevState) => ({ ...prevState, tracker: trackersUpdated }));
+    }
+  }, [trackers]);
+
+  useEffect(() => {
     getTrackers();
   }, []);
 
