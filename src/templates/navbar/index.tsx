@@ -1,3 +1,4 @@
+import { useAdmin } from "@/hooks";
 import { Box, HStack } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
@@ -14,26 +15,31 @@ export const itemsMenu = [
 export const Navbar = () => {
   const { pathname, push } = useRouter();
   const [items] = useState(itemsMenu);
+  const { hasSuperAdmin } = useAdmin();
+
+  console.log(hasSuperAdmin);
 
   return (
     <HStack display={["none", null, null, "flex"]}>
-      {items.map((item, i) => (
-        <Box
-          key={i}
-          cursor="pointer"
-          _hover={{ bgColor: "pri.50", color: "pri.500" }}
-          borderBottomWidth="4px"
-          borderBottomColor={pathname.includes(item.pathname) ? "pri.600" : "transparent"}
-          px="2"
-          userSelect="none"
-          color={pathname.includes(item.pathname) ? "pri.600" : "black"}
-          fontWeight="medium"
-          py="4"
-          onClick={() => push(item.pathname)}
-        >
-          {item.label}
-        </Box>
-      ))}
+      {items
+        .filter((item) => (!hasSuperAdmin ? item.pathname !== "/districts" : true))
+        .map((item, i) => (
+          <Box
+            key={i}
+            cursor="pointer"
+            _hover={{ bgColor: "pri.50", color: "pri.500" }}
+            borderBottomWidth="4px"
+            borderBottomColor={pathname.includes(item.pathname) ? "pri.600" : "transparent"}
+            px="2"
+            userSelect="none"
+            color={pathname.includes(item.pathname) ? "pri.600" : "black"}
+            fontWeight="medium"
+            py="4"
+            onClick={() => push(item.pathname)}
+          >
+            {item.label}
+          </Box>
+        ))}
     </HStack>
   );
 };

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { NextPage } from "next";
 
@@ -11,9 +11,21 @@ import { useDistrictContext } from "@/contexts";
 
 import { NewDistrict } from "./newDistrict/NewDistrict";
 import { DistrictTable } from "./districtTable/DistrictTable";
+import { useAdmin } from "@/hooks";
+import { useRouter } from "next/router";
 
 export const DistrictTemplate: NextPage = () => {
   const { districts } = useDistrictContext();
+  const { hasSuperAdmin } = useAdmin();
+
+  const { push } = useRouter();
+
+  if (!hasSuperAdmin) {
+    if (typeof window !== "undefined") {
+      push("/dashboard");
+    }
+    return <></>;
+  }
 
   return (
     <WrapperPage title="Listado de Distritos" breadcrumb={{ routes: ["districts"] }}>
