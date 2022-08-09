@@ -13,6 +13,7 @@ import {
   List,
   ListItem,
   Box,
+  Image,
 } from "@chakra-ui/react";
 import { Button } from "@/components";
 import { useTrackerContext } from "@/contexts";
@@ -43,6 +44,10 @@ export const TrackerModal = () => {
               <SimpleGrid spacing={5} columns={12}>
                 <GridItem colSpan={6}>
                   <List spacing={3}>
+                    <ListItem>
+                      <strong>Foto:</strong>
+                      <Image rounded="md" w="10" src={comodin.foto} alt="" />
+                    </ListItem>
                     <ListItem>
                       <strong>Nombre:</strong> {comodin.user}
                     </ListItem>
