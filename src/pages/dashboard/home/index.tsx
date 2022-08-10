@@ -1,11 +1,24 @@
 import { Card } from "@/layout";
 import { WrapperPage } from "@/templates";
-import { Box, GridItem, IconButton } from "@chakra-ui/react";
+import {
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuItemOption,
+  MenuGroup,
+  MenuOptionGroup,
+  MenuDivider,
+  GridItem,
+  HStack,
+  IconButton,
+} from "@chakra-ui/react";
 import { NextPage } from "next";
 import React from "react";
-import { Maximize } from "react-feather";
+import { ChevronDown, Maximize } from "react-feather";
 import dynamic from "next/dynamic";
-import { SwiperSlideBaner } from "@/components";
+import { Button, SwiperSlideBaner } from "@/components";
+import { RemoveBannerModal } from "./RemoveBannerModal";
 
 const ReactApexChart = dynamic(() => import("react-apexcharts"), { ssr: false });
 // import ReactApexChart from "react-apexcharts";
@@ -76,6 +89,10 @@ export const DashboardPage: NextPage = () => {
   return (
     <WrapperPage fullScreen title="Dashboard">
       <GridItem colSpan={[12]}>
+        <HStack mb="2" justifyContent="flex-end">
+          <RemoveBannerModal />
+          <Button colorScheme="pri">Agregar</Button>
+        </HStack>
         <SwiperSlideBaner />
       </GridItem>
       <Card.Wrapper colSpan={[12, null, null, 6]}>
