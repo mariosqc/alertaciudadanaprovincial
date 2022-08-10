@@ -32,8 +32,6 @@ export const SwiperSlideBaner = () => {
     });
   }
 
-  console.log(banners);
-
   useEffect(() => {
     getBanners();
   }, []);
