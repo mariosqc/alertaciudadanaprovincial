@@ -1,6 +1,6 @@
 import { useDistrictContext } from "@/contexts";
 import { Card } from "@/layout";
-import { Box, Flex, HStack, IconButton, Text, Select, Tag, Image } from "@chakra-ui/react";
+import { Box, Flex, HStack, IconButton, Text, Select, Tag, Image, chakra } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React, { useMemo } from "react";
 import { LogOut, Settings } from "react-feather";
@@ -19,6 +19,8 @@ export const Header = () => {
     () => districts.find((district) => district.id === cookies.get("district_id")),
     [districts]
   );
+
+  const currentDistrict = districts.find((district) => district.id === cookies.get("district_id"));
 
   function signOut() {
     cookies.remove("user");
@@ -43,6 +45,16 @@ export const Header = () => {
           <Navbar />
         </Flex>
         <HStack>
+          <Box textAlign="right">
+            <Text fontSize="sm" mb="0.5" lineHeight="none">
+              <chakra.strong color="gray.500">
+                Bienvenido <chakra.span color="gray.800">{currentDistrict?.user.name}</chakra.span>
+              </chakra.strong>
+            </Text>
+            <Tag variant="solid" colorScheme="pri" size="sm">
+              {currentDistrict?.name}
+            </Tag>
+          </Box>
           {hasSuperAdmin && (
             <>
               <Tag colorScheme="pri" variant="solid" minWidth="max-content" fontSize="sm">
