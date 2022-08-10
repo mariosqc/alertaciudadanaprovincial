@@ -17,8 +17,6 @@ export const Navbar = () => {
   const [items] = useState(itemsMenu);
   const { hasSuperAdmin } = useAdmin();
 
-  console.log(hasSuperAdmin);
-
   return (
     <HStack display={["none", null, null, "flex"]}>
       {items

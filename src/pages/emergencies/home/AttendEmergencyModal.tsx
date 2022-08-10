@@ -33,6 +33,7 @@ export const AttendEmergencyModal: FC<AttendEmergencyModalProps> = ({ emergency 
   async function attendEmergency() {
     setIsLoading(true);
     const { userId, id } = emergency;
+
     await database
       .ref(`/district/${districtId}/emergency/${userId}/${id}`)
       .update({ attended: true, status: "Atendida", values: assessment ? "Verdadero" : "Falso" });
@@ -69,7 +70,7 @@ export const AttendEmergencyModal: FC<AttendEmergencyModalProps> = ({ emergency 
               <Text fontSize="lg" fontWeight="medium" mb="2">
                 Usuario: {emergency.user}
               </Text>
-              <Checkbox onChange={(e: any) => setAssessment(e.target.checked)}>
+              <Checkbox onChange={(e: any) => setAssessment(!e.target.checked)}>
                 Marque en caso de falsa emergencia
               </Checkbox>
             </AlertDialogBody>
