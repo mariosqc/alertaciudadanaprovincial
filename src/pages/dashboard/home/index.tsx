@@ -17,8 +17,9 @@ import { NextPage } from "next";
 import React from "react";
 import { ChevronDown, Maximize } from "react-feather";
 import dynamic from "next/dynamic";
-import { Button, SwiperSlideBaner } from "@/components";
+import { Button, FileUpload, SwiperSlideBaner } from "@/components";
 import { RemoveBannerModal } from "./RemoveBannerModal";
+import { UploadBanner } from "./UploadBanner";
 
 const ReactApexChart = dynamic(() => import("react-apexcharts"), { ssr: false });
 // import ReactApexChart from "react-apexcharts";
@@ -91,7 +92,7 @@ export const DashboardPage: NextPage = () => {
       <GridItem colSpan={[12]}>
         <HStack mb="2" justifyContent="flex-end">
           <RemoveBannerModal />
-          <Button colorScheme="pri">Agregar</Button>
+          <UploadBanner />
         </HStack>
         <SwiperSlideBaner />
       </GridItem>

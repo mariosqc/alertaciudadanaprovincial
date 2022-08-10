@@ -1,70 +1,60 @@
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 import { Image } from "@chakra-ui/react";
 
-import { Card, CardBody, CardContainer } from "@/layout";
+import { CardBody, CardContainer } from "@/layout";
+
+import { database } from "@/firebase";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
+import Cookies from "universal-cookie";
+
+const cookies = new Cookies();
 
 export const SwiperSlideBaner = () => {
+  const districtId = useMemo(() => cookies.get("district_id"), []);
+  const [banners, setBanners] = useState<any[]>([]);
+
+  function getBanners() {
+    database.ref(`district/${districtId}/banner`).on("value", (snapshot) => {
+      let bannerSnapshot = snapshot.val();
+
+      if (!bannerSnapshot) {
+        return;
+      }
+
+      const banners = Object.entries(bannerSnapshot || {}).map(([key, value]: any) => ({
+        id: key,
+        fullPath: value.fullPath,
+      }));
+      setBanners(banners);
+    });
+  }
+
+  console.log(banners);
+
+  useEffect(() => {
+    getBanners();
+  }, []);
+
   return (
-    <Swiper
-      spaceBetween={10}
-      slidesPerView={3}
-      onSlideChange={() => console.log("slide change")}
-      onSwiper={(swiper) => console.log(swiper)}
-    >
-      <CardContainer>
-        <CardBody>
-          <SwiperSlide>
-            <Image
-              alt=""
-              src="https://img.freepik.com/vector-gratis/banner-negro-formas-geometricas-amarillas_1017-32327.jpg?w=2000"
-            />
-          </SwiperSlide>
-        </CardBody>
-      </CardContainer>
-      <Card.Wrapper>
-        <Card.Body>
-          <SwiperSlide>
-            <Image
-              alt=""
-              src="https://img.freepik.com/vector-gratis/banner-negro-formas-geometricas-amarillas_1017-32327.jpg?w=2000"
-            />
-          </SwiperSlide>
-        </Card.Body>
-      </Card.Wrapper>
-      <Card.Wrapper>
-        <Card.Body>
-          <SwiperSlide>
-            <Image
-              alt=""
-              src="https://img.freepik.com/vector-gratis/banner-negro-formas-geometricas-amarillas_1017-32327.jpg?w=2000"
-            />
-          </SwiperSlide>
-        </Card.Body>
-      </Card.Wrapper>
-      <Card.Wrapper>
-        <Card.Body>
-          <SwiperSlide>
-            <Image
-              alt=""
-              src="https://img.freepik.com/vector-gratis/banner-negro-formas-geometricas-amarillas_1017-32327.jpg?w=2000"
-            />
-          </SwiperSlide>
-        </Card.Body>
-      </Card.Wrapper>
-      <Card.Wrapper>
-        <Card.Body>
-          <SwiperSlide>
-            <Image
-              alt=""
-              src="https://img.freepik.com/vector-gratis/banner-negro-formas-geometricas-amarillas_1017-32327.jpg?w=2000"
-            />
-          </SwiperSlide>
-        </Card.Body>
-      </Card.Wrapper>
+    <Swiper loop spaceBetween={10} slidesPerView={3}>
+      {banners.map((item) => (
+        <CardContainer key={item.id}>
+          <CardBody>
+            <SwiperSlide>
+              <Image
+                alt=""
+                src={`https://firebasestorage.googleapis.com/v0/b/alerta-ciudadana-provincial.appspot.com/o/${item.fullPath.replace(
+                  /\//,
+                  "%2F"
+                )}?alt=media`}
+              />
+            </SwiperSlide>
+          </CardBody>
+        </CardContainer>
+      ))}
     </Swiper>
   );
 };
