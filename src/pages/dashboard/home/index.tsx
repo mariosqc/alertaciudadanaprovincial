@@ -1,10 +1,11 @@
 import { Card } from "@/layout";
 import { WrapperPage } from "@/templates";
-import { IconButton } from "@chakra-ui/react";
+import { Box, GridItem, IconButton } from "@chakra-ui/react";
 import { NextPage } from "next";
 import React from "react";
 import { Maximize } from "react-feather";
 import dynamic from "next/dynamic";
+import { SwiperSlideBaner } from "@/components";
 
 const ReactApexChart = dynamic(() => import("react-apexcharts"), { ssr: false });
 // import ReactApexChart from "react-apexcharts";
@@ -74,6 +75,9 @@ export const DashboardPage: NextPage = () => {
 
   return (
     <WrapperPage fullScreen title="Dashboard">
+      <GridItem colSpan={[12]}>
+        <SwiperSlideBaner />
+      </GridItem>
       <Card.Wrapper colSpan={[12, null, null, 6]}>
         <Card.Header
           title="Grafico 1"

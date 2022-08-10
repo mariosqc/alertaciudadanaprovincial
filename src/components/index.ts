@@ -11,3 +11,5 @@ export * from "./alertDialog";
 export * from "./pagination";
 
 export * from "./newTrackerModal";
+
+export * from "./swiper";
