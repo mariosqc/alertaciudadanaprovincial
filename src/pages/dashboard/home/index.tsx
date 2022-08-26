@@ -89,13 +89,14 @@ export const DashboardPage: NextPage = () => {
 
   return (
     <WrapperPage fullScreen title="Dashboard">
-      <GridItem colSpan={[12]}>
-        <HStack mb="2" justifyContent="flex-end">
-          <RemoveBannerModal />
-          <UploadBanner />
-        </HStack>
-        <SwiperSlideBaner />
-      </GridItem>
+      <Card.Wrapper colSpan={[12]}>
+        <Card.Container>
+          <HStack mb="2" justifyContent="flex-end">
+            <UploadBanner />
+          </HStack>
+          <SwiperSlideBaner />
+        </Card.Container>
+      </Card.Wrapper>
       <Card.Wrapper colSpan={[12, null, null, 6]}>
         <Card.Header
           title="Grafico 1"
