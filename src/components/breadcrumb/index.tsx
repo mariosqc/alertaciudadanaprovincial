@@ -23,7 +23,8 @@ export type RoutesBreadcrumbType =
   | "emergencies"
   | "emergenciesTypes"
   | "emergenciesReports"
-  | "districts";
+  | "districts"
+  | "directories";
 
 type RouteObj = {
   label: string;
@@ -66,6 +67,10 @@ const Routes: Record<RoutesBreadcrumbType, RouteObj> = {
   districts: {
     label: "Distritos",
     href: "/districts",
+  },
+  directories: {
+    label: "Directorios",
+    href: "/directories",
   },
 };
 

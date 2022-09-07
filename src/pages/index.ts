@@ -15,3 +15,7 @@ export * from "./signin";
 export * from "./districts";
 
 export * from "./dashboard";
+
+export * from "./directories/home";
+export * from "./banners/home";
+

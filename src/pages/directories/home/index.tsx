@@ -1,0 +1,51 @@
+import { useDirectoryContext } from "@/contexts";
+import { Card } from "@/layout";
+import { WrapperPage } from "@/templates";
+import { Box, Divider, Flex, HStack, List, ListItem, Tag, Text } from "@chakra-ui/react";
+import React, { Fragment } from "react";
+import { Phone } from "react-feather";
+import { MenuDirectory } from "./MenuDirectory";
+
+export const DirectoriesPage = () => {
+  const { directories } = useDirectoryContext();
+
+  console.log(directories);
+
+  return (
+    <WrapperPage title="Diretorios" breadcrumb={{ routes: ["complaints"] }}>
+      <Card.Wrapper colSpan={12}>
+        <Card.Header title="Listado de directorios" subtitle={`${directories.length} Resultados encontrados`} />
+        <Card.Body>
+          <List>
+            {[...directories, ...directories].map((directory, i) => (
+              <Fragment key={directory?.id}>
+                {i !== 0 && <Divider my="3" />}
+
+                <ListItem>
+                  <Flex alignItems="center" justifyContent="space-between">
+                    <Box>
+                      <HStack>
+                        <Text fontWeight="semibold">{directory?.name}</Text>
+                        <Tag lineHeight="none" size="sm" variant="solid" colorScheme="green">
+                          {directory?.area}
+                        </Tag>
+                        <Tag lineHeight="none" size="sm" variant="solid" colorScheme="pri">
+                          {directory?.position}
+                        </Tag>
+                      </HStack>
+                      <HStack>
+                        <Phone size="1.25rem" />
+                        <Text fontWeight="semibold">{directory?.phone}</Text>
+                      </HStack>
+                    </Box>
+                    <MenuDirectory directory={directory} />
+                  </Flex>
+                </ListItem>
+              </Fragment>
+            ))}
+          </List>
+        </Card.Body>
+      </Card.Wrapper>
+    </WrapperPage>
+  );
+};

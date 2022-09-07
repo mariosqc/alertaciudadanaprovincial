@@ -27,6 +27,7 @@ import AuthProvider, { useAuthContext } from "src/contexts/auth";
 import { useRouter } from "next/router";
 import TrackerProvider from "src/contexts/trackers";
 import { NewTrackerModal } from "@/components";
+import DirectoryProvider from "src/contexts/directories";
 
 const MyApp: FC<{ Component: FC; pageProps: any }> = ({ Component, pageProps }) => {
   useEffect(() => {
@@ -55,6 +56,7 @@ const MyApp: FC<{ Component: FC; pageProps: any }> = ({ Component, pageProps }) 
             EmergencyProvider,
             ComplaintProvider,
             TrackerProvider,
+            DirectoryProvider,
           ]}
         >
           <ComponentMain Component={<Component {...pageProps} />} />

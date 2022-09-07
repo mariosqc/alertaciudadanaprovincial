@@ -19,11 +19,15 @@ import { Button } from "@/components";
 import { useTrackerContext } from "@/contexts";
 import { Tracker } from "@alerta-ciudadana/entity";
 import ReactPlayer from "react-player";
+import Cookies from "universal-cookie";
+import { database } from "@/firebase";
 
 export const TrackerModal = () => {
   const { attendEmergency, setAttendEmergency } = useTrackerContext();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [comodin, setComodin] = useState<Tracker>();
+
+  const districtId = useMemo(() => new Cookies().get("district_id"), []);
 
   const attendingCurrentEmergency = useMemo<Tracker | undefined>(() => {
     if (attendEmergency.attending) {
@@ -33,6 +37,10 @@ export const TrackerModal = () => {
     } else return undefined;
   }, [attendEmergency]);
 
+  async function attendedEmergency() {
+    await database.ref(`district/${districtId}/follow/location/${attendEmergency.tracker?.id}`).remove();
+    onClose();
+  }
   return (
     <Modal closeOnEsc={false} closeOnOverlayClick={false} size="3xl" isCentered isOpen={isOpen} onClose={onClose}>
       {comodin && (
@@ -81,7 +89,10 @@ export const TrackerModal = () => {
                 </GridItem>
               </SimpleGrid>
             </ModalBody>
-            <ModalFooter>
+            <ModalFooter justifyContent="space-between">
+              <Button colorScheme="pri" mr={3} onClick={attendedEmergency}>
+                Atendida
+              </Button>
               <Button
                 colorScheme="pri"
                 mr={3}

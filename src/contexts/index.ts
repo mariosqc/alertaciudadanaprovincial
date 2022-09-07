@@ -6,3 +6,4 @@ export * from "./auth";
 export * from "./complaints";
 export * from "./trackers";
 export * from "./settings";
+export * from "./directories";

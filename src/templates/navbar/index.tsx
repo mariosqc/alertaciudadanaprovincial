@@ -9,7 +9,9 @@ export const itemsMenu = [
   { label: "Seguimiento", pathname: "/tracker" },
   { label: "Emergencias", pathname: "/emergencies" },
   { label: "Denuncias", pathname: "/complaints" },
+  { label: "Directorios", pathname: "/directories" },
   { label: "Distritos", pathname: "/districts" },
+  { label: "Banners", pathname: "/banners" },
 ];
 
 export const Navbar = () => {
