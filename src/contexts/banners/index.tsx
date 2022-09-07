@@ -12,9 +12,9 @@ const cookies = new Cookies();
 interface BannerContext {
   banners: Banner[];
   getBanners(): void;
-  deleteBanner(id: string): void;
-  createBanner(directory: { title: string; file: File }): Promise<void>;
-  updateBanner(directory: Banner): Promise<void>;
+  deleteBanner(banner: Banner): void;
+  createBanner(banner: { title: string; file: File }): Promise<void>;
+  updateBanner(banner: Banner): Promise<void>;
 }
 
 const BannerContext = createContext<BannerContext>();
@@ -50,13 +50,14 @@ const BannersProvider: FC = ({ children }) => {
     });
   }
 
-  async function updateBanner(directory: Banner) {
-    const { id, ...rest } = directory;
-    await database.ref(`district/${districtId}/directory/${id}`).update(rest);
+  async function updateBanner(banner: Banner) {
+    const { id, ...rest } = banner;
+    await database.ref(`district/${districtId}/banner/${banner.url}`).update(rest);
   }
 
-  async function deleteBanner(id: string) {
-    await database.ref(`district/${districtId}/directory/${id}`).remove();
+  async function deleteBanner(banner: Banner) {
+    await storage.ref(banner.url).delete();
+    await database.ref(`district/${districtId}/banner/${banner.id}`).remove();
   }
 
   return (
