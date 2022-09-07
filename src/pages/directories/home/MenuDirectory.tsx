@@ -1,19 +1,10 @@
 import React, { FC } from "react";
 
-import {
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  MenuItemOption,
-  MenuGroup,
-  MenuOptionGroup,
-  MenuDivider,
-  IconButton,
-} from "@chakra-ui/react";
+import { Menu, MenuButton, MenuList, MenuItem, IconButton } from "@chakra-ui/react";
 import { MoreVertical } from "react-feather";
 import { useDirectoryContext } from "@/contexts";
 import { Directory } from "@alerta-ciudadana/entity";
+import { UpdateDirectoryModal } from "./UpdateDirectoryModal";
 
 interface MenuDirectoryProps {
   directory: Directory;
@@ -33,7 +24,7 @@ export const MenuDirectory: FC<MenuDirectoryProps> = ({ directory }) => {
         _focus={{}}
       />
       <MenuList>
-        <MenuItem fontSize="sm">Actualizar</MenuItem>
+        <UpdateDirectoryModal directory={directory} />
         <MenuItem fontSize="sm" onClick={() => deleteDirectory(directory.id)}>
           Eliminar
         </MenuItem>

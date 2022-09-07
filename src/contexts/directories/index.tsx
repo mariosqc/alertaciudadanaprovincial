@@ -1,6 +1,5 @@
 import { FC, useState, useContext, useEffect, useMemo } from "react";
 import { Directory } from "@alerta-ciudadana/entity";
-import moment from "moment";
 
 import { database } from "@/firebase";
 import { createContext } from "@/utils";
@@ -11,6 +10,8 @@ const cookies = new Cookies();
 interface DirectoryContext {
   directories: Directory[];
   deleteDirectory(id: string): void;
+  createDirectory(directory: Directory): Promise<void>;
+  updateDirectory(directory: Directory): Promise<void>;
 }
 
 const DirectoryContext = createContext<DirectoryContext>();
@@ -32,6 +33,15 @@ const DirectoryProvider: FC = ({ children }) => {
     });
   }
 
+  async function createDirectory(directory: Directory) {
+    await database.ref(`district/${districtId}/directory`).push(directory);
+  }
+
+  async function updateDirectory(directory: Directory) {
+    const { id, ...rest } = directory;
+    await database.ref(`district/${districtId}/directory/${id}`).update(rest);
+  }
+
   async function deleteDirectory(id: string) {
     await database.ref(`district/${districtId}/directory/${id}`).remove();
   }
@@ -40,7 +50,11 @@ const DirectoryProvider: FC = ({ children }) => {
     getDirectory();
   }, []);
 
-  return <DirectoryContext.Provider value={{ directories, deleteDirectory }}>{children}</DirectoryContext.Provider>;
+  return (
+    <DirectoryContext.Provider value={{ directories, createDirectory, updateDirectory, deleteDirectory }}>
+      {children}
+    </DirectoryContext.Provider>
+  );
 };
 
 export const useDirectoryContext = () => useContext(DirectoryContext);

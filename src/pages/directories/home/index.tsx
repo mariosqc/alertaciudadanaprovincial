@@ -5,19 +5,22 @@ import { Box, Divider, Flex, HStack, List, ListItem, Tag, Text } from "@chakra-u
 import React, { Fragment } from "react";
 import { Phone } from "react-feather";
 import { MenuDirectory } from "./MenuDirectory";
+import { NewDirectoryModal } from "./NewDirectoryModal";
 
 export const DirectoriesPage = () => {
   const { directories } = useDirectoryContext();
 
-  console.log(directories);
-
   return (
     <WrapperPage title="Diretorios" breadcrumb={{ routes: ["complaints"] }}>
       <Card.Wrapper colSpan={12}>
-        <Card.Header title="Listado de directorios" subtitle={`${directories.length} Resultados encontrados`} />
+        <Card.Header
+          title="Listado de directorios"
+          subtitle={`${directories.length} Resultados encontrados`}
+          optionsRight={[<NewDirectoryModal key="0" />]}
+        />
         <Card.Body>
           <List>
-            {[...directories, ...directories].map((directory, i) => (
+            {directories.map((directory, i) => (
               <Fragment key={directory?.id}>
                 {i !== 0 && <Divider my="3" />}
 
