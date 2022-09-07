@@ -5,9 +5,8 @@ import { WrapperPage } from "@/templates";
 
 import { BannerModal } from "./BannerModal";
 import { useBannerContext } from "@/contexts";
-import { Divider, Flex, HStack, IconButton, List, ListItem, Tag, Text } from "@chakra-ui/react";
+import { Divider, Flex, HStack, List, ListItem, Text } from "@chakra-ui/react";
 import { MenuBanner } from "./MenuBanner";
-import { Eye, Type } from "react-feather";
 import { ShowBanner } from "./ShowBanner";
 
 export const BannersPage = () => {
@@ -22,7 +21,7 @@ export const BannersPage = () => {
         <Card.Wrapper colSpan={12}>
           <Card.Header
             title="Listado de banners"
-            subtitle={`${10} Resultados encontrados`}
+            subtitle={`${banners.length} Resultados encontrados`}
             optionsRight={[<BannerModal key="0" />]}
           />
           <Card.Container>

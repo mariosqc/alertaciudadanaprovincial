@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useMemo } from "react";
 
 import { Flex, SimpleGrid, Stack } from "@chakra-ui/react";
 
@@ -7,6 +7,10 @@ import { NextSeo } from "next-seo";
 import { Header } from "../header";
 
 import { Breadcrumb, RoutesBreadcrumbType } from "@/components";
+import Cookies from "universal-cookie";
+import { useRouter } from "next/router";
+
+const cookies = new Cookies();
 
 interface WrapperPageProps {
   title: string;
@@ -19,6 +23,16 @@ interface WrapperPageProps {
 }
 
 export const WrapperPage: FC<WrapperPageProps> = ({ children, title, description, fullScreen, breadcrumb }) => {
+  const districtId = useMemo(() => cookies.get("district_id"), []);
+
+  const { push } = useRouter();
+
+  useEffect(() => {
+    if (!districtId) push("/signin");
+  }, []);
+
+  if (!districtId) return null;
+
   return (
     <>
       <NextSeo title={`${title} - Alerta Ciudadana`} description={description} />
