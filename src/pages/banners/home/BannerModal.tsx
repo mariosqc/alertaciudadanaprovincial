@@ -12,12 +12,12 @@ import {
 } from "@chakra-ui/react";
 
 import { Button } from "@/components";
-import { DirectoryForm } from "./DirectoryForm";
-import { useDirectoryContext } from "@/contexts";
+import { BannerForm } from "./BannerForm";
+import { useBannerContext } from "@/contexts";
 
-export const NewDirectoryModal = () => {
+export const BannerModal = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { createDirectory } = useDirectoryContext();
+  const { createBanner } = useBannerContext();
 
   return (
     <div>
@@ -31,9 +31,9 @@ export const NewDirectoryModal = () => {
           <ModalHeader>Nuevo</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <DirectoryForm
+            <BannerForm
               onSubmit={async (values) => {
-                await createDirectory(values);
+                const response = await createBanner(values);
                 onClose();
               }}
             />
@@ -43,7 +43,7 @@ export const NewDirectoryModal = () => {
             <Button variant="ghost" mr={3} onClick={onClose}>
               Cancelar
             </Button>
-            <Button type="submit" form="create-or-update-directory" colorScheme="pri">
+            <Button type="submit" form="create-or-update-banner" colorScheme="pri">
               Guardar directorio
             </Button>
           </ModalFooter>

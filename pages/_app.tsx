@@ -15,6 +15,7 @@ import "@fontsource/open-sans/500.css";
 import "@fontsource/open-sans/600.css";
 import "@fontsource/open-sans/700.css";
 import "@fontsource/open-sans/800.css";
+
 import Head from "next/head";
 import { firebaseOptions } from "@/firebase";
 import { Compose } from "@/contexts";
@@ -23,11 +24,10 @@ import DistrictProvider from "src/contexts/districts";
 import EmergencyProvider from "src/contexts/emergency";
 import ComplaintProvider from "src/contexts/complaints";
 import SettingsProvider from "src/contexts/settings";
-import AuthProvider, { useAuthContext } from "src/contexts/auth";
-import { useRouter } from "next/router";
 import TrackerProvider from "src/contexts/trackers";
 import { NewTrackerModal } from "@/components";
 import DirectoryProvider from "src/contexts/directories";
+import BannersProvider from "src/contexts/banners";
 
 const MyApp: FC<{ Component: FC; pageProps: any }> = ({ Component, pageProps }) => {
   useEffect(() => {
@@ -57,6 +57,7 @@ const MyApp: FC<{ Component: FC; pageProps: any }> = ({ Component, pageProps }) 
             ComplaintProvider,
             TrackerProvider,
             DirectoryProvider,
+            BannersProvider,
           ]}
         >
           <ComponentMain Component={<Component {...pageProps} />} />

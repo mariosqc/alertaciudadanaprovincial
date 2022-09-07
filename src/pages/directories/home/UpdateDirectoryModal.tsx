@@ -34,7 +34,7 @@ export const UpdateDirectoryModal: FC<UpdateDirectoryModalProps> = ({ directory 
       <Modal isCentered isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Modal Title</ModalHeader>
+          <ModalHeader>Nuevo</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <DirectoryForm

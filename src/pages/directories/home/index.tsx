@@ -11,7 +11,7 @@ export const DirectoriesPage = () => {
   const { directories } = useDirectoryContext();
 
   return (
-    <WrapperPage title="Diretorios" breadcrumb={{ routes: ["complaints"] }}>
+    <WrapperPage title="Diretorios" breadcrumb={{ routes: ["directories"] }}>
       <Card.Wrapper colSpan={12}>
         <Card.Header
           title="Listado de directorios"

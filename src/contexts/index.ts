@@ -7,3 +7,4 @@ export * from "./complaints";
 export * from "./trackers";
 export * from "./settings";
 export * from "./directories";
+export * from "./banners";
