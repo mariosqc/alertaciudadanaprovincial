@@ -25,7 +25,7 @@ const BannersProvider: FC = ({ children }) => {
   const districtId = useMemo(() => cookies.get("district_id"), []);
 
   function getBanners() {
-    database.ref(`district/${districtId}/banner`).on("value", (snapshot) => {
+    database.ref(`district/${districtId}/slider`).on("value", (snapshot) => {
       let bannerSnapshot = snapshot.val();
 
       if (!bannerSnapshot) {
@@ -42,9 +42,9 @@ const BannersProvider: FC = ({ children }) => {
   }
 
   async function createBanner({ title, file }: { title: string; file: File }) {
-    const response = await storage.ref(`banners/${uuidv4()}`).put(file);
+    const response = await storage.ref(`sliders/${uuidv4()}`).put(file);
 
-    await database.ref(`district/${districtId}/banner`).push({
+    await database.ref(`district/${districtId}/slider`).push({
       fullPath: response.metadata.fullPath,
       title,
     });
@@ -52,12 +52,12 @@ const BannersProvider: FC = ({ children }) => {
 
   async function updateBanner(banner: Banner) {
     const { id, ...rest } = banner;
-    await database.ref(`district/${districtId}/banner/${banner.url}`).update(rest);
+    await database.ref(`district/${districtId}/slider/${banner.url}`).update(rest);
   }
 
   async function deleteBanner(banner: Banner) {
     await storage.ref(banner.url).delete();
-    await database.ref(`district/${districtId}/banner/${banner.id}`).remove();
+    await database.ref(`district/${districtId}/slider/${banner.id}`).remove();
   }
 
   return (
