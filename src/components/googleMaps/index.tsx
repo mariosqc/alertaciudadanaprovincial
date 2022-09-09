@@ -66,21 +66,24 @@ export const GoogleMaps: FC<GoogleMapsProps> = ({
     [_onEditPolygon]
   );
 
-  const onLoad = (map: any) => {
-    const bounds = new window.google.maps.LatLngBounds();
+  const onLoad = useCallback(
+    (map: any) => {
+      const bounds = new window.google.maps.LatLngBounds();
 
-    if (defaultCenter && defaultCenter.lat !== 0 && defaultCenter.lng !== 0) {
-      bounds.extend(defaultCenter);
-      map.fitBounds(bounds);
-      setMap(map);
-    } else {
-      bounds.extend({ lat: 19.410694, lng: -70.643761 });
-      map.fitBounds(bounds);
-      setMap(map);
-    }
-  };
+      if (defaultCenter && defaultCenter.lat !== 0 && defaultCenter.lng !== 0) {
+        bounds.extend(defaultCenter);
+        map.fitBounds(bounds);
+        setMap(map);
+      } else {
+        bounds.extend({ lat: 19.410694, lng: -70.643761 });
+        map.fitBounds(bounds);
+        setMap(map);
+      }
+    },
+    [defaultCenter]
+  );
 
-  const onUnmount = useCallback(function callback(map) {
+  const onUnmount = useCallback(function callback() {
     setMap(null);
   }, []);
 
@@ -101,12 +104,14 @@ export const GoogleMaps: FC<GoogleMapsProps> = ({
 
   const onLoadDrawingManager = (drawingManager: any) => {};
 
+  console.log(defaultCenter);
+
   return (
     <>
       {/* @ts-ignore */}
       <GoogleMap
         mapContainerStyle={{ width: "100%", height: "100%" }}
-        options={{ maxZoom: 15, minZoom: 3, zoom: defaultZoom }}
+        options={{ maxZoom: 18, minZoom: 3, zoom: defaultZoom }}
         onLoad={onLoad}
         onUnmount={onUnmount}
         onClick={(e) => {
