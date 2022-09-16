@@ -7,7 +7,6 @@ import moment from "moment";
 import { FormProvider, Input, Pagination } from "@/components";
 import { useDebouncedCallback } from "use-debounce";
 import { Emergency } from "@alerta-ciudadana/entity";
-import { Check } from "react-feather";
 import { AttendEmergencyModal } from "./AttendEmergencyModal";
 
 export const EmergenciesTable = () => {
@@ -25,6 +24,8 @@ export const EmergenciesTable = () => {
       const query = values.query;
       return String(field).toLowerCase().includes(query.toLowerCase());
     });
+
+    pagination.setEmergencies(emergenciesFinded);
   }
 
   return (

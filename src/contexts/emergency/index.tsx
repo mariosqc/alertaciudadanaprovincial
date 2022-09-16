@@ -16,6 +16,7 @@ interface EmergencyContext extends PaginatioContext<Emergency> {
   emergencies: Emergency[];
   allEmergencies: Emergency[];
   typesOfEmergencies: EntityType[];
+  setEmergencies(emergencies: Emergency[]): void;
   createEmergencyType: (values: { name: string; icon: File }) => Promise<void>;
   filterByDates: (startDate: string, endDate: string) => void;
   deleteEmergencyType: (entity: EntityType) => Promise<void>;
@@ -134,6 +135,7 @@ const EmergencyProvider: FC = ({ children }) => {
         allEmergencies,
         pagination,
         typesOfEmergencies,
+        setEmergencies,
         prevPage,
         nextPage,
         changeNumberPerPage,
