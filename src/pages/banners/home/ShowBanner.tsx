@@ -22,6 +22,8 @@ interface ShowBannerProps {
 export const ShowBanner: FC<ShowBannerProps> = ({ banner }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  console.log(banner);
+
   return (
     <>
       <IconButton onClick={onOpen} colorScheme="pri" variant="ghost" _focus={{}} size="sm" aria-label={""}>
@@ -32,14 +34,7 @@ export const ShowBanner: FC<ShowBannerProps> = ({ banner }) => {
         <ModalContent>
           <ModalHeader>Imagen del banner {banner.title}</ModalHeader>
           <ModalBody>
-            <Image
-              userSelect="none"
-              alt=""
-              src={`https://firebasestorage.googleapis.com/v0/b/alerta-ciudadana-provincial.appspot.com/o/${banner.url.replace(
-                /\//,
-                "%2F"
-              )}?alt=media`}
-            />
+            <Image userSelect="none" alt="" src={banner.url.replace(/Banner\//, "Banner%2F")} />
           </ModalBody>
 
           <ModalFooter>

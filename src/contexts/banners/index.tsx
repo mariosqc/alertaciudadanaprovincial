@@ -34,7 +34,7 @@ const BannersProvider: FC = ({ children }) => {
 
       const banners = Object.entries(bannerSnapshot || {}).map(([key, value]: any) => ({
         id: key,
-        url: value.fullPath,
+        url: value.url,
         title: value.title,
       }));
       setBanners(banners);
@@ -42,12 +42,10 @@ const BannersProvider: FC = ({ children }) => {
   }
 
   async function createBanner({ title, file }: { title: string; file: File }) {
-    const response = await storage.ref(`sliders/${uuidv4()}`).put(file);
+    const response = await storage.ref(`Banner/${uuidv4()}`).put(file);
+    const url = `https://firebasestorage.googleapis.com/v0/b/alerta-ciudadana-provincial.appspot.com/o/${response.metadata.fullPath}?alt=media`;
 
-    await database.ref(`district/${districtId}/slider`).push({
-      fullPath: response.metadata.fullPath,
-      title,
-    });
+    await database.ref(`district/${districtId}/slider`).push({ url, title });
   }
 
   async function updateBanner(banner: Banner) {

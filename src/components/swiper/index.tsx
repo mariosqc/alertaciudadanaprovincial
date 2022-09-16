@@ -22,14 +22,7 @@ export const SwiperSlideBaner = () => {
                 {item.title || "No existe un título"}
               </Text>
             </Flex>
-            <Image
-              userSelect="none"
-              alt=""
-              src={`https://firebasestorage.googleapis.com/v0/b/alerta-ciudadana-provincial.appspot.com/o/${item.url.replace(
-                /\//,
-                "%2F"
-              )}?alt=media`}
-            />
+            <Image userSelect="none" alt="" src={item.url.replace(/Banner\//, "Banner%2F")} />
           </SwiperSlide>
         ))}
       </Swiper>

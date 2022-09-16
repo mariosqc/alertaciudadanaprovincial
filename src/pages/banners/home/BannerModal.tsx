@@ -33,7 +33,7 @@ export const BannerModal = () => {
           <ModalBody>
             <BannerForm
               onSubmit={async (values) => {
-                const response = await createBanner(values);
+                await createBanner(values);
                 onClose();
               }}
             />
