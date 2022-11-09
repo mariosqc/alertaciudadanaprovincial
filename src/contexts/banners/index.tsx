@@ -43,7 +43,11 @@ const BannersProvider: FC = ({ children }) => {
 
   async function createBanner({ title, file }: { title: string; file: File }) {
     const response = await storage.ref(`Banner/${uuidv4()}`).put(file);
-    const url = `https://firebasestorage.googleapis.com/v0/b/alerta-ciudadana-provincial.appspot.com/o/${response.metadata.fullPath}?alt=media`;
+
+    const url = `https://firebasestorage.googleapis.com/v0/b/alerta-ciudadana-provincial.appspot.com/o/${response.metadata.fullPath.replace(
+      /\//,
+      "%2F"
+    )}?alt=media`;
 
     await database.ref(`district/${districtId}/slider`).push({ url, title });
   }

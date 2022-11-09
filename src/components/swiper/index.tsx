@@ -1,17 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { Box, Flex, Image, Text } from "@chakra-ui/react";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import Cookies from "universal-cookie";
-import { MenuBanner } from "./MenuBanner";
 import { useBannerContext } from "@/contexts";
 
 const cookies = new Cookies();
 
 export const SwiperSlideBaner = () => {
-  const { banners } = useBannerContext();
+  const { banners, getBanners } = useBannerContext();
+  useEffect(() => {
+    getBanners();
+  }, []);
+
   return (
     <Box overflow="hidden" maxH="96">
       <Swiper loop spaceBetween={10} slidesPerView={3}>
