@@ -16,7 +16,7 @@ import {
   Image,
 } from "@chakra-ui/react";
 import { Button } from "@/components";
-import { useTrackerContext } from "@/contexts";
+import { useEmergencyContext, useTrackerContext } from "@/contexts";
 import { Tracker } from "@alerta-ciudadana/entity";
 import ReactPlayer from "react-player";
 import Cookies from "universal-cookie";
@@ -26,6 +26,7 @@ export const TrackerModal = () => {
   const { attendEmergency, setAttendEmergency } = useTrackerContext();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [comodin, setComodin] = useState<Tracker>();
+  const { emergencies } = useEmergencyContext();
 
   const districtId = useMemo(() => new Cookies().get("district_id"), []);
 
@@ -38,7 +39,10 @@ export const TrackerModal = () => {
   }, [attendEmergency]);
 
   async function attendedEmergency() {
-    await database.ref(`district/${districtId}/follow/location/${attendEmergency.tracker?.id}`).remove();
+    const emergency = emergencies[emergencies.length - 1];
+    const pathRef = `district/${districtId}/follow/location/${attendEmergency.tracker?.id}`;
+    await database.ref(pathRef).update({ activator: false });
+    await database.ref(`district/${districtId}/emergency/${attendingCurrentEmergency?.id}/${emergency.id}`).remove();
     onClose();
   }
   return (

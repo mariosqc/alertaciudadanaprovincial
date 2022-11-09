@@ -104,8 +104,6 @@ export const GoogleMaps: FC<GoogleMapsProps> = ({
 
   const onLoadDrawingManager = (drawingManager: any) => {};
 
-  console.log(defaultCenter);
-
   return (
     <>
       {/* @ts-ignore */}

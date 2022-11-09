@@ -26,7 +26,7 @@ export const TrackerPage: NextPage = () => {
               tracker.tipe === "Esperando..."
                 ? "https://firebasestorage.googleapis.com/v0/b/alerta-ciudadana-provincial.appspot.com/o/icons%2Fspin.gif?alt=media&token=5dcf56c3-5f0e-413a-b75d-37ddf49db10e"
                 : `https://firebasestorage.googleapis.com/v0/b/alerta-ciudadana-provincial.appspot.com/o/emergency-types%2F${removeAccents(
-                    tracker.tipe.toLowerCase()
+                    `${tracker?.tipe?.toLowerCase()}`
                   )}?alt=media`;
 
             return {

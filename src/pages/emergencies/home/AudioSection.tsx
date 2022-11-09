@@ -8,10 +8,11 @@ interface AudioSectionProps {
 }
 
 export const AudioSection: FC<AudioSectionProps> = ({ emergency }) => {
+
   return (
     <Box>
       <List>
-        {Object.values(emergency || {}).map(({ mensaje_voz }) => (
+        {Object.values(emergency.voz || {}).map(({ mensaje_voz }) => (
           <ListItem className="audio-container" key={mensaje_voz}>
             {/* @ts-ignore */}
             <ReactPlayer url={mensaje_voz} controls />
