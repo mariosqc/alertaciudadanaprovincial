@@ -51,18 +51,8 @@ export const NewDistrictForm: FC<NewDistrictFormProps> = ({ onSubmit }) => {
           />
         </HStack>
         <HStack alignItems="flex-start">
-          <InputControl
-            name="user.name"
-            rules={{ required: true }}
-            formControl={{ label: "Nombre del Usuario" }}
-            inputProps={{ placeholder: "Juan Manuel Estrella..." }}
-          />
-          <InputControl
-            name="user.username"
-            rules={{ required: true }}
-            formControl={{ label: "Nombre de Usuario" }}
-            inputProps={{ placeholder: "juan_manuel_estrella_01..." }}
-          />
+          <InputControl name="user.name" rules={{ required: true }} formControl={{ label: "Nombre del Usuario" }} />
+          <InputControl name="user.username" rules={{ required: true }} formControl={{ label: "Correo de usuario" }} />
         </HStack>
         <HStack alignItems="flex-start">
           <InputControl

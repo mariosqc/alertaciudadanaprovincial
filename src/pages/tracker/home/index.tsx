@@ -29,6 +29,7 @@ export const TrackerPage: NextPage = () => {
                     `${tracker?.tipe?.toLowerCase()}`
                   )}?alt=media`;
 
+
             return {
               position: { lat: tracker.l[0], lng: tracker.l[1] },
               icon: { url, scaledSize: new google.maps.Size(36, 36) },

@@ -25,7 +25,6 @@ export const NewTrackerModal = () => {
   const { push, pathname } = useRouter();
 
   async function updateTracker() {
-    await database.ref(`district/${districtId}/follow/location/${newTracker.tracker?.id}`).update({ visited: true });
     setNewTracker({ attending: true, tracker: newTracker.tracker });
     setAttendEmergency({ attending: true, tracker: newTracker.tracker });
     pathname !== "/tracker" && push("/tracker");
