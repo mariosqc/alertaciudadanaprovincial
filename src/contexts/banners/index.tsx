@@ -1,4 +1,4 @@
-import { FC, useState, useContext, useEffect, useMemo } from "react";
+import { FC, useState, useContext, useMemo } from "react";
 
 import Cookies from "universal-cookie";
 import { v4 as uuidv4 } from "uuid";
@@ -58,8 +58,14 @@ const BannersProvider: FC = ({ children }) => {
   }
 
   async function deleteBanner(banner: Banner) {
-    await storage.ref(banner.url).delete();
-    await database.ref(`district/${districtId}/slider/${banner.id}`).remove();
+    try {
+      const url = banner.url.replace(/%2F/, "/").split("/o/")[1].split("?")[0];
+
+      await storage.ref(url).delete();
+      await database.ref(`district/${districtId}/slider/${banner.id}`).remove();
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   return (

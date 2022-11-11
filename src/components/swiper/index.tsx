@@ -25,7 +25,7 @@ export const SwiperSlideBaner = () => {
                 {item.title || "No existe un título"}
               </Text>
             </Flex>
-            <Image userSelect="none" alt="" src={item.url.replace(/Banner\//, "Banner%2F")} />
+            <Image w="full" userSelect="none" alt="" src={item.url.replace(/Banner\//, "Banner%2F")} />
           </SwiperSlide>
         ))}
       </Swiper>
