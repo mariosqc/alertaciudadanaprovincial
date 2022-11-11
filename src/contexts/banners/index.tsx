@@ -63,6 +63,8 @@ const BannersProvider: FC = ({ children }) => {
 
       await storage.ref(url).delete();
       await database.ref(`district/${districtId}/slider/${banner.id}`).remove();
+      if (banners.length === 1) setBanners([]);
+      
     } catch (err) {
       console.log(err);
     }
