@@ -27,7 +27,6 @@ export const BannersPage = () => {
           />
           <Card.Container>
             <Card.Body>
-              <RecordAudio userToken="" />
               <List>
                 {banners.map((banner, i) => (
                   <Fragment key={banner?.id}>

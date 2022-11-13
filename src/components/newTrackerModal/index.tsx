@@ -12,7 +12,6 @@ import {
 } from "@chakra-ui/react";
 import { useTrackerContext } from "@/contexts";
 import { useRouter } from "next/router";
-import { database } from "@/firebase";
 import Cookies from "universal-cookie";
 
 const cookies = new Cookies();

@@ -14,8 +14,9 @@ import {
   ListItem,
   Box,
   Image,
+  HStack,
 } from "@chakra-ui/react";
-import { Button } from "@/components";
+import { Button, RecordAudio } from "@/components";
 import { useEmergencyContext, useTrackerContext } from "@/contexts";
 import { Tracker } from "@alerta-ciudadana/entity";
 import ReactPlayer from "react-player";
@@ -94,9 +95,12 @@ export const TrackerModal = () => {
               </SimpleGrid>
             </ModalBody>
             <ModalFooter justifyContent="space-between">
-              <Button colorScheme="pri" mr={3} onClick={attendedEmergency}>
-                Atendida
-              </Button>
+              <HStack>
+                <Button colorScheme="pri" mr={3} onClick={attendedEmergency}>
+                  Atendida
+                </Button>
+                <RecordAudio userToken={comodin.token} />
+              </HStack>
               <Button
                 colorScheme="pri"
                 mr={3}
