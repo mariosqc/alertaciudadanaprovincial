@@ -15,3 +15,5 @@ export * from "./newTrackerModal";
 export * from "./swiper";
 
 export * from "./uploadButton";
+
+export * from "./recordAudio";

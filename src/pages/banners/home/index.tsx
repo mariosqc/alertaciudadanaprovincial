@@ -8,6 +8,7 @@ import { useBannerContext } from "@/contexts";
 import { Divider, Flex, HStack, List, ListItem, Text } from "@chakra-ui/react";
 import { MenuBanner } from "./MenuBanner";
 import { ShowBanner } from "./ShowBanner";
+import { RecordAudio } from "@/components";
 
 export const BannersPage = () => {
   const { getBanners, banners } = useBannerContext();
@@ -26,6 +27,7 @@ export const BannersPage = () => {
           />
           <Card.Container>
             <Card.Body>
+              <RecordAudio userToken="" />
               <List>
                 {banners.map((banner, i) => (
                   <Fragment key={banner?.id}>
