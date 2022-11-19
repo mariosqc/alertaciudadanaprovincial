@@ -5,3 +5,4 @@ export * from "./inputMask";
 export * from "./inputMaskControl";
 export * from "./formControl";
 export * from "./inputUploadFile";
+export * from "./InputNormal";
