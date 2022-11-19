@@ -87,7 +87,7 @@ export const TrackerModal = () => {
                 <Button colorScheme="pri" mr={3} onClick={attendedEmergency}>
                   Atendida
                 </Button>
-                <RecordAudio userToken={comodin.token} />
+                {/* <RecordAudio userToken={comodin.token} /> */}
               </HStack>
               <Button
                 colorScheme="pri"
