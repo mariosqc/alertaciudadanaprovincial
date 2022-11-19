@@ -2,9 +2,9 @@ import React, { FC } from "react";
 import { Input as _Input, InputProps as _InputProps } from "@chakra-ui/react";
 import { useFormContext } from "react-hook-form";
 
-export interface InputProps extends _InputProps {}
+export interface InputNormalProps extends _InputProps {}
 
-export const InputNormal: FC<InputProps> = ({ ...props }) => {
+export const InputNormal: FC<InputNormalProps> = ({ ...props }) => {
   return (
     <_Input
       _focus={{
