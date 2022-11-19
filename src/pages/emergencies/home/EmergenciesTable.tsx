@@ -1,118 +1,176 @@
-import React from "react";
+import React, { useState, useMemo } from "react";
 
-import { Tag, Table, TableContainer, Tbody, Td, Text, Tfoot, Th, Thead, Tr, Box, IconButton } from "@chakra-ui/react";
+import {
+  createColumnHelper,
+  flexRender,
+  getCoreRowModel,
+  getSortedRowModel,
+  getFilteredRowModel,
+  SortingState,
+  useReactTable,
+  Column,
+  Table,
+} from "@tanstack/react-table";
+
+import {
+  chakra,
+  Table as _Table,
+  TableContainer,
+  Tbody,
+  Td,
+  Text,
+  Th,
+  Thead,
+  Tr,
+  Box,
+  HStack,
+  Tag,
+} from "@chakra-ui/react";
 import { useEmergencyContext } from "@/contexts";
-import { EmergencyModal } from "./EmergencyModal";
 import moment from "moment";
-import { FormProvider, Input, Pagination } from "@/components";
-import { useDebouncedCallback } from "use-debounce";
-import { Emergency } from "@alerta-ciudadana/entity";
-import { AttendEmergencyModal } from "./AttendEmergencyModal";
+import "moment/locale/es";
+import { FormProvider, Input, InputNormal, Pagination } from "@/components";
+import { ArrowDown, ArrowUp } from "react-feather";
+
+interface TableDataType {
+  date: string;
+  emergency: string;
+  user: string;
+  place: string;
+  phone: string;
+  status: string;
+  values: string;
+}
+const columnHelper = createColumnHelper<TableDataType>();
 
 export const EmergenciesTable = () => {
-  const pagination = useEmergencyContext();
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const { emergencies } = useEmergencyContext();
 
-  const debounced = useDebouncedCallback(findEmergencies, 250);
+  const columns = useMemo(
+    () => [
+      columnHelper.accessor("date", {
+        cell: ({ getValue }) => <Text>{moment(getValue()).locale("es-do").format("ll")}</Text>,
+        header: "Fecha",
+      }),
+      columnHelper.accessor("emergency", { cell: ({ getValue }) => getValue(), header: "Emergencias" }),
+      columnHelper.accessor("user", { cell: ({ getValue }) => getValue(), header: "Usuarios" }),
+      columnHelper.accessor("place", { cell: ({ getValue }) => getValue(), header: "Lugar" }),
+      columnHelper.accessor("phone", { cell: ({ getValue }) => getValue(), header: "Teléfono" }),
+      columnHelper.accessor("status", {
+        cell: ({ getValue }) => {
+          const value = getValue();
+          return (
+            <Tag variant="solid" size="sm" colorScheme={value === "Por Atender" ? "red" : "green"}>
+              {value}
+            </Tag>
+          );
+        },
+        header: "Estado",
+      }),
+      columnHelper.accessor("values", {
+        cell: ({ getValue }) => {
+          const value = getValue();
+          return (
+            <Tag size="sm" colorScheme={value === "Verdadero" ? "green" : "red"}>
+              {String(value)}
+            </Tag>
+          );
+        },
+        header: "Valoración",
+      }),
+    ],
+    []
+  );
 
-  async function findEmergencies(values: { field: string; query: string }) {
-    if (values.query === "") {
-      return;
-    }
+  const table = useReactTable({
+    columns,
+    data: emergencies,
+    state: { sorting },
+    getCoreRowModel: getCoreRowModel(),
+    onSortingChange: setSorting,
+    getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    enableRowSelection: true,
+    enableMultiRowSelection: true,
+    debugTable: true,
+  });
 
-    const emergenciesFinded = pagination.allEmergencies.filter((e) => {
-      const field = e[values.field as keyof Emergency];
-      const query = values.query;
-      return String(field).toLowerCase().includes(query.toLowerCase());
-    });
-
-    pagination.setEmergencies(emergenciesFinded);
+  function Filter({ column }: { column: Column<any, unknown> }) {
+    const columnFilterValue = column.getFilterValue();
+    return (
+      <InputNormal
+        name="date"
+        value={(columnFilterValue ?? "") as string}
+        onChange={(e) => column.setFilterValue(e.target.value)}
+      />
+    );
   }
+
+  // console.log("CAlle");
 
   return (
     <FormProvider id="" onSubmit={() => {}}>
       <TableContainer py="3">
-        <Table mb="4" size="sm" variant="striped">
+        <_Table mb="4" size="sm" variant="striped">
           <Thead>
-            <Tr>
-              {[
-                { label: "Fecha", field: "date", finded: true },
-                { label: "Emergencia", field: "emergency", finded: true },
-                { label: "Usuario", field: "user", finded: true },
-                { label: "Lugar", field: "place", finded: true },
-                { label: "Teléfono", field: "phone", finded: true },
-                { label: "Estado", field: "status", finded: false },
-                { label: "Valoración", field: "values", finded: false },
-              ].map((column) => (
-                <Th key={column.label}>
-                  <Box mb="1">
-                    <Text mb="1">{column.label}</Text>
-                    {column.finded && (
-                      <Input
-                        name="date"
-                        inputProps={{
-                          onChange: (e) => debounced({ field: column.field, query: e.target.value }),
-                        }}
-                      />
-                    )}
-                  </Box>
-                </Th>
-              ))}
-              <Th w="0"></Th>
-              <Th w="0"></Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {pagination.pagination.items.length === 0 && (
-              <>
-                <Tr>
-                  <Td colSpan={9}>
-                    <Text py="2" textAlign="center" fontWeight="semibold">
-                      No se han encontrado emergencias
-                    </Text>
-                  </Td>
-                </Tr>
-              </>
-            )}
-            {pagination.pagination.items.map((emergency, i) => (
-              <Tr key={emergency.id}>
-                <Td>{moment(emergency.date).format("LLL")}</Td>
-                <Td>{emergency.emergency}</Td>
-                <Td>{emergency.user}</Td>
-                <Td>{emergency.place}</Td>
-                <Td>{emergency.phone}</Td>
-                <Td>
-                  <Tag variant="solid" size="sm" colorScheme={emergency.status === "Por Atender" ? "red" : "green"}>
-                    {emergency.status}
-                  </Tag>
-                </Td>
-                <Td>
-                  <Tag size="sm" colorScheme={emergency.values === "Verdadero" ? "green" : "red"}>
-                    {String(emergency.values)}
-                  </Tag>
-                </Td>
-                <Td>
-                  <AttendEmergencyModal emergency={emergency} />
-                </Td>
-                <Td>
-                  <EmergencyModal emergency={emergency} />
-                </Td>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <Tr key={headerGroup.id}>
+                {headerGroup.headers.map((header) => {
+                  return (
+                    <Th cursor="pointer" key={header.id} p="4">
+                      <HStack onClick={header.column.getToggleSortingHandler()} mb="1" spacing={1}>
+                        <Text userSelect="none">{flexRender(header.column.columnDef.header, header.getContext())}</Text>
+                        <chakra.span>
+                          {header.column.getIsSorted() ? (
+                            header.column.getIsSorted() === "desc" ? (
+                              <Box>
+                                <ArrowUp size="1rem" />
+                              </Box>
+                            ) : (
+                              <Box>
+                                <ArrowDown size="1rem" />
+                              </Box>
+                            )
+                          ) : null}
+                        </chakra.span>
+                      </HStack>
+                      <Filter column={header.column} />
+                    </Th>
+                  );
+                })}
               </Tr>
             ))}
+          </Thead>
+          <Tbody>
+            {table.getRowModel().rows.map((row) => {
+              return (
+                <Tr _hover={{ bgColor: "main.100" }} cursor="pointer" key={row.id}>
+                  {row.getVisibleCells().map((cell) => {
+                    return (
+                      <Td
+                        border="none"
+                        key={cell.id}
+                        p="4"
+                        onClick={() => {
+                          table.getToggleAllRowsSelectedHandler();
+                        }}
+                      >
+                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      </Td>
+                    );
+                  })}
+                </Tr>
+              );
+            })}
           </Tbody>
-          <Tfoot>
-            <Tr>
-              <Th>Fecha</Th>
-              <Th>Emergencia</Th>
-              <Th>Usuario</Th>
-              <Th>Lugar</Th>
-              <Th>Teléfono</Th>
-              <Th>Estado</Th>
-              <Th>Valoración</Th>
-              <Th w="0"></Th>
-            </Tr>
-          </Tfoot>
-        </Table>
-        <Pagination {...pagination} />
+        </_Table>
+        {/* <Pagination
+          changeNumberPerPage={() => {}}
+          goToFirstPage={() => {}}
+          goToLastPage={() => {}}
+          nextPage={() => {}}
+        /> */}
       </TableContainer>
     </FormProvider>
   );

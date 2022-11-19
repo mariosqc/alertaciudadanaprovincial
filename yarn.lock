@@ -1483,6 +1483,18 @@
   resolved "https://registry.yarnpkg.com/@rushstack/eslint-patch/-/eslint-patch-1.0.8.tgz#be3e914e84eacf16dbebd311c0d0b44aa1174c64"
   integrity sha512-ZK5v4bJwgXldAUA8r3q9YKfCwOqoHTK/ZqRjSeRXQrBXWouoPnS4MQtgC4AXGiiBuUu5wxrRgTlv0ktmM4P1Aw==
 
+"@tanstack/react-table@^8.5.30":
+  version "8.5.30"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-table/-/react-table-8.5.30.tgz#5be6f8ead1f8c8076f497c253fe28d2f53d9dd9f"
+  integrity sha512-CyzVzd6T5qO2aznyHsjlKgY5Zy9YYd61EtnJjI8o9ibgiurCAUN6QMGsvKPpdu+MVbqEtzkd3sjbhN2BNbj8Og==
+  dependencies:
+    "@tanstack/table-core" "8.5.30"
+
+"@tanstack/table-core@8.5.30":
+  version "8.5.30"
+  resolved "https://registry.yarnpkg.com/@tanstack/table-core/-/table-core-8.5.30.tgz#188d3974c282ae2dce90942eac251301d227f957"
+  integrity sha512-3IhJVOpX7EDiAa2BcXowEJHOflmGI/hHhVY8UpEmtNxvDWo2QK7ohSXPndz35GK36mNoMXX4a5UA9BbVU1A0aw==
+
 "@tootallnate/once@2":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@tootallnate/once/-/once-2.0.0.tgz#f544a148d3ab35801c1f633a7441fd87c2e484bf"
