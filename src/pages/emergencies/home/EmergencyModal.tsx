@@ -75,23 +75,25 @@ export const EmergencyModal: FC<EmergencyModalProps> = ({ emergency }) => {
                 {sectionActive === "AUDIO" && <AudioSection emergency={emergency} />}
                 {sectionActive === "VIDEO" && <VideoSection emergency={emergency} />}
               </Box>
-              <Box flex="1.5">
-                <GoogleMaps
-                  polygonPathList={[{ path: polygon }]}
-                  defaultCenter={{ lat: emergency.coor[0], lng: emergency.coor[1] }}
-                  markerList={[
-                    {
-                      position: { lat: emergency.coor[0], lng: emergency.coor[1] },
-                      icon: {
-                        url: `https://firebasestorage.googleapis.com/v0/b/alerta-ciudadana-fe9d9.appspot.com/o/Iconos%20emergencia%2F${removeAccents(
-                          emergency.emergency.toLowerCase()
-                        )}.png?alt=media`,
-                        scaledSize: new google.maps.Size(36, 36),
+              {emergency.coor && (
+                <Box flex="1.5">
+                  <GoogleMaps
+                    polygonPathList={[{ path: polygon }]}
+                    defaultCenter={{ lat: emergency.coor[0], lng: emergency.coor[1] }}
+                    markerList={[
+                      {
+                        position: { lat: emergency.coor[0], lng: emergency.coor[1] },
+                        icon: {
+                          url: `https://firebasestorage.googleapis.com/v0/b/alerta-ciudadana-fe9d9.appspot.com/o/Iconos%20emergencia%2F${removeAccents(
+                            emergency.emergency.toLowerCase()
+                          )}.png?alt=media`,
+                          scaledSize: new google.maps.Size(36, 36),
+                        },
                       },
-                    },
-                  ]}
-                />
-              </Box>
+                    ]}
+                  />
+                </Box>
+              )}
             </Flex>
           </ModalBody>
 

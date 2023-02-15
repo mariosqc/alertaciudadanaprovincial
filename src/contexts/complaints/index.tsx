@@ -137,13 +137,7 @@ const ComplaintProvider: FC = ({ children }) => {
     <ComplaintContext.Provider
       value={{
         complaints,
-        pagination,
         typesOfComplaints,
-        changeNumberPerPage,
-        nextPage,
-        prevPage,
-        goToFirstPage,
-        goToLastPage,
         createComplaintType,
         deleteComplaintType,
         sortTable,
