@@ -7,6 +7,7 @@ import _ from "lodash";
 import { useDidMountEffect } from "@/hooks";
 
 import { flexRender, getCoreRowModel, getSortedRowModel, SortingState, useReactTable } from "@tanstack/react-table";
+import { ChevronDown, ChevronUp } from "react-feather";
 
 interface TableRowType {
   isSelected?: boolean;
@@ -39,11 +40,7 @@ export const Table = <T,>({ columns, enableRowSelection, data, onChangeRowSelect
     onChangeRowSelection?.(Object.keys(rowSelection).map((index) => _.get(data, index)));
   }, [rowSelection]);
 
-  function getRowSelected() {
-    // const rowSelected = data.filter((row) => row.isSelected).map(() => true);
-    // console.log(rowSelected);
-    // setRowSelection(Object.assign({}, rowSelected) as any as Record<string, boolean>);
-  }
+  function getRowSelected() {}
 
   useEffect(() => {
     getRowSelected();
@@ -64,9 +61,13 @@ export const Table = <T,>({ columns, enableRowSelection, data, onChangeRowSelect
                         <chakra.span>
                           {header.column.getIsSorted() ? (
                             header.column.getIsSorted() === "desc" ? (
-                              <Box transform="rotate(180deg)">Icons.CaretDown</Box>
+                              <Box mb="1">
+                                <ChevronDown size="1.25rem" />
+                              </Box>
                             ) : (
-                              <Box>Icons.CaretDown</Box>
+                              <Box mb="1">
+                                <ChevronUp size="1.25rem" />
+                              </Box>
                             )
                           ) : null}
                         </chakra.span>
