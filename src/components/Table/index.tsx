@@ -11,6 +11,7 @@ import {
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
+  getPaginationRowModel,
   getSortedRowModel,
   SortingState,
   useReactTable,
@@ -18,6 +19,7 @@ import {
 import { rankItem } from "@tanstack/match-sorter-utils";
 import { ChevronDown, ChevronUp } from "react-feather";
 import { FilterTable } from "./Filter";
+import { Pagination } from "../pagination";
 
 interface TableRowType {
   isSelected?: boolean;
@@ -53,6 +55,7 @@ export const Table = <T,>({ columns, enableRowSelection, data, onChangeRowSelect
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
     globalFilterFn: fuzzyFilter,
     enableRowSelection,
     enableMultiRowSelection: true,
@@ -70,7 +73,7 @@ export const Table = <T,>({ columns, enableRowSelection, data, onChangeRowSelect
   }, [data]);
 
   return (
-    <Box>
+    <Box mb="2">
       <TableContainer py="3">
         <_Table mb="4" size="sm" variant="striped">
           <Thead>
@@ -130,6 +133,7 @@ export const Table = <T,>({ columns, enableRowSelection, data, onChangeRowSelect
           </Tbody>
         </_Table>
       </TableContainer>
+      <Pagination table={table} />
     </Box>
   );
 };
