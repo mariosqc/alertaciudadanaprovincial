@@ -1,77 +1,47 @@
-import React from "react";
+import React, { useMemo } from "react";
 
-import { Table, TableContainer, Tbody, Td, Text, Tfoot, Th, Thead, Tr } from "@chakra-ui/react";
+import { Text } from "@chakra-ui/react";
 import { useComplaintContext } from "@/contexts";
-import moment from "moment";
-import { Pagination } from "@/components";
+import { Table } from "@/components";
 import { ComplaintModal } from "./EmergencyModal";
+import { createColumnHelper } from "@tanstack/react-table";
+import { Complaint } from "@alerta-ciudadana/entity";
+
+interface TableRowType {
+  isSelected: boolean;
+}
+
+interface TableDataType extends Complaint, TableRowType {}
+
+const columnHelper = createColumnHelper<TableDataType>();
 
 export const ComplaintsTable = () => {
   const pagination = useComplaintContext();
-
-  return (
-    <>
-      <TableContainer py="3">
-        <Table mb="4" size="sm" variant="striped">
-          <Thead>
-            <Tr>
-              <Th>Fecha</Th>
-              <Th>Usuario</Th>
-              <Th>Tipo de Denuncia</Th>
-              <Th>Estado</Th>
-              <Th>Teléfono</Th>
-              <Th>Lugar</Th>
-              <Th>Denuncia</Th>
-              <Th w="0"></Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {pagination.pagination.items.length === 0 ? (
-              <>
-                <Tr>
-                  <Td colSpan={9}>
-                    <Text py="2" textAlign="center" fontWeight="semibold">
-                      No se han encontrado denuncias
-                    </Text>
-                  </Td>
-                </Tr>
-              </>
-            ) : (
-              pagination.pagination.items.map((complaint, i) => (
-                <Tr key={complaint.id}>
-                  <Td>{moment(complaint.date).format("LLL")}</Td>
-                  <Td>{complaint.user}</Td>
-                  <Td>{complaint.type || <Text textAlign="center">-</Text>}</Td>
-                  <Td>{complaint.status}</Td>
-                  <Td>{complaint.phone}</Td>
-                  <Td>{complaint.place}</Td>
-                  <Td>
-                    {complaint.description.length > 50
-                      ? complaint.description.substring(0, 49).concat("...")
-                      : complaint.description}
-                  </Td>
-                  <Td>
-                    {" "}
-                    <ComplaintModal complaint={complaint} />
-                  </Td>
-                </Tr>
-              ))
-            )}
-          </Tbody>
-          <Tfoot>
-            <Tr>
-              <Th>Fecha</Th>
-              <Th>Usuario</Th>
-              <Th>Teléfono</Th>
-              <Th>Lugar</Th>
-              <Th>Denuncia</Th>
-
-              <Th w="0"></Th>
-            </Tr>
-          </Tfoot>
-        </Table>
-        <Pagination {...pagination} />
-      </TableContainer>
-    </>
+  const columns = useMemo(
+    () => [
+      columnHelper.accessor("date", { cell: ({ getValue }) => getValue(), header: "Date" }),
+      columnHelper.accessor("user", { cell: ({ getValue }) => getValue(), header: "Usuario" }),
+      columnHelper.accessor("type", {
+        cell: ({ getValue }) => (getValue() ? getValue() : <Text textAlign="center">-</Text>),
+        header: "Tipo de Denuncia",
+      }),
+      columnHelper.accessor("status", { cell: ({ getValue }) => getValue(), header: "Estado" }),
+      columnHelper.accessor("phone", { cell: ({ getValue }) => getValue(), header: "Teléfono" }),
+      columnHelper.accessor("place", { cell: ({ getValue }) => getValue(), header: "Lugar" }),
+      columnHelper.accessor("description", {
+        cell: ({ getValue }) => {
+          const description = getValue();
+          return description.length > 50 ? description.substring(0, 49).concat("...") : description;
+        },
+        header: "Denuncia",
+      }),
+      columnHelper.accessor("isSelected", {
+        cell: ({ row }) => <ComplaintModal complaint={row.original} />,
+        header: "Lugar",
+      }),
+    ],
+    []
   );
+
+  return <Table columns={columns} data={pagination.complaints as TableDataType[]} />;
 };

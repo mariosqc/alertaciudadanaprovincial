@@ -17,3 +17,5 @@ export * from "./swiper";
 export * from "./uploadButton";
 
 export * from "./recordAudio";
+
+export * from "./table";

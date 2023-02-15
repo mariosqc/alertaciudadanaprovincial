@@ -51,21 +51,14 @@ export const Table = <T,>({ columns, enableRowSelection, data, onChangeRowSelect
 
   return (
     <Box>
-      <TableContainer borderColor="sec.500">
-        <_Table size="sm">
+      <TableContainer py="3">
+        <_Table mb="4" size="sm" variant="striped">
           <Thead>
             {table.getHeaderGroups().map((headerGroup) => (
-              <Tr bgColor="sec.500" key={headerGroup.id}>
+              <Tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <Th
-                      border="none"
-                      color="white"
-                      cursor="pointer"
-                      key={header.id}
-                      p="4"
-                      onClick={header.column.getToggleSortingHandler()}
-                    >
+                    <Th cursor="pointer" key={header.id} onClick={header.column.getToggleSortingHandler()}>
                       <HStack spacing={1}>
                         <Text userSelect="none">{flexRender(header.column.columnDef.header, header.getContext())}</Text>
                         <chakra.span>
