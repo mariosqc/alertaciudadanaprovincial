@@ -37,7 +37,8 @@ export const ComplaintsTable = () => {
       }),
       columnHelper.accessor("isSelected", {
         cell: ({ row }) => <ComplaintModal complaint={row.original} />,
-        header: "Lugar",
+        header: "",
+        enableColumnFilter: false,
       }),
     ],
     []
