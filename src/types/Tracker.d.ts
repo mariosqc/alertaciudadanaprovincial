@@ -1,7 +1,7 @@
 declare module "@alerta-ciudadana/entity" {
   interface Tracker {
     id: string;
-    activator: true;
+    activator: boolean;
     foto: string;
     g: string;
     l: [number, number];
@@ -14,6 +14,5 @@ declare module "@alerta-ciudadana/entity" {
     user: string;
     video: string;
     voz: Record<string, { mensaje_voz: string }>;
-    visited: boolean;
   }
 }

@@ -53,7 +53,7 @@ const TrackerProvider: FC = ({ children }) => {
   }
 
   useEffect(() => {
-    const countTrackers = trackers.filter((tracker) => !tracker?.visited).length;
+    const countTrackers = trackers.filter((tracker) => !tracker?.activator).length;
     if (trackerLengths < countTrackers) {
       setNewTracker({ tracker: trackers[countTrackers - 1], attending: false });
       setNewTrackerDetected(true);
